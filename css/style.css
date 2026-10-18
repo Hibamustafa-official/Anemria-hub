@@ -1,0 +1,164 @@
+/* Global Styles & Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #0f1016;
+    color: #f8f9fa;
+    line-height: 1.6;
+}
+
+/* Header & Navigation */
+header {
+    background-color: #1a1c29;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    border-bottom: 2px solid #ff4757;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff4757;
+    letter-spacing: 1px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #f8f9fa;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover, nav ul li a.active {
+    color: #ff4757;
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 100px 20px;
+    background: linear-gradient(rgba(15, 16, 22, 0.8), rgba(15, 16, 22, 0.8)), url('../images/hero-bg.jpg') no-repeat center center/cover;
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.hero p {
+    font-size: 18px;
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+    color: #a4b0be;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #ff4757;
+    color: #ffffff;
+    padding: 12px 30px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #ff6b81;
+}
+
+/* Statistics Section */
+.stats-section {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: #151823;
+}
+
+.stats-section h2 {
+    margin-bottom: 40px;
+    font-size: 32px;
+    color: #ff4757;
+}
+
+.stats-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    background-color: #1a1c29;
+    padding: 30px;
+    border-radius: 10px;
+    width: 250px;
+    border: 1px solid #2f3542;
+}
+
+.stat-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #a4b0be;
+}
+
+.stat-number {
+    font-size: 36px;
+    font-weight: bold;
+    color: #ff4757;
+}
+
+/* Info Section (Benefits & Shortcomings) */
+.info-section {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 60px 20px;
+    flex-wrap: wrap;
+}
+
+.info-box {
+    background-color: #1a1c29;
+    padding: 30px;
+    border-radius: 10px;
+    width: 450px;
+    border-left: 4px solid #ff4757;
+}
+
+.info-box h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: #ffffff;
+}
+
+.info-box ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    color: #a4b0be;
+}
+
+.info-box ul li {
+    margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #151823;
+    color: #747d8c;
+    border-top: 1px solid #2f3542;
+}
