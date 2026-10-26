@@ -1,0 +1,334 @@
+/* ==========================================================
+   ANEMRIA HUB — style5.css  (Community Hub page)
+   Polls • connection requests • reviews
+   Palette: deep navy • royal blue • sky blue • soft violet
+   ========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* ---------- 1. Variables (change colours here) ---------- */
+:root {
+    --bg: #060912;
+    --bg-soft: #0a0f1f;
+    --card: #0f1528;
+    --card-hover: #151d38;
+    --border: rgba(255, 255, 255, 0.08);
+
+    --primary: #3d5afe;
+    --primary-light: #7b8cff;
+    --sky: #38bdf8;
+    --violet: #7c4dff;
+    --success: #34d399;
+
+    --text: #f1f4fc;
+    --text-muted: #a3abc2;
+
+    --radius: 18px;
+    --shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+    --glow: 0 10px 34px rgba(61, 90, 254, 0.28);
+    --grad: linear-gradient(135deg, #3d5afe, #6d4aff);
+    --grad-text: linear-gradient(135deg, #38bdf8, #818cf8);
+    --transition: all 0.3s ease;
+}
+
+/* ---------- 2. Reset & Base ---------- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Poppins', 'Segoe UI', Tahoma, sans-serif;
+    background:
+        radial-gradient(circle at 12% 0%, rgba(61, 90, 254, 0.16), transparent 42%),
+        radial-gradient(circle at 92% 22%, rgba(124, 77, 255, 0.1), transparent 42%),
+        var(--bg);
+    background-attachment: fixed;
+    color: var(--text);
+    line-height: 1.7;
+    min-height: 100vh;
+}
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+::selection { background: var(--primary); color: #fff; }
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--grad); border-radius: 10px; }
+
+/* ---------- 3. Header & Navigation ---------- */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 14px 6%;
+    background: rgba(6, 9, 18, 0.8);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+}
+
+header h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    background: var(--grad-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+nav ul { display: flex; flex-wrap: wrap; gap: 6px; }
+
+nav ul li a {
+    display: block;
+    padding: 9px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    border-radius: 50px;
+    transition: var(--transition);
+}
+
+nav ul li a:hover,
+nav ul li a[href="community.html"] {
+    color: #fff;
+    background: rgba(61, 90, 254, 0.16);
+    box-shadow: inset 0 0 0 1px rgba(91, 125, 255, 0.5);
+}
+
+/* ---------- 4. Main Layout ---------- */
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 5% 60px;
+}
+
+/* !important beats the inline margin-top in the HTML */
+main > section { margin-top: 56px !important; }
+
+main > section > h2 {
+    position: relative;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+main > section > h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 70px;
+    height: 4px;
+    border-radius: 10px;
+    background: var(--grad);
+}
+
+main > section > p {
+    max-width: 780px;
+    margin-bottom: 24px;
+    color: var(--text-muted);
+}
+
+/* ---------- 5. Shared Form Controls ---------- */
+main input[type="text"] {
+    font-family: inherit;
+    font-size: 0.93rem;
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    outline: none;
+    transition: var(--transition);
+}
+
+main input[type="text"]:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(61, 90, 254, 0.28);
+}
+
+main input[type="text"]::placeholder { color: var(--text-muted); }
+
+main button {
+    font-family: inherit;
+    font-weight: 600;
+    color: #fff;
+    background: var(--grad);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+main button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--glow);
+}
+
+/* ---------- 6. Layout: polls & connect side by side ---------- */
+main {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0 30px;
+}
+
+main > section:nth-of-type(1),
+main > section:nth-of-type(2) {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px !important;
+}
+
+main > section:nth-of-type(3) { grid-column: 1 / -1; }
+
+/* Keep both headings the same height so the cards line up */
+main > section:nth-of-type(1) > h2,
+main > section:nth-of-type(2) > h2 {
+    min-height: 5rem;
+    font-size: 1.55rem;
+    line-height: 1.3;
+}
+
+/* Cards (inline styles in HTML, so !important is needed) */
+main > section > div {
+    flex: 1;
+    max-width: none !important;
+    margin-top: 0 !important;
+    padding: 28px !important;
+    background: var(--card);
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+main > section > div > h3 {
+    margin-bottom: 20px;
+    font-size: 1.08rem;
+    line-height: 1.5;
+}
+
+br { display: none; }
+
+/* ---------- 7. Poll ---------- */
+main form { display: flex; flex-direction: column; gap: 12px; }
+
+main label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    font-size: 0.93rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+main label:hover { border-color: var(--primary-light); background: rgba(61, 90, 254, 0.1); }
+
+main label:has(input:checked) {
+    border-color: var(--primary);
+    background: rgba(61, 90, 254, 0.2);
+    box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+main label input { width: 18px; height: 18px; accent-color: var(--primary); }
+
+main form button {
+    align-self: flex-start;
+    margin: 8px 0 0 !important;
+    padding: 12px 30px !important;
+}
+
+/* ---------- 8. Connect box ---------- */
+main > section:nth-of-type(2) > div > input {
+    display: block;
+    width: 100% !important;
+    margin-bottom: 16px !important;
+    padding: 14px 20px !important;
+}
+
+main > section:nth-of-type(2) > div > button { padding: 12px 28px !important; }
+
+/* ---------- 9. Reviews (3rd section) ---------- */
+main > section:nth-of-type(3) article {
+    position: relative;
+    margin: 0 0 18px !important;
+    padding: 26px 28px !important;
+    background: linear-gradient(160deg, var(--card), var(--bg-soft));
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--primary) !important;
+    border-radius: var(--radius);
+    transition: var(--transition);
+}
+
+main > section:nth-of-type(3) article:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--glow);
+}
+
+main > section:nth-of-type(3) article h4 {
+    margin-bottom: 8px;
+    font-size: 1rem;
+    color: var(--sky);
+}
+
+main > section:nth-of-type(3) article p {
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: #c8cee0;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+    main { grid-template-columns: 1fr; }
+    main > section:nth-of-type(1) > h2,
+    main > section:nth-of-type(2) > h2 { min-height: 0; }
+}
+
+@media (max-width: 768px) {
+    header { flex-direction: column; text-align: center; }
+    nav ul { justify-content: center; }
+    main > section > h2 { font-size: 1.45rem; }
+    main > section:nth-of-type(1) > h2,
+    main > section:nth-of-type(2) > h2 { min-height: 0; font-size: 1.45rem; }
+    main > section > div { padding: 22px !important; }
+}
+
+/* ---------- Footer ---------- */
+footer {
+    margin-top: 40px;
+    padding: 30px 6%;
+    text-align: center;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    background: var(--bg-soft);
+    border-top: 1px solid var(--border);
+}
+
+/* ---------- Animations ---------- */
+@keyframes fade-up {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.35; }
+}
+
+main > section { animation: fade-up 0.8s ease both; }
+main > section:nth-of-type(2) { animation-delay: 0.1s; }
+main > section:nth-of-type(3) { animation-delay: 0.2s; }
+
+@media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+}
