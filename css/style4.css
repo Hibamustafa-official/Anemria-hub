@@ -1,359 +1,481 @@
-/* ==========================================================
-   ANEMRIA HUB — style4.css  (Anime Chat page)
-   Character search • modern chat window
-   Palette: deep navy • royal blue • sky blue • soft violet
-   ========================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
-/* ---------- 1. Variables (change colours here) ---------- */
 :root {
     --bg: #060912;
     --bg-soft: #0a0f1f;
     --card: #0f1528;
     --card-hover: #151d38;
-    --border: rgba(255, 255, 255, 0.08);
-
+    --border: rgba(255,255,255,.09);
     --primary: #3d5afe;
-    --primary-light: #7b8cff;
     --sky: #38bdf8;
     --violet: #7c4dff;
-    --success: #34d399;
-
     --text: #f1f4fc;
-    --text-muted: #a3abc2;
-
-    --radius: 18px;
-    --shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
-    --glow: 0 10px 34px rgba(61, 90, 254, 0.28);
-    --grad: linear-gradient(135deg, #3d5afe, #6d4aff);
-    --grad-text: linear-gradient(135deg, #38bdf8, #818cf8);
-    --transition: all 0.3s ease;
+    --muted: #a3abc2;
+    --gradient: linear-gradient(135deg,#3d5afe,#6d4aff);
+    --gradient-text: linear-gradient(135deg,#38bdf8,#818cf8);
+    --shadow: 0 12px 32px rgba(0,0,0,.4);
 }
 
-/* ---------- 2. Reset & Base ---------- */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-html { scroll-behavior: smooth; }
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 110px;
+}
 
 body {
-    font-family: 'Poppins', 'Segoe UI', Tahoma, sans-serif;
+    font-family: 'Poppins','Segoe UI',sans-serif;
+    color: var(--text);
     background:
-        radial-gradient(circle at 12% 0%, rgba(61, 90, 254, 0.16), transparent 42%),
-        radial-gradient(circle at 92% 22%, rgba(124, 77, 255, 0.1), transparent 42%),
+        radial-gradient(circle at 12% 0%,rgba(61,90,254,.16),transparent 42%),
+        radial-gradient(circle at 92% 22%,rgba(124,77,255,.1),transparent 42%),
         var(--bg);
     background-attachment: fixed;
-    color: var(--text);
     line-height: 1.7;
     min-height: 100vh;
 }
 
-a { text-decoration: none; color: inherit; }
-ul { list-style: none; }
-::selection { background: var(--primary); color: #fff; }
+a {
+    color: inherit;
+    text-decoration: none;
+}
 
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--grad); border-radius: 10px; }
-
-/* ---------- 3. Header & Navigation ---------- */
 header {
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 100;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     gap: 14px;
-    padding: 14px 6%;
-    background: rgba(6, 9, 18, 0.8);
+    padding: 15px 6%;
+    background: rgba(6,9,18,.88);
     backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
 }
 
 header h1 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    background: var(--grad-text);
-    -webkit-background-clip: text;
+    font-size: 1.2rem;
+    font-weight: 800;
+    background: var(--gradient-text);
     background-clip: text;
+    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-nav ul { display: flex; flex-wrap: wrap; gap: 6px; }
+nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    list-style: none;
+}
 
-nav ul li a {
+nav a {
     display: block;
-    padding: 9px 16px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--text-muted);
-    border-radius: 50px;
-    transition: var(--transition);
+    padding: 8px 13px;
+    color: var(--muted);
+    border-radius: 30px;
+    font-size: .85rem;
+    transition: .25s ease;
 }
 
-nav ul li a:hover,
-nav ul li a[href="anime-chat.html"] {
-    color: #fff;
-    background: rgba(61, 90, 254, 0.16);
-    box-shadow: inset 0 0 0 1px rgba(91, 125, 255, 0.5);
+nav a:hover,
+nav a.active {
+    color: white;
+    background: rgba(61,90,254,.18);
+    box-shadow: inset 0 0 0 1px rgba(91,125,255,.4);
 }
 
-/* ---------- 4. Main Layout ---------- */
 main {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 20px 5% 60px;
+    width: min(1150px,90%);
+    margin: auto;
+    padding: 30px 0 65px;
 }
 
-/* !important beats the inline margin-top in the HTML */
-main > section { margin-top: 56px !important; }
-
-main > section > h2 {
-    position: relative;
-    margin-bottom: 14px;
-    padding-bottom: 12px;
-    font-size: 1.8rem;
-    font-weight: 700;
+main section {
+    margin-top: 45px;
+    animation: fade-up .6s ease both;
 }
 
-main > section > h2::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 70px;
-    height: 4px;
-    border-radius: 10px;
-    background: var(--grad);
-}
-
-main > section > p {
-    max-width: 780px;
-    margin-bottom: 24px;
-    color: var(--text-muted);
-}
-
-/* ---------- 5. Shared Form Controls ---------- */
-main input[type="text"] {
-    font-family: inherit;
-    font-size: 0.93rem;
-    color: var(--text);
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    outline: none;
-    transition: var(--transition);
-}
-
-main input[type="text"]:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(61, 90, 254, 0.28);
-}
-
-main input[type="text"]::placeholder { color: var(--text-muted); }
-
-main button {
-    font-family: inherit;
-    font-weight: 600;
-    color: #fff;
-    background: var(--grad);
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-main button:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--glow);
-}
-
-/* ---------- Search Section (1st section) ---------- */
-main > section:nth-of-type(1) {
-    margin-top: 40px !important;
-    padding: 50px 6% 46px;
+.hero {
+    margin-top: 18px;
+    padding: 55px 6%;
     text-align: center;
     border: 1px solid var(--border);
     border-radius: 28px;
     background:
-        radial-gradient(circle at 15% 20%, rgba(61, 90, 254, 0.28), transparent 48%),
-        radial-gradient(circle at 85% 85%, rgba(124, 77, 255, 0.22), transparent 48%),
+        radial-gradient(circle at 15% 20%,rgba(61,90,254,.26),transparent 48%),
+        radial-gradient(circle at 85% 85%,rgba(124,77,255,.2),transparent 48%),
         var(--bg-soft);
     box-shadow: var(--shadow);
 }
 
-main > section:nth-of-type(1) > h2::after { left: 50%; transform: translateX(-50%); }
-main > section:nth-of-type(1) > p { margin-left: auto; margin-right: auto; }
+.eyebrow {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--sky);
+    font-size: .73rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
 
-/* Overrides the inline styles in the HTML */
+.hero h2 {
+    font-size: clamp(2rem,5vw,3.4rem);
+    line-height: 1.25;
+    margin-bottom: 15px;
+}
+
+.hero h2 span {
+    background: var(--gradient-text);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero > p:not(.result-count) {
+    max-width: 680px;
+    margin: 0 auto 25px;
+    color: var(--muted);
+}
+
 .search-box {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
     gap: 10px;
-    max-width: 700px;
+    max-width: 650px;
     margin: 0 auto;
-    padding: 8px;
-    background: rgba(255, 255, 255, 0.05);
+    padding: 7px;
     border: 1px solid var(--border);
-    border-radius: 60px;
+    border-radius: 50px;
+    background: rgba(255,255,255,.045);
 }
 
 .search-box input {
-    flex: 1 1 240px;
-    width: auto !important;
-    padding: 14px 22px !important;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
+    flex: 1;
+    min-width: 0;
+    padding: 13px 19px;
+    color: var(--text);
+    font: inherit;
+    font-size: .92rem;
+    background: transparent;
+    border: none;
+    outline: none;
 }
 
-.search-box button { padding: 14px 30px !important; font-size: 0.95rem; }
-
-/* ---------- 6. Chat Window (2nd section) ---------- */
-/* The HTML has inline styles on these boxes, so !important is needed */
-main > section:nth-of-type(2) > div {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    max-width: 780px !important;
-    margin: 0 auto;
-    padding: 0 !important;
-    overflow: hidden;
-    color: var(--text) !important;
-    background: var(--card) !important;
-    border: 1px solid rgba(91, 125, 255, 0.3) !important;
-    border-radius: 24px;
-    box-shadow: var(--glow), var(--shadow);
+.search-box input::placeholder {
+    color: var(--muted);
 }
 
-/* Chat header bar */
-main > section:nth-of-type(2) > div > h3 {
-    flex: 0 0 100%;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 18px 24px;
-    font-size: 1.02rem;
+.search-box:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(61,90,254,.17);
+}
+
+.search-box button {
+    padding: 12px 27px;
+    color: white;
+    font: inherit;
     font-weight: 600;
-    background: linear-gradient(90deg, rgba(61, 90, 254, 0.22), rgba(124, 77, 255, 0.1));
-    border-bottom: 1px solid var(--border);
+    border: none;
+    border-radius: 40px;
+    background: var(--gradient);
+    cursor: pointer;
+    transition: .25s ease;
 }
 
-main > section:nth-of-type(2) > div > h3::before {
-    content: '';
-    flex: none;
-    width: 11px;
-    height: 11px;
-    background: var(--success);
-    border-radius: 50%;
-    box-shadow: 0 0 10px var(--success);
-    animation: pulse 1.8s infinite;
+.search-box button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(61,90,254,.3);
 }
 
-/* Messages area */
-main > section:nth-of-type(2) > div > div {
-    flex: 0 0 100%;
-    height: 320px !important;
-    margin: 0 !important;
-    padding: 24px !important;
-    overflow-y: auto !important;
-    color: var(--text) !important;
-    background: var(--bg) !important;
-    border: none !important;
+.result-count {
+    margin-top: 14px;
+    color: var(--muted);
+    font-size: .83rem;
 }
 
-main > section:nth-of-type(2) > div > div p {
-    display: inline-block;
-    max-width: 85%;
-    margin-bottom: 12px;
-    padding: 12px 18px;
-    font-size: 0.92rem;
-    line-height: 1.6;
-    background: var(--card-hover);
-    border: 1px solid var(--border);
-    border-radius: 18px 18px 18px 4px;
-    animation: fade-up 0.5s ease both;
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
-main > section:nth-of-type(2) > div > div p strong {
-    display: block;
-    margin-bottom: 2px;
-    font-size: 0.78rem;
-    letter-spacing: 0.5px;
+.section-heading h2,
+.info-section h2 {
+    font-size: clamp(1.4rem,3vw,1.9rem);
+    line-height: 1.4;
+}
+
+.video-badge,
+.collection-count {
+    padding: 7px 13px;
     color: var(--sky);
+    font-size: .72rem;
+    font-weight: 600;
+    border: 1px solid rgba(56,189,248,.22);
+    border-radius: 30px;
+    background: rgba(56,189,248,.07);
 }
 
-/* For later, when you add messages with JavaScript */
-.msg-user {
+.video-frame {
+    overflow: hidden;
+    padding: 8px;
+    border: 1px solid rgba(91,125,255,.3);
+    border-radius: 22px;
+    background: #000;
+    box-shadow: 0 0 35px rgba(61,90,254,.12);
+}
+
+.video-frame video {
     display: block;
-    margin-left: auto;
-    text-align: right;
-    background: var(--grad) !important;
-    border-radius: 18px 18px 4px 18px !important;
+    width: 100%;
+    max-height: 620px;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+    background: #000;
+    border-radius: 14px;
 }
 
-/* Input row */
-main > section:nth-of-type(2) > div > input {
-    flex: 1 1 200px;
-    width: auto !important;
-    margin: 18px 0 18px 20px;
-    padding: 14px 20px !important;
+.video-status {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: .87rem;
 }
 
-main > section:nth-of-type(2) > div > button {
-    margin: 18px 20px 18px 12px;
-    padding: 14px 28px !important;
-    font-size: 0.92rem;
+.anime-grid {
+    display: grid;
+    grid-template-columns: repeat(4,minmax(0,1fr));
+    gap: 22px;
 }
 
-/* ---------- Responsive ---------- */
-@media (max-width: 768px) {
-    header { flex-direction: column; text-align: center; }
-    nav ul { justify-content: center; }
-
-    main > section:nth-of-type(1) { padding: 36px 18px; border-radius: 22px; }
-    .search-box { border-radius: 24px; }
-    .search-box button { width: 100%; }
-
-    main > section > h2 { font-size: 1.45rem; }
-
-    main > section:nth-of-type(2) > div > div { height: 260px !important; padding: 16px !important; }
-    main > section:nth-of-type(2) > div > input { flex: 0 0 calc(100% - 40px); margin: 16px 20px 0; }
-    main > section:nth-of-type(2) > div > button { width: calc(100% - 40px); margin: 12px 20px 18px; }
+.anime-card {
+    min-width: 0;
+    overflow: hidden;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    transition: transform .25s ease,border-color .25s ease,box-shadow .25s ease;
 }
 
-/* ---------- Footer ---------- */
-footer {
-    margin-top: 40px;
-    padding: 30px 6%;
+.anime-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(91,125,255,.6);
+    box-shadow: 0 14px 30px rgba(0,0,0,.28);
+}
+
+.thumbnail-button {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    padding: 0;
+    border: none;
+    background: var(--card-hover);
+    cursor: pointer;
+}
+
+.thumbnail-button img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .35s ease;
+}
+
+.anime-card:hover .thumbnail-button img {
+    transform: scale(1.055);
+}
+
+.play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    padding-left: 3px;
+    color: white;
+    font-size: 1.1rem;
+    border: 1px solid rgba(255,255,255,.35);
+    border-radius: 50%;
+    background: rgba(61,90,254,.85);
+    box-shadow: 0 5px 25px rgba(0,0,0,.35);
+    transform: translate(-50%,-50%);
+    transition: .25s ease;
+}
+
+.anime-card:hover .play-icon {
+    background: #6d4aff;
+    transform: translate(-50%,-50%) scale(1.1);
+}
+
+.card-details {
+    padding: 13px 14px 16px;
+}
+
+.card-details h3 {
+    font-size: .94rem;
+    font-weight: 600;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.card-details p {
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: .77rem;
+}
+
+.empty-message {
+    padding: 35px 10px;
+    color: var(--muted);
     text-align: center;
-    font-size: 0.88rem;
-    color: var(--text-muted);
+}
+
+.info-section {
+    padding: 30px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: var(--bg-soft);
+}
+
+.info-section p {
+    margin-top: 12px;
+    color: var(--muted);
+}
+
+.info-section .note {
+    font-size: .83rem;
+}
+
+footer {
+    padding: 27px 6%;
+    color: var(--muted);
+    text-align: center;
+    font-size: .85rem;
     background: var(--bg-soft);
     border-top: 1px solid var(--border);
 }
 
-/* ---------- Animations ---------- */
+.thumbnail-missing {
+    display: none !important;
+}
+
+.thumbnail-placeholder {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 15px;
+    color: var(--muted);
+    text-align: center;
+    font-size: .85rem;
+    background: linear-gradient(135deg,#111a33,#17142d);
+}
+
 @keyframes fade-up {
-    from { opacity: 0; transform: translateY(28px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50%      { opacity: 0.35; }
+@media (max-width: 900px) {
+    .anime-grid {
+        grid-template-columns: repeat(3,minmax(0,1fr));
+        gap: 17px;
+    }
+
+    header {
+        justify-content: center;
+        text-align: center;
+    }
+
+    nav ul {
+        justify-content: center;
+    }
 }
 
-main > section { animation: fade-up 0.8s ease both; }
-main > section:nth-of-type(2) { animation-delay: 0.1s; }
-main > section:nth-of-type(3) { animation-delay: 0.2s; }
+@media (max-width: 600px) {
+    main {
+        width: 92%;
+        padding-top: 20px;
+    }
+
+    header h1 {
+        font-size: 1.05rem;
+    }
+
+    nav ul {
+        gap: 3px;
+    }
+
+    nav a {
+        padding: 7px 9px;
+        font-size: .75rem;
+    }
+
+    .hero {
+        padding: 35px 18px;
+        border-radius: 22px;
+    }
+
+    .search-box {
+        flex-wrap: wrap;
+        border-radius: 18px;
+    }
+
+    .search-box input {
+        flex-basis: 100%;
+    }
+
+    .search-box button {
+        width: 100%;
+    }
+
+    .anime-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+        gap: 13px;
+    }
+
+    .card-details {
+        padding: 10px;
+    }
+
+    .card-details h3 {
+        font-size: .84rem;
+    }
+
+    .play-icon {
+        width: 43px;
+        height: 43px;
+    }
+
+    .info-section {
+        padding: 22px;
+    }
+}
 
 @media (prefers-reduced-motion: reduce) {
-    * { animation: none !important; transition: none !important; }
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
 }
