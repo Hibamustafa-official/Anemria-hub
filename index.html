@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Anemria Hub — anime stories, voice actors, streaming guides, polls, chat and community in one place.">
     <title>Anemria — The Ultimate Anime Universe Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Poppins:wght@500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Google Fonts: Poppins (headings) + Inter (body text) -->
+    <!-- Theme script: head mein taake page load par flash na aaye -->
+    <script src="js/script.js"></script>
+
+    <!-- Google Fonts (ek hi link) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Poppins:wght@400;500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="css/style1.css">
 </head>
@@ -34,7 +36,7 @@
         </nav>
 
         <!-- Dark / Light Mode Toggle -->
-        <button type="button" class="theme-toggle" id="themeToggle" role="switch" aria-checked="true" aria-label="Toggle dark and light mode">
+        <button type="button" class="theme-toggle" id="themeToggle" role="switch" aria-checked="true" aria-label="Toggle dark and light mode" title="Dark / Light mode">
             <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
                 <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
             </svg>
@@ -50,12 +52,10 @@
 
         <!-- ================= HERO & SEARCH ================= -->
         <section class="hero-section" id="home">
-            <!-- Background art (sirf artwork, bina text ke) -->
             <img class="hero-bg" src="images/Main page.png" alt="" aria-hidden="true">
             <div class="hero-overlay"></div>
             <div class="hero-glow"></div>
 
-            <!-- Left side content -->
             <div class="hero-content">
                 <span class="hero-badge">Anime &bull; Stories &bull; Community</span>
 
@@ -170,8 +170,6 @@
             </div>
         </section>
 
-        <!-- ================= STORIES (READ & LISTEN) ================= -->
-
         <!-- ================= REAL VOICES BEHIND ANIME ================= -->
         <section class="voice-section section-alt accent-pink" id="voices">
             <div class="container">
@@ -189,8 +187,8 @@
                         <p>Voice of <strong>L</strong><br>Death Note (Japanese)</p>
                     </div>
                     <div class="voice-card">
-                        <div class="voice-avatar">NS</div>
-                        <h3>Shidō Nakamura</h3>
+                        <div class="voice-avatar">SN</div>
+                       <h3>Shido Nakamura</h3>
                         <p>Voice of <strong>Ryuk</strong><br>Death Note (Japanese)</p>
                     </div>
                     <div class="voice-card">
@@ -209,7 +207,6 @@
                 <p class="section-intro">Stream sample episodes with subtitle options. For full episodes, we only use official and legal sources.</p>
 
                 <div class="watch-layout">
-
                     <div class="subtitle-panel">
                         <h3>Subtitle &amp; Language</h3>
                         <div class="lang-buttons" role="group" aria-label="Subtitle language">
@@ -244,7 +241,6 @@
                 <p class="section-intro">Create a poll or vote on live community questions.</p>
 
                 <div class="poll-layout">
-                    <!-- Vote -->
                     <div class="poll-card">
                         <h3>Which anime has the best story?</h3>
                         <form id="pollForm">
@@ -256,7 +252,6 @@
                         <div class="poll-results" id="pollResults"></div>
                     </div>
 
-                    <!-- Create -->
                     <div class="poll-card">
                         <h3>Create Your Own Poll</h3>
                         <form id="createPollForm">
@@ -278,7 +273,6 @@
                 <p class="section-intro">Talk with your favorite characters, or join a group chat for a specific anime.</p>
 
                 <div class="chat-layout">
-                    <!-- Character chatbot -->
                     <div class="chat-card">
                         <h3>Chat with a Character</h3>
                         <div class="chat-window" id="chatWindow">
@@ -290,7 +284,6 @@
                         </div>
                     </div>
 
-                    <!-- Group chat -->
                     <div class="chat-card">
                         <h3>Group Chats by Anime</h3>
                         <ul class="group-list">
@@ -378,6 +371,5 @@
         <p>&copy; 2026 Anemria Hub. All Rights Reserved. Built with passion for global anime lovers.</p>
     </footer>
 
-    <script src="js/script.js"></script>
 </body>
 </html>
