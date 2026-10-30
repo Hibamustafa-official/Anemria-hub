@@ -1,83 +1,178 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/style2.css">
-    <title>Explorer & Story — Anemria</title>
+    <meta name="description" content="Anemria Explorer — read the stories, history and lore behind your favorite anime.">
+    <title>Explorer &amp; Story — Anemria</title>
+
+    <!-- Theme script: CSS se pehle (page khulte hi theme lag jaye) -->
+    <script src="js/script.js"></script>
+
+    <!-- Google Fonts (index.html jaise) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Poppins:wght@400;500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style2.css">
 </head>
 <body>
 
-    <!-- Header & Navigation -->
-    <header>
-        <h1>Anemria Explorer & Story Repository</h1>
-        <nav>
+    <!-- ================= HEADER & NAVIGATION ================= -->
+    <header class="site-header">
+        <div class="logo-container">
+            <h1>Anemria</h1>
+            <p>Your Ultimate Anime Universe Hub</p>
+        </div>
+
+        <nav aria-label="Main navigation">
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="anime-list.html">Explorer & Story</a></li>
-                <li><a href="watch.html">Watch & Stream</a></li>
+                <li><a href="anime-list.html" class="active">Explorer &amp; Story</a></li>
+                <li><a href="watch.html">Watch &amp; Stream</a></li>
                 <li><a href="anime-chat.html">Anime Chat</a></li>
                 <li><a href="community.html">Community Hub</a></li>
             </ul>
         </nav>
+
+        <!-- Dark / Light Mode Toggle -->
+        <button type="button" class="theme-toggle" id="themeToggle" role="switch" aria-checked="true" aria-label="Toggle dark and light mode" title="Dark / Light mode">
+            <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+            </svg>
+            <span class="toggle-knob"></span>
+            <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="4"/>
+                <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+            </svg>
+        </button>
     </header>
 
-    <!-- Main Content Area -->
     <main>
-        <!-- Search Bar Section -->
-        <section>
-            <h2>Search Anime History & Lore</h2>
-            <p>Use the search option below to look up your favorite anime titles, categories, or specific characters before diving into their detailed stories.</p>
-            <div class="search-box">
-                <input type="text" placeholder="Search anime (e.g., Death Note, Demon Slayer)..." style="width: 50%; padding: 8px;">
-                <button style="padding: 8px 15px;">Search</button>
+
+        <!-- ================= SEARCH ================= -->
+        <section class="search-section section-base accent-blue" id="search">
+            <div class="container">
+                <h2>Search Anime History &amp; Lore</h2>
+                <p class="section-intro">Look up your favorite anime titles, categories, or characters before diving into their detailed stories.</p>
+
+                <div class="search-container">
+                    <svg class="search-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                        <circle cx="11" cy="11" r="7"/>
+                        <path d="M21 21l-4.3-4.3"/>
+                    </svg>
+                    <input type="text" id="searchInput" placeholder="Search anime (e.g., Death Note, Demon Slayer)..." aria-label="Search anime">
+                    <button type="button" id="searchBtn">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                            <circle cx="11" cy="11" r="7"/>
+                            <path d="M21 21l-4.3-4.3"/>
+                        </svg>
+                        Search
+                    </button>
+                </div>
             </div>
         </section>
 
-        <!-- Anime Categories Section -->
-        <section>
-            <h2>Anime Categories</h2>
-            <p>Select your favorite genre to explore comprehensive story chapters and character backgrounds:</p>
-            <ul>
-                <li><strong>Psychological Thriller:</strong> Intense mind games, strategy, and moral conflicts.</li>
-                <li><strong>Dark Fantasy & Action:</strong> Supernatural battles, monsters, and survival journeys.</li>
-                <li><strong>Supernatural & Mystery:</strong> Hidden realms, gods of death, and thrilling investigations.</li>
-            </ul>
+        <!-- ================= CATEGORIES ================= -->
+        <section class="categories-section section-alt accent-violet" id="categories">
+            <div class="container">
+                <h2>Anime Categories</h2>
+                <p class="section-intro">Pick a genre to explore story chapters and character backgrounds:</p>
+                <ul class="category-grid">
+                    <li><strong>Psychological Thriller</strong> Intense mind games, strategy, and moral conflicts.</li>
+                    <li><strong>Dark Fantasy &amp; Action</strong> Supernatural battles, monsters, and survival journeys.</li>
+                    <li><strong>Supernatural &amp; Mystery</strong> Hidden realms, gods of death, and thrilling investigations.</li>
+                </ul>
+            </div>
         </section>
 
-        <!-- Detailed Anime Stories Database (Paragraph Form) -->
-        <section>
-            <h2>Complete Anime Masterpiece Stories & History</h2>
+        <!-- ================= STORIES ================= -->
+        <section class="stories-section section-base accent-pink" id="stories">
+            <div class="container">
+                <h2>Complete Anime Masterpiece Stories &amp; History</h2>
+                <p class="section-intro">Three unforgettable stories, told from the first episode to the final showdown.</p>
 
-            <!-- Death Note Detailed Story -->
-            <article>
-                <h3>Death Note: The Psychological Masterpiece</h3>
-                <p>Death Note ki kahani shuru hoti hai Light Yagami naam ke ek behad intelligent high school student se, jo apni zandgi se bore ho chuka hai aur duniya ke andar faili hui crime aur corruption ko dekh kar pareshan hai. Ek din uske paas achanak ek mysterious black notebook girti hai, jiska naam "Death Note" hota hai. Is notebook ko Ryuk naam ke ek Shinigami (god of death) ne insani duniya mein phenka hota hai. Death Note ka rule yeh hai ki agar aap kisi ka naam isme likhte waqt uska chehra yaad rakhenge, toh us insaan ki maut ho jayegi.</p>
-                <p>Is taaqat ko milne ke baad Light Yagami duniya ke sabhi criminals ko khatam karke ek nayi aur saaf-suthri duniya ka bhagwan banne ki thaan leta hai aur "Kira" ke naam se mashhoor ho jata hai. Jab duniya bhar mein bina kisi wazah ke criminals maut ke munh mein jane lagte hain, toh international police aur Interpol bebas ho jate hain. Tab entry hoti hai duniya ke sabse rahasyamayi aur brilliant detective ki, jise duniya "L" ke naam se jaanti hai.</p>
-                <p>L aur Light ke beech ek khatarnak aur romanchak (thriller) cat-and-mouse game shuru hota hai. L ko pata chal jata hai ki Kira Japan ke Kanto region mein hai aur woh Light ko hi sabse bada suspect man kar uske peeche pad jata hai. Dono ke beech dimaagi jang chhid jati hai jismein Misa Amane (jisne doosri Death Note milti hai) aur kai doosre characters aate hain. Yeh poori kahani justice, morality aur power ke misuse par adharit hai.</p>
-            </article>
+                <div class="story-list">
 
-            <!-- Demon Slayer Detailed Story -->
-            <article>
-                <h3>Demon Slayer: Kimetsu no Yaiba — The Epic Journey</h3>
-                <p>Demon Slayer ki kahani Taisho-era Japan ki hai, jahan Tanjiro Kamado naam ka ek saadhu aur mehnati ladka apne parivar ka khyal rakhne ke liye pahad se koyla bechne shehar jata hai. Ek din jab woh ghar wapas lautta hai, toh dekhta hai ki ek khunkhaar demon ne uske poore parivar ko qatal kar diya hai. Kewal uski choti behan, Nezuko Kamado, zinda bachti hai, lekin demon ke hamle ki wajah se woh khud ek khatarnak demon mein badal chuki hoti hai.</p>
-                <p>Halanki Nezuko demon ban chuki hai, par woh abhi bhi apne bhai Tanjiro ko pehchanti hai aur uspar hamla nahi karti. Tabhi wahan Giyu Tomioka naam ka ek Demon Slayer aata hai jo Nezuko ko khatam karna chahta hai, lekin Tanjiro ke anurodh aur Nezuko ki insaniiyat ko dekh kar woh unhe ek rasta batata hai. Tanjiro apni behan ko wapas insaan banane aur apne parivar ka badla lene ke liye Demon Slayer Corps mein shamil hone ka faisla karta hai.</p>
-                <p>Tanjiro sakht training ke baad Water Breathing technique seekhta hai aur apni yatra ke dauran Zenitsu Agatsuma aur Inosuke Hashibira jaise doston se milta hai. Yeh sabhi mil kar Muzan Kibutsuji (Demon King) aur uske powerful demons (Twelve Kizuki) ke khilaf ladai ladte hain. Yeh kahani bhai-behan ke pyaar, himmat aur dukh ke samundar mein umeed ki kiran ko darshati hai.</p>
-            </article>
+                    <!-- ---------- Story 1: Death Note ---------- -->
+                    <article class="story-card story-blue" id="death-note">
+                        <span class="story-icon" aria-hidden="true"></span>
+                        <span class="story-badge">Story 01</span>
+                        <h3>Death Note: The Psychological Masterpiece</h3>
 
-            <!-- Hell's Paradise Detailed Story -->
-            <article>
-                <h3>Hell's Paradise: Jigokuraku — Dark Mystery Story</h3>
-                <p>Hell's Paradise ki kahani Edo period ke dauran ki hai, jahan Gabimaru the Hollow naam ka ek sabse khatarnak aur nirdai ninja assassin rehta hai jo apne gaon ki taraf se dhokha khane ke baad mout ki saza ka samna kar raha hota hai. Gabimaru ke upar kai tarike ke execution (faansi, aag, aur crushing) azmaye jate hain, lekin uski body par kisi cheez ka asar nahi hota kyunki uske andar apni patni se milne ki zinda rehne ki zidd hoti hai.</p>
-                <p>Tab wahan Yamada Asaemon Sagiri naam ki ek shatir executioner aati hai aur use ek shart rakhti hai ki agar woh ek rahasyamayi aur khatarnak island par ja kar wahan se immortal life ka elixir (amrit) dhoond kar layega, toh shogun use maaf kar dega aur use aazadi milegi. Gabimaru is mission ke liye tayar ho jata hai aur baaki death-row criminals ke sath us island ki taraf rawana hota hai.</p>
-                <p>Woh island koi aam jagah nahi balkay ek bhayanak nark jaisi jannat hoti hai jahan ajeeb-o-gareeb monstrous deities aur jaanleva paudhe hote hain. Is mission ke dauran Gabimaru aur Sagiri ko survival ki ek anokhi jang ladni padti hai jismein unhe apni taaqat aur vishwas dono ka imtihan dena padta hai.</p>
-            </article>
+                        <ul class="story-meta">
+                            <li>Psychological Thriller</li>
+                            <li>Studio: Madhouse</li>
+                            <li>Year: 2006</li>
+                        </ul>
+
+                        <p>Light Yagami is a brilliant high school student who is bored with his life and troubled by the crime and corruption spreading across the world. One day a mysterious black notebook falls into his hands. It is called the "Death Note", and it was dropped into the human world by a Shinigami (god of death) named Ryuk. The rule is simple and terrifying: anyone whose name is written in the notebook while the writer pictures their face will die.</p>
+                        <p>With this power, Light decides to wipe out the world's criminals and become the god of a new, clean world. People soon begin calling him "Kira". As criminals die without explanation all over the globe, the international police and Interpol find themselves helpless. Then the world's most mysterious and brilliant detective steps forward, known only as "L".</p>
+                        <p>A dangerous and thrilling cat-and-mouse game begins between L and Light. L works out that Kira is operating in Japan's Kanto region and soon treats Light as his prime suspect. A battle of minds follows, with Misa Amane, who holds a second Death Note, and many other characters pulled into the conflict. At its heart, the story is about justice, morality, and the misuse of power.</p>
+
+                        <div class="story-chars">
+                            <span>Light Yagami</span>
+                            <span>L</span>
+                            <span>Ryuk</span>
+                            <span>Misa Amane</span>
+                        </div>
+                    </article>
+
+                    <!-- ---------- Story 2: Demon Slayer ---------- -->
+                    <article class="story-card story-pink" id="demon-slayer">
+                        <span class="story-icon" aria-hidden="true"></span>
+                        <span class="story-badge">Story 02</span>
+                        <h3>Demon Slayer: Kimetsu no Yaiba — The Epic Journey</h3>
+
+                        <ul class="story-meta">
+                            <li>Dark Fantasy &amp; Action</li>
+                            <li>Studio: ufotable</li>
+                            <li>Year: 2019</li>
+                        </ul>
+
+                        <p>Demon Slayer is set in Taisho-era Japan, where Tanjiro Kamado, a kind and hardworking boy, travels down from the mountains to sell charcoal and support his family. When he returns home, he finds that a ruthless demon has slaughtered his entire family. Only his younger sister, Nezuko, is still alive, but the attack has turned her into a dangerous demon herself.</p>
+                        <p>Even as a demon, Nezuko still recognizes her brother and does not attack him. A Demon Slayer named Giyu Tomioka arrives intending to put her down, but Tanjiro's pleading and Nezuko's lingering humanity change his mind, and he points them toward a path forward. Determined to turn his sister back into a human and avenge his family, Tanjiro decides to join the Demon Slayer Corps.</p>
+                        <p>After brutal training, Tanjiro masters the Water Breathing technique and meets companions like Zenitsu Agatsuma and Inosuke Hashibira along his journey. Together they face Muzan Kibutsuji, the Demon King, and his powerful Twelve Kizuki. It is a story of brotherly love, courage, and a spark of hope in an ocean of sorrow.</p>
+
+                        <div class="story-chars">
+                            <span>Tanjiro Kamado</span>
+                            <span>Nezuko Kamado</span>
+                            <span>Zenitsu Agatsuma</span>
+                            <span>Inosuke Hashibira</span>
+                        </div>
+                    </article>
+
+                    <!-- ---------- Story 3: Hell's Paradise ---------- -->
+                    <article class="story-card story-mint" id="hells-paradise">
+                        <span class="story-icon" aria-hidden="true"></span>
+                        <span class="story-badge">Story 03</span>
+                        <h3>Hell's Paradise: Jigokuraku — Dark Mystery Story</h3>
+
+                        <ul class="story-meta">
+                            <li>Supernatural &amp; Mystery</li>
+                            <li>Studio: MAPPA</li>
+                            <li>Year: 2023</li>
+                        </ul>
+
+                        <p>Hell's Paradise takes place in the Edo period and follows Gabimaru the Hollow, one of the most dangerous and ruthless ninja assassins ever known. Betrayed by his own village, he now sits on death row. Executioners try one method after another, including hanging, fire, and crushing, but nothing can kill him, because his stubborn will to live is driven by his wish to see his wife again.</p>
+                        <p>Then Yamada Asaemon Sagiri, a sharp and calculating executioner, offers him a deal. If Gabimaru travels to a mysterious and perilous island and brings back the elixir of immortal life, the Shogun will pardon him and set him free. Gabimaru accepts the mission and sets sail for the island with a group of other death-row criminals.</p>
+                        <p>The island is no ordinary place. It is a paradise that feels like hell, filled with strange, monstrous deities and deadly plants. Throughout the mission, Gabimaru and Sagiri must fight a strange and desperate battle for survival that tests both their strength and their faith.</p>
+
+                        <div class="story-chars">
+                            <span>Gabimaru</span>
+                            <span>Yamada Asaemon Sagiri</span>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
         </section>
+
     </main>
 
-    <!-- Footer -->
+    <!-- ================= FOOTER ================= -->
     <footer>
-        <p>&copy; 2026 Anemria Hub. All Rights Reserved.</p>
+        <p>&copy; 2026 Anemria Hub. All Rights Reserved. Built with passion for global anime lovers.</p>
     </footer>
 
 </body>

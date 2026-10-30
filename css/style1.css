@@ -1,11 +1,14 @@
 /* ==========================================================
    Anemria Hub — style1.css   |   "Candy Sakura" theme
    Headings: Fredoka  |  Body: Quicksand  |  Hero/Nav: Poppins
-   Dark (default) + Light mode via [data-theme]
+   Dark (default) + Light mode via [data-theme] on <html>
+   Theme switching is handled by js/theme.js (saved in localStorage)
    ========================================================== */
 
 /* ---------- DARK THEME (default) ---------- */
 :root {
+    color-scheme: dark;
+
     --bg: #0b0722;
     --bg-alt: #120c33;
     --card: rgba(32, 24, 82, 0.60);
@@ -37,6 +40,7 @@
     --hero-overlay:
         linear-gradient(90deg, rgba(8, 6, 26, 0.80) 0%, rgba(8, 6, 26, 0.40) 40%, rgba(8, 6, 26, 0) 70%),
         linear-gradient(to bottom, rgba(8, 6, 26, 0.35) 0%, rgba(8, 6, 26, 0) 25%);
+    --hero-overlay-mobile: linear-gradient(to bottom, rgba(8, 6, 26, 0.70), rgba(8, 6, 26, 0.45));
     --hero-fade: #0b0722;
     --input-bg: rgba(14, 10, 46, 0.75);
     --search-bg: rgba(14, 10, 46, 0.55);
@@ -44,10 +48,14 @@
     --orb-1: rgba(139, 92, 246, 0.16);
     --orb-2: rgba(244, 114, 182, 0.12);
     --tint: 0.09;
+    --track: rgba(139, 92, 246, 0.16);
+    --scroll-thumb: rgba(167, 139, 250, 0.45);
 }
 
 /* ---------- LIGHT THEME ---------- */
 [data-theme="light"] {
+    color-scheme: light;
+
     --bg: #fbf7ff;
     --bg-alt: #fff2f8;
     --card: #ffffff;
@@ -77,6 +85,7 @@
     --header-bg: rgba(255, 255, 255, 0.86);
     --hero-overlay:
         linear-gradient(90deg, rgba(251, 247, 255, 0.93) 0%, rgba(251, 247, 255, 0.62) 40%, rgba(251, 247, 255, 0) 70%);
+    --hero-overlay-mobile: linear-gradient(to bottom, rgba(251, 247, 255, 0.88), rgba(251, 247, 255, 0.60));
     --hero-fade: #fbf7ff;
     --input-bg: rgba(255, 255, 255, 0.95);
     --search-bg: rgba(255, 255, 255, 0.78);
@@ -84,6 +93,8 @@
     --orb-1: rgba(167, 139, 250, 0.28);
     --orb-2: rgba(244, 114, 182, 0.22);
     --tint: 0.11;
+    --track: rgba(124, 58, 237, 0.12);
+    --scroll-thumb: rgba(124, 58, 237, 0.35);
 }
 
 /* ---------- Per-section accent colours ---------- */
@@ -110,7 +121,7 @@ body {
     color: var(--body);
     line-height: 1.75;
     -webkit-font-smoothing: antialiased;
-    transition: background 0.35s ease, color 0.35s ease;
+    transition: background 0.4s ease, color 0.4s ease;
 }
 
 h2, h3, h4, .btn, .lang-btn {
@@ -123,7 +134,23 @@ ul { list-style: none; }
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
 
+button, input { font: inherit; }
+
 ::selection { background: var(--pink); color: #fff; }
+
+/* ---------- Custom scrollbar ---------- */
+html { scrollbar-color: var(--scroll-thumb) var(--bg); scrollbar-width: thin; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 999px; border: 2px solid var(--bg); }
+
+/* ---------- Keyboard focus (accessibility) ---------- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+    outline: 2px solid var(--violet);
+    outline-offset: 3px;
+}
 
 /* ==========================================================
    HEADER  (Poppins — same look as the approved design)
@@ -141,7 +168,7 @@ img { max-width: 100%; display: block; }
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
-    transition: background 0.35s ease;
+    transition: background 0.4s ease, border-color 0.4s ease;
 }
 
 .logo-container { flex-shrink: 0; }
@@ -191,14 +218,18 @@ img { max-width: 100%; display: block; }
     box-shadow: 0 0 16px rgba(99, 102, 241, 0.30);
 }
 
-/* ---------- Dark / Light toggle ---------- */
+/* ==========================================================
+   DARK / LIGHT TOGGLE  (interactive + animated)
+   Moon = dark mode, Sun = light mode.
+   State is set by js/theme.js via  <html data-theme="dark|light">
+   ========================================================== */
 .theme-toggle {
     position: relative;
     flex-shrink: 0;
     width: 96px;
     height: 40px;
     border-radius: 999px;
-    border: 1px solid var(--border);
+    border: 1.5px solid var(--border);
     background: var(--input-bg);
     cursor: pointer;
     color: var(--muted);
@@ -206,34 +237,78 @@ img { max-width: 100%; display: block; }
     align-items: center;
     justify-content: space-between;
     padding: 0 12px;
-    transition: border-color 0.3s ease;
+    overflow: hidden;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: border-color 0.3s ease, background 0.4s ease,
+                box-shadow 0.3s ease, transform 0.2s ease;
 }
 
-.theme-toggle:hover { border-color: var(--violet); }
-.theme-toggle svg { position: relative; z-index: 2; transition: color 0.3s ease; }
+.theme-toggle:hover {
+    border-color: var(--violet);
+    box-shadow: 0 0 18px rgba(167, 139, 250, 0.40);
+    transform: scale(1.05);
+}
 
+.theme-toggle:active { transform: scale(0.95); }
+
+.theme-toggle:focus-visible {
+    outline: 2px solid var(--violet);
+    outline-offset: 3px;
+}
+
+.theme-toggle svg {
+    position: relative;
+    z-index: 2;
+    transition: color 0.3s ease, transform 0.5s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+/* sliding knob */
 .toggle-knob {
     position: absolute;
     top: 50%;
-    left: 34px;
-    width: 22px;
-    height: 22px;
+    left: 6px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    background: #fff;
+    background: #ffffff;
     transform: translateY(-50%);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-    transition: left 0.3s ease, background 0.3s ease;
+    box-shadow: 0 0 12px rgba(167, 139, 250, 0.75);
+    transition: left 0.4s cubic-bezier(.68, -0.3, .27, 1.3),
+                width 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
     z-index: 1;
 }
 
-[data-theme="dark"] .icon-moon,
-:root:not([data-theme]) .icon-moon { color: var(--violet); }
+.theme-toggle:active .toggle-knob { width: 36px; }
 
-[data-theme="light"] .icon-sun { color: #f59e0b; }
-[data-theme="light"] .toggle-knob { left: 44px; background: #f59e0b; box-shadow: 0 0 10px rgba(245, 158, 11, 0.6); }
+/* ----- DARK state (default): knob left, moon active ----- */
+.icon-moon { color: #5b3fd1; transform: rotate(0deg) scale(1); }
+.icon-sun  { color: var(--muted); transform: rotate(-90deg) scale(0.8); }
+
+/* ----- LIGHT state: knob right, sun active ----- */
+[data-theme="light"] .theme-toggle {
+    background: linear-gradient(90deg, #ffe9b8, #ffd1ea);
+    border-color: rgba(245, 158, 11, 0.55);
+}
+
+[data-theme="light"] .theme-toggle:hover {
+    border-color: #f59e0b;
+    box-shadow: 0 0 18px rgba(245, 158, 11, 0.40);
+}
+
+[data-theme="light"] .toggle-knob {
+    left: 62px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    box-shadow: 0 0 14px rgba(245, 158, 11, 0.75);
+}
+
+[data-theme="light"] .theme-toggle:active .toggle-knob { left: 54px; }
+
+[data-theme="light"] .icon-moon { color: var(--muted); transform: rotate(90deg) scale(0.8); }
+[data-theme="light"] .icon-sun  { color: #ffffff; transform: rotate(0deg) scale(1); }
 
 /* ==========================================================
-   HERO  (unchanged look)
+   HERO
    ========================================================== */
 .hero-section {
     position: relative;
@@ -256,7 +331,13 @@ img { max-width: 100%; display: block; }
     z-index: 0;
 }
 
-.hero-overlay { position: absolute; inset: 0; background: var(--hero-overlay); z-index: 1; }
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--hero-overlay);
+    z-index: 1;
+    transition: opacity 0.4s ease;
+}
 
 .hero-glow {
     position: absolute;
@@ -287,6 +368,7 @@ img { max-width: 100%; display: block; }
     border: 1px solid rgba(59, 130, 246, 0.7);
     background: rgba(59, 130, 246, 0.12);
     backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     color: #5cc8ff;
     font-family: "Poppins", sans-serif;
     font-weight: 700;
@@ -350,6 +432,12 @@ img { max-width: 100%; display: block; }
     box-shadow: 0 0 26px rgba(59, 130, 246, 0.22);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    transition: box-shadow 0.25s ease, border-color 0.25s ease, background 0.4s ease;
+}
+
+.search-container:focus-within {
+    border-color: rgba(99, 102, 241, 0.95);
+    box-shadow: 0 0 34px rgba(99, 102, 241, 0.40);
 }
 
 .search-icon { color: var(--text); flex-shrink: 0; }
@@ -367,6 +455,7 @@ img { max-width: 100%; display: block; }
     padding: 12px 6px;
 }
 
+.search-container input:focus-visible { outline: none; }
 .search-container input::placeholder { color: var(--muted); }
 
 .search-container button {
@@ -391,6 +480,8 @@ img { max-width: 100%; display: block; }
     box-shadow: 0 8px 22px rgba(59, 130, 246, 0.45);
 }
 
+.search-container button:active { transform: translateY(0) scale(0.97); }
+
 /* ==========================================================
    SECTIONS  (alternate backgrounds + soft glowing orbs)
    ========================================================== */
@@ -399,7 +490,7 @@ img { max-width: 100%; display: block; }
     position: relative;
     padding: 96px 0;
     overflow: hidden;
-    transition: background 0.35s ease;
+    transition: background 0.4s ease;
 }
 
 .section-base { background: var(--bg); }
@@ -501,7 +592,20 @@ img { max-width: 100%; display: block; }
     filter: brightness(1.08);
 }
 
+.btn:active { transform: translateY(0) scale(0.97); }
+
 .btn.small { padding: 8px 22px; font-size: 0.9rem; }
+
+/* state used after a click (Join / Send Request / Voted) — for JS later */
+.btn.is-done {
+    background: transparent;
+    color: var(--c, var(--violet));
+    border: 1.5px solid var(--c, var(--violet));
+    box-shadow: none;
+    cursor: default;
+}
+
+.btn.is-done:hover { transform: none; filter: none; box-shadow: none; }
 
 /* ==========================================================
    CARD COLOUR CYCLE  (each card gets its own colour)
@@ -527,7 +631,8 @@ img { max-width: 100%; display: block; }
     box-shadow: var(--shadow);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    transition: transform 0.35s cubic-bezier(.34, 1.56, .64, 1), border-color 0.3s ease, box-shadow 0.3s ease, background 0.35s ease;
+    transition: transform 0.35s cubic-bezier(.34, 1.56, .64, 1), border-color 0.3s ease,
+                box-shadow 0.3s ease, background 0.4s ease;
 }
 
 /* nth-child rules above must win over the fallback line above */
@@ -589,20 +694,98 @@ img { max-width: 100%; display: block; }
     margin-bottom: 12px;
 }
 
-/* cute icon bubbles */
-.category-grid li strong::before {
-    display: grid;
-    place-items: center;
-    width: 56px; height: 56px;
-    margin-bottom: 16px;
-    border-radius: 18px;
-    background: var(--cg);
-    font-size: 1.7rem;
+/* ==========================================================
+   CATEGORY ICONS  (CSS-only SVG icons — emoji ki jagah)
+   Brain / Swords / Flower / Rocket
+   strong::before = rangeen bubble, strong::after = icon
+   ========================================================== */
+
+/* icon ke liye jagah banao */
+.category-grid li strong {
+    position: relative;
+    padding-top: 74px;
 }
-.category-grid li:nth-child(1) strong::before { content: "🧠"; }
-.category-grid li:nth-child(2) strong::before { content: "⚔️"; }
-.category-grid li:nth-child(3) strong::before { content: "🌸"; }
-.category-grid li:nth-child(4) strong::before { content: "🚀"; }
+
+/* ---------- Bubble (peeche ka gol dabba) ---------- */
+.category-grid li strong::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--cg), transparent 130%), var(--card-solid);
+    border: 1.5px solid var(--cg);
+    box-shadow: 0 8px 20px var(--cg), inset 0 0 14px var(--cg);
+    transition: transform 0.45s cubic-bezier(.34, 1.56, .64, 1),
+                box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* ---------- Icon (mask se bana, card ke rang mein) ---------- */
+.category-grid li strong::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--c), var(--c2));
+    -webkit-mask: var(--icon) center / 30px 30px no-repeat;
+            mask: var(--icon) center / 30px 30px no-repeat;
+    transition: transform 0.45s cubic-bezier(.34, 1.56, .64, 1);
+    animation: iconFloat 3.6s ease-in-out infinite;
+}
+
+/* har card ki alag animation timing, taake sab ek saath na hilein */
+.category-grid li:nth-child(2) strong::after { animation-delay: 0.4s; }
+.category-grid li:nth-child(3) strong::after { animation-delay: 0.8s; }
+.category-grid li:nth-child(4) strong::after { animation-delay: 1.2s; }
+
+@keyframes iconFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-3px); }
+}
+
+/* ---------- Hover effect ---------- */
+.category-grid li:hover strong::before {
+    transform: rotate(-9deg) scale(1.10);
+    border-color: var(--c);
+    box-shadow: 0 12px 28px var(--cg), inset 0 0 18px var(--cg);
+}
+
+.category-grid li:hover strong::after {
+    animation: none;
+    transform: rotate(-9deg) scale(1.18);
+}
+
+/* ---------- Light theme ke liye halka sa fark ---------- */
+[data-theme="light"] .category-grid li strong::before {
+    background: linear-gradient(135deg, var(--cg), transparent 130%), #ffffff;
+    box-shadow: 0 8px 18px var(--cg), inset 0 0 10px var(--cg);
+}
+
+/* ---------- 4 ICONS (SVG, stroke style) ---------- */
+
+/* 1) Psychological Thriller → Brain */
+.category-grid li:nth-child(1) {
+    --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z'/%3E%3Cpath d='M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z'/%3E%3Cpath d='M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4'/%3E%3Cpath d='M17.599 6.5a3 3 0 0 0 .399-1.375'/%3E%3Cpath d='M6.003 5.125A3 3 0 0 0 6.401 6.5'/%3E%3Cpath d='M3.477 10.896a4 4 0 0 1 .585-.396'/%3E%3Cpath d='M19.938 10.5a4 4 0 0 1 .585.396'/%3E%3Cpath d='M6 18a4 4 0 0 1-1.967-.516'/%3E%3Cpath d='M19.967 17.484A4 4 0 0 1 18 18'/%3E%3C/svg%3E");
+}
+
+/* 2) Dark Fantasy & Action → Crossed Swords */
+.category-grid li:nth-child(2) {
+    --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14.5 17.5 3 6V3h3l11.5 11.5'/%3E%3Cpath d='M13 19l6-6'/%3E%3Cpath d='M16 16l4 4'/%3E%3Cpath d='M19 21l2-2'/%3E%3Cpath d='M14.5 6.5 18 3h3v3l-3.5 3.5'/%3E%3Cpath d='M5 14l6 6'/%3E%3Cpath d='M7 17l-3 3'/%3E%3Cpath d='M3 19l2 2'/%3E%3C/svg%3E");
+}
+
+/* 3) Slice of Life & Drama → Sakura Flower */
+.category-grid li:nth-child(3) {
+    --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3Cpath d='M12 7.5a4.5 4.5 0 1 1 4.5 4.5M12 7.5A4.5 4.5 0 1 0 7.5 12M12 7.5V9m-4.5 3a4.5 4.5 0 1 0 4.5 4.5M7.5 12H9m7.5 0a4.5 4.5 0 1 1-4.5 4.5m4.5-4.5H15m-3 4.5V15'/%3E%3Cpath d='m8 16 1.5-1.5'/%3E%3Cpath d='M14.5 9.5 16 8'/%3E%3Cpath d='m8 8 1.5 1.5'/%3E%3Cpath d='M14.5 14.5 16 16'/%3E%3C/svg%3E");
+}
+
+/* 4) Sci-Fi & Mecha → Rocket */
+.category-grid li:nth-child(4) {
+    --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z'/%3E%3Cpath d='m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z'/%3E%3Cpath d='M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0'/%3E%3Cpath d='M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5'/%3E%3C/svg%3E");
+}
 
 /* ---------- Stats ---------- */
 .stats-grid {
@@ -624,7 +807,109 @@ img { max-width: 100%; display: block; }
 }
 
 .stat-box p { color: var(--body); font-size: 1.02rem; }
+/* ==========================================================
+   STAT ICONS  (CSS-only SVG icons — Platform Statistics)
+   h3::before = rangeen bubble + glow ring
+   h3::after  = icon (mask, card ke rang ke gradient mein)
+   ========================================================== */
 
+.stat-box h3 {
+    position: relative;
+    padding-top: 92px;
+}
+
+/* ---------- Bubble ---------- */
+.stat-box h3::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: calc(50% - 38px);
+    width: 76px;
+    height: 76px;
+    border-radius: 26px;
+    background: linear-gradient(135deg, var(--cg), transparent 130%), var(--card-solid);
+    border: 1.5px solid var(--cg);
+    box-shadow: 0 10px 24px var(--cg), inset 0 0 16px var(--cg);
+    transition: transform 0.45s cubic-bezier(.34, 1.56, .64, 1),
+                box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* ---------- Icon ---------- */
+.stat-box h3::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: calc(50% - 38px);
+    width: 76px;
+    height: 76px;
+    background: linear-gradient(135deg, var(--c), var(--c2));
+    -webkit-mask: var(--icon) center / 38px 38px no-repeat;
+            mask: var(--icon) center / 38px 38px no-repeat;
+    transition: transform 0.45s cubic-bezier(.34, 1.56, .64, 1);
+    animation: statFloat 3.6s ease-in-out infinite;
+}
+
+/* har card ki alag timing */
+.stat-box:nth-child(2) h3::after { animation-delay: 0.5s; }
+.stat-box:nth-child(3) h3::after { animation-delay: 1s; }
+
+@keyframes statFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-4px); }
+}
+
+/* ---------- Hover ---------- */
+.stat-box:hover h3::before {
+    transform: rotate(-8deg) scale(1.10);
+    border-color: var(--c);
+    box-shadow: 0 14px 30px var(--cg), inset 0 0 20px var(--cg);
+}
+
+.stat-box:hover h3::after {
+    animation: none;
+    transform: rotate(-8deg) scale(1.16);
+}
+
+/* ---------- Light theme ---------- */
+[data-theme="light"] .stat-box h3::before {
+    background: linear-gradient(135deg, var(--cg), transparent 130%), #ffffff;
+    box-shadow: 0 10px 22px var(--cg), inset 0 0 12px var(--cg);
+}
+
+/* ---------- 3 ICONS ---------- */
+
+/* 1) Total Anime Tracked → Film strip */
+.stat-box:nth-child(1) {
+    --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='18' height='18' x='3' y='3' rx='2'/%3E%3Cpath d='M7 3v18'/%3E%3Cpath d='M3 7.5h4'/%3E%3Cpath d='M3 12h18'/%3E%3Cpath d='M3 16.5h4'/%3E%3Cpath d='M17 3v18'/%3E%3Cpath d='M17 7.5h4'/%3E%3Cpath d='M17 16.5h4'/%3E%3C/svg%3E");
+}
+
+/* 2) Anime Lovers → Heart (dhadakta hua) */
+.stat-box:nth-child(2) {
+    --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z'/%3E%3C/svg%3E");
+}
+
+/* 3) Anime Haters → Broken heart */
+.stat-box:nth-child(3) {
+    --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z'/%3E%3Cpath d='m12 13-1-1 2-2-3-3 2-2'/%3E%3C/svg%3E");
+}
+
+/* Lovers wala dil dhadakta hai */
+@keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    14%      { transform: scale(1.14); }
+    28%      { transform: scale(1); }
+    42%      { transform: scale(1.10); }
+    56%      { transform: scale(1); }
+}
+
+.stat-box:nth-child(2) h3::after {
+    animation: heartBeat 1.8s ease-in-out infinite;
+}
+
+.stat-box:nth-child(2):hover h3::after {
+    animation: none;
+    transform: rotate(-8deg) scale(1.16);
+}
 /* ---------- Charts ---------- */
 .charts-grid {
     display: grid;
@@ -656,6 +941,7 @@ img { max-width: 100%; display: block; }
     inset: 24px;
     border-radius: 50%;
     background: var(--card-solid);
+    transition: background 0.4s ease;
 }
 
 .donut span {
@@ -684,7 +970,7 @@ img { max-width: 100%; display: block; }
 .bar-row { margin-bottom: 20px; }
 .bar-label { display: flex; justify-content: space-between; font-size: 0.98rem; color: var(--body); margin-bottom: 7px; }
 .bar-label b { font-family: "Fredoka", sans-serif; color: var(--text); font-weight: 600; }
-.bar-track { height: 14px; border-radius: 999px; background: rgba(139, 92, 246, 0.16); overflow: hidden; }
+.bar-track { height: 14px; border-radius: 999px; background: var(--track); overflow: hidden; }
 .bar-fill {
     height: 100%;
     width: calc(var(--value) * 1%);
@@ -715,10 +1001,10 @@ img { max-width: 100%; display: block; }
     border-radius: 14px 14px 0 0;
     background: linear-gradient(to top, #38bdf8, #a78bfa 60%, #f472b6);
     box-shadow: 0 0 16px rgba(167, 139, 250, 0.35);
-    transition: filter 0.2s ease;
+    transition: filter 0.2s ease, transform 0.2s ease;
 }
 
-.column:hover { filter: brightness(1.2); }
+.column:hover { filter: brightness(1.2); transform: translateY(-3px); }
 
 .column::before {
     content: attr(data-value);
@@ -750,7 +1036,7 @@ img { max-width: 100%; display: block; }
 }
 
 .voice-card { padding: 40px 22px 32px; text-align: center; }
-.voice-card h3 { margin: 18px 0 8px; font-size: 1.25rem; }
+.voice-card h3 { margin: 18px 0 8px; font-size: 1.25rem; font-family: "Poppins", sans-serif; font-weight: 600; }
 .voice-card p { color: var(--body); font-size: 1rem; }
 .voice-card strong { color: var(--c); font-weight: 700; }
 
@@ -790,7 +1076,7 @@ img { max-width: 100%; display: block; }
     transition: all 0.2s ease;
 }
 
-.lang-btn:hover { color: var(--text); border-color: var(--c); }
+.lang-btn:hover { color: var(--text); border-color: var(--c); transform: translateY(-2px); }
 .lang-btn.active { background: var(--grad); color: #fff; border-color: transparent; box-shadow: 0 6px 18px rgba(236, 72, 153, 0.30); }
 
 .note { font-size: 0.95rem; color: var(--muted); }
@@ -839,6 +1125,7 @@ img { max-width: 100%; display: block; }
 }
 
 .poll-option:hover { border-color: var(--c); background: var(--cg); color: var(--text); }
+.poll-option:has(input:checked) { border-color: var(--c); background: var(--cg); color: var(--text); }
 .poll-option input { accent-color: var(--c); width: 17px; height: 17px; }
 
 #createPollForm { display: flex; flex-direction: column; gap: 14px; }
@@ -854,7 +1141,7 @@ img { max-width: 100%; display: block; }
     font-weight: 600;
     font-size: 1rem;
     outline: none;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.4s ease;
 }
 
 #createPollForm input::placeholder, .chat-input input::placeholder { color: var(--muted); }
@@ -869,6 +1156,11 @@ img { max-width: 100%; display: block; }
 .poll-results { margin-top: 20px; font-size: 0.98rem; color: var(--body); }
 .poll-results:empty { display: none; }
 
+/* poll result rows (JS use karega) */
+.poll-result-row { margin-bottom: 14px; }
+.poll-result-row .bar-label { margin-bottom: 6px; }
+.poll-result-row .bar-fill { background: linear-gradient(90deg, var(--c), var(--c2)); box-shadow: 0 0 12px var(--cg); transition: width 0.6s ease; }
+
 /* ---------- Chat ---------- */
 .chat-window {
     height: 250px;
@@ -881,11 +1173,29 @@ img { max-width: 100%; display: block; }
     display: flex;
     flex-direction: column;
     gap: 10px;
+    scroll-behavior: smooth;
+    transition: background 0.4s ease;
 }
 
 .msg { max-width: 82%; padding: 10px 16px; border-radius: 18px; font-size: 1rem; color: var(--text); }
 .msg.bot  { align-self: flex-start; background: rgba(167, 139, 250, 0.22); border-bottom-left-radius: 5px; }
 .msg.user { align-self: flex-end; background: var(--grad); color: #fff; border-bottom-right-radius: 5px; }
+
+/* "typing..." dots (JS use karega) */
+.msg.typing { display: inline-flex; gap: 5px; align-items: center; }
+.msg.typing span {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--violet);
+    animation: typingBounce 1s infinite ease-in-out;
+}
+.msg.typing span:nth-child(2) { animation-delay: 0.15s; }
+.msg.typing span:nth-child(3) { animation-delay: 0.30s; }
+
+@keyframes typingBounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+    30%           { transform: translateY(-6px); opacity: 1; }
+}
 
 .chat-input { display: flex; gap: 10px; }
 
@@ -909,7 +1219,7 @@ img { max-width: 100%; display: block; }
 .group-list .mini-track { grid-column: 1; }
 .group-list .btn { grid-column: 2; grid-row: 1 / span 2; }
 
-.mini-track { height: 9px; border-radius: 999px; background: rgba(139, 92, 246, 0.16); overflow: hidden; }
+.mini-track { height: 9px; border-radius: 999px; background: var(--track); overflow: hidden; }
 .mini-fill { height: 100%; width: calc(var(--value) * 1%); border-radius: 999px; background: linear-gradient(90deg, var(--c), var(--c2)); }
 
 /* ---------- Live connection ---------- */
@@ -964,7 +1274,7 @@ footer {
     background: var(--footer-bg);
     color: var(--muted);
     font-size: 1rem;
-    transition: background 0.35s ease;
+    transition: background 0.4s ease;
 }
 
 footer::before {
@@ -994,7 +1304,7 @@ footer::before {
 
     .hero-section { padding: 40px 5%; min-height: auto; }
     .hero-bg { object-position: 72% center; }
-    .hero-overlay { background: linear-gradient(to bottom, rgba(8, 6, 26, 0.7), rgba(8, 6, 26, 0.45)); }
+    .hero-overlay { background: var(--hero-overlay-mobile); }
 
     .search-container { flex-wrap: wrap; padding: 12px; }
     .search-container input { flex: 1 1 100%; order: 2; }
@@ -1006,4 +1316,16 @@ footer::before {
 
     .group-list li { grid-template-columns: 1fr; }
     .group-list .btn { grid-column: 1; grid-row: auto; justify-self: start; }
+}
+
+/* ==========================================================
+   ACCESSIBILITY — jin logon ne "reduce motion" on kiya ho
+   ========================================================== */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
