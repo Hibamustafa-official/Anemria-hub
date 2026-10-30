@@ -167,13 +167,114 @@ input:focus-visible {
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    padding: 12px 5%;
-    background: var(--header-bg);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    padding: 14px 5%;
+    background:
+        linear-gradient(90deg,
+            rgba(167, 139, 250, 0.12),
+            rgba(244, 114, 182, 0.08),
+            rgba(56, 189, 248, 0.12)),
+        var(--header-bg);
+    backdrop-filter: blur(18px) saturate(170%);
+    -webkit-backdrop-filter: blur(18px) saturate(170%);
     border-bottom: 1px solid var(--border);
-    transition: background 0.4s ease, border-color 0.4s ease;
+    box-shadow: 0 10px 34px rgba(0, 0, 0, 0.22);
+    transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
 }
+
+[data-theme="light"] .site-header {
+    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.12);
+}
+
+/* neeche rainbow glow line */
+.site-header::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -1px;
+    height: 3px;
+    background: var(--grad-rainbow);
+    opacity: 0.9;
+    box-shadow: 0 0 14px rgba(167, 139, 250, 0.55);
+    pointer-events: none;
+}
+
+/* ---------- Logo ---------- */
+.logo-container {
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.logo-container:hover { transform: scale(1.04) rotate(-1deg); }
+
+.logo-container h1 {
+    font-family: "Poppins", sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.05;
+    background: linear-gradient(90deg, #38bdf8, #818cf8, #a78bfa, #f472b6);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 4px 14px rgba(129, 140, 248, 0.45));
+    animation: logoShift 6s ease-in-out infinite;
+}
+
+@keyframes logoShift {
+    0%, 100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
+}
+
+.logo-container p {
+    font-family: "Poppins", sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* ---------- Nav ---------- */
+.site-header nav ul {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--input-bg);
+}
+
+.site-header nav a {
+    position: relative;
+    display: block;
+    padding: 9px 20px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--muted);
+    white-space: nowrap;
+    transition: color 0.25s ease, background 0.25s ease,
+                transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.site-header nav a:hover {
+    color: var(--text);
+    background: rgba(167, 139, 250, 0.16);
+    transform: translateY(-2px);
+}
+
+.site-header nav a.active {
+    color: #ffffff;
+    border-color: transparent;
+    background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.50);
+}
+
+.site-header nav a.active:hover { transform: translateY(-2px) scale(1.03); }
 
 .logo-container { flex-shrink: 0; }
 
@@ -388,7 +489,22 @@ input:focus-visible {
 /* ==========================================================
    SEARCH  (index.html wali search bar)
    ========================================================== */
-.search-section { padding: 80px 0 90px; }
+/* Section ke upar/neeche ki jagah */
+.search-section { padding: 70px 0 80px; }
+
+/* Search wala box (watch.html ke hero card jaisa) */
+.search-section .container {
+    width: 90%;
+    max-width: 1500px;
+    padding: 84px 6% 92px;
+    border-radius: 40px;
+    border: 1.5px solid var(--border);
+    background: linear-gradient(145deg, var(--card-solid), var(--bg-alt));
+    box-shadow: var(--shadow), 0 0 40px var(--sec-glow);
+}
+
+/* Box ke andar search bar thori chaudi */
+.search-section .search-container { max-width: 960px; }
 
 .search-container {
     display: flex;
@@ -457,6 +573,104 @@ input:focus-visible {
 /* ==========================================================
    CATEGORY CARDS  (index.html jaise + CSS-only icons)
    ========================================================== */
+   /* ==========================================================
+   SEARCH CARD — compact + bigger fonts + glow upgrade
+   ========================================================== */
+.search-section { padding: 48px 0 64px; }
+
+.search-section .container {
+    width: 90%;
+    max-width: 1040px;               /* pehle 1500px tha */
+    padding: 52px 5% 56px;           /* pehle 84px / 92px tha */
+    border-radius: 32px;
+    border: 2px solid transparent;
+    overflow: hidden;
+    /* gradient border */
+    background:
+        linear-gradient(145deg, var(--card-solid), var(--bg-alt)) padding-box,
+        linear-gradient(135deg, #38bdf8, #a78bfa, #f472b6) border-box;
+    box-shadow:
+        var(--shadow),
+        0 0 60px var(--sec-glow, rgba(167, 139, 250, 0.30));
+}
+
+/* card ke andar do glowing orbs */
+.search-section .container::before,
+.search-section .container::after {
+    content: "";
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.search-section .container::before {
+    top: -130px;
+    right: -110px;
+    background: radial-gradient(circle, rgba(244, 114, 182, 0.30), transparent 70%);
+}
+
+.search-section .container::after {
+    bottom: -140px;
+    left: -110px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.28), transparent 70%);
+}
+
+/* ----- Bade fonts ----- */
+.search-section .container > h2 {
+    font-size: clamp(2.3rem, 4.6vw, 3.4rem);
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.search-section .container > h2::after {
+    width: 130px;
+    height: 7px;
+}
+
+.search-section .section-intro {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    max-width: 720px;
+    margin-bottom: 38px;
+}
+
+/* ----- Search bar ----- */
+.search-section .search-container {
+    max-width: 860px;
+    padding: 10px 12px 10px 24px;
+    border-radius: 20px;
+    border: 1.5px solid rgba(99, 102, 241, 0.65);
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.25);
+}
+
+.search-section .search-container:focus-within {
+    transform: translateY(-2px);
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.50);
+}
+
+.search-section .search-container input {
+    font-size: 1.2rem;
+    padding: 14px 8px;
+}
+
+.search-section .search-container button {
+    padding: 15px 32px;
+    font-size: 1.1rem;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+    background-size: 160% 100%;
+    box-shadow: 0 8px 22px rgba(139, 92, 246, 0.40);
+    transition: transform 0.2s ease, box-shadow 0.25s ease, background-position 0.4s ease;
+}
+
+.search-section .search-container button:hover {
+    background-position: 100% 0;
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 12px 30px rgba(236, 72, 153, 0.45);
+}
 .category-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -837,7 +1051,12 @@ footer::before {
     .site-header nav ul { flex-wrap: wrap; justify-content: center; }
 
     .section-base, .section-alt { padding: 66px 0; }
-    .search-section { padding: 56px 0 64px; }
+    .search-section { padding: 40px 0 48px; }
+.search-section .container {
+    width: 92%;
+    padding: 44px 5% 48px;
+    border-radius: 28px;
+}
     .container { padding: 0 6%; }
 
     .search-container { flex-wrap: wrap; padding: 12px; }

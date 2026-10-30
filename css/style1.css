@@ -1,41 +1,43 @@
+
 /* ==========================================================
    Anemria Hub — style1.css   |   "Candy Sakura" theme
-   Headings: Fredoka  |  Body: Quicksand  |  Hero/Nav: Poppins
+   Headings: Fredoka  |  Body: Quicksand
+   Poppins: ONLY header / nav / buttons
    Dark (default) + Light mode via [data-theme] on <html>
    Theme switching is handled by js/theme.js (saved in localStorage)
    ========================================================== */
-
+ 
 /* ---------- DARK THEME (default) ---------- */
 :root {
     color-scheme: dark;
-
+ 
     --bg: #0b0722;
     --bg-alt: #120c33;
     --card: rgba(32, 24, 82, 0.60);
     --card-solid: #1a1245;
     --footer-bg: #070418;
     --border: rgba(180, 160, 255, 0.22);
-
+ 
     --text: #ffffff;
     --body: #d8d0ff;
     --muted: #a69cdc;
-
+ 
     --sky: #38bdf8;
     --violet: #a78bfa;
     --pink: #f472b6;
     --mint: #34d399;
     --amber: #fbbf24;
-
+ 
     /* card colour set (cycled across cards) */
     --c1: #38bdf8; --c1b: #818cf8; --c1g: rgba(56, 189, 248, 0.32);
     --c2: #f472b6; --c2b: #fb7185; --c2g: rgba(244, 114, 182, 0.32);
     --c3: #34d399; --c3b: #2dd4bf; --c3g: rgba(52, 211, 153, 0.30);
     --c4: #fbbf24; --c4b: #fb923c; --c4g: rgba(251, 191, 36, 0.30);
-
+ 
     --grad: linear-gradient(90deg, #ff7eb6, #a78bfa);
     --grad-rainbow: linear-gradient(90deg, #38bdf8, #a78bfa, #f472b6, #fbbf24);
     --grad-hero: linear-gradient(90deg, #2f8bff, #a78bfa);
-
+ 
     --header-bg: rgba(11, 7, 34, 0.78);
     --hero-overlay:
         linear-gradient(90deg, rgba(8, 6, 26, 0.80) 0%, rgba(8, 6, 26, 0.40) 40%, rgba(8, 6, 26, 0) 70%),
@@ -51,37 +53,37 @@
     --track: rgba(139, 92, 246, 0.16);
     --scroll-thumb: rgba(167, 139, 250, 0.45);
 }
-
+ 
 /* ---------- LIGHT THEME ---------- */
 [data-theme="light"] {
     color-scheme: light;
-
+ 
     --bg: #fbf7ff;
     --bg-alt: #fff2f8;
     --card: #ffffff;
     --card-solid: #ffffff;
     --footer-bg: #f1e8ff;
     --border: rgba(124, 58, 237, 0.15);
-
+ 
     --text: #241b4b;
     --body: #5a4f86;
     --muted: #8277ad;
-
+ 
     --sky: #0284c7;
     --violet: #7c3aed;
     --pink: #db2777;
     --mint: #059669;
     --amber: #d97706;
-
+ 
     --c1: #0284c7; --c1b: #6366f1; --c1g: rgba(2, 132, 199, 0.22);
     --c2: #db2777; --c2b: #e11d48; --c2g: rgba(219, 39, 119, 0.22);
     --c3: #059669; --c3b: #0d9488; --c3g: rgba(5, 150, 105, 0.22);
     --c4: #d97706; --c4b: #ea580c; --c4g: rgba(217, 119, 6, 0.22);
-
+ 
     --grad: linear-gradient(90deg, #ec4899, #8b5cf6);
     --grad-rainbow: linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b);
     --grad-hero: linear-gradient(90deg, #2563eb, #7c3aed);
-
+ 
     --header-bg: rgba(255, 255, 255, 0.86);
     --hero-overlay:
         linear-gradient(90deg, rgba(251, 247, 255, 0.93) 0%, rgba(251, 247, 255, 0.62) 40%, rgba(251, 247, 255, 0) 70%);
@@ -96,23 +98,23 @@
     --track: rgba(124, 58, 237, 0.12);
     --scroll-thumb: rgba(124, 58, 237, 0.35);
 }
-
+ 
 /* ---------- Per-section accent colours ---------- */
 .accent-blue   { --sec: var(--sky);    --sec-2: #7dd3fc; --sec-glow: rgba(56, 189, 248, 0.30); }
 .accent-violet { --sec: var(--violet); --sec-2: #c4b5fd; --sec-glow: rgba(167, 139, 250, 0.30); }
 .accent-pink   { --sec: var(--pink);   --sec-2: #f9a8d4; --sec-glow: rgba(244, 114, 182, 0.30); }
 .accent-mint   { --sec: var(--mint);   --sec-2: #6ee7b7; --sec-glow: rgba(52, 211, 153, 0.30); }
-
+ 
 [data-theme="light"] .accent-blue   { --sec-2: #38bdf8; --sec-glow: rgba(2, 132, 199, 0.20); }
 [data-theme="light"] .accent-violet { --sec-2: #a78bfa; --sec-glow: rgba(124, 58, 237, 0.20); }
 [data-theme="light"] .accent-pink   { --sec-2: #f472b6; --sec-glow: rgba(219, 39, 119, 0.20); }
 [data-theme="light"] .accent-mint   { --sec-2: #34d399; --sec-glow: rgba(5, 150, 105, 0.20); }
-
+ 
 /* ---------- Reset & base ---------- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
 html { scroll-behavior: smooth; }
-
+ 
 body {
     font-family: "Quicksand", "Segoe UI", Arial, sans-serif;
     font-size: 1.05rem;
@@ -123,27 +125,27 @@ body {
     -webkit-font-smoothing: antialiased;
     transition: background 0.4s ease, color 0.4s ease;
 }
-
+ 
 h2, h3, h4, .btn, .lang-btn {
     font-family: "Fredoka", "Quicksand", Arial, sans-serif;
 }
-
+ 
 h3 { font-weight: 600; color: var(--text); letter-spacing: 0.01em; }
-
+ 
 ul { list-style: none; }
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
-
+ 
 button, input { font: inherit; }
-
+ 
 ::selection { background: var(--pink); color: #fff; }
-
+ 
 /* ---------- Custom scrollbar ---------- */
 html { scrollbar-color: var(--scroll-thumb) var(--bg); scrollbar-width: thin; }
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 999px; border: 2px solid var(--bg); }
-
+ 
 /* ---------- Keyboard focus (accessibility) ---------- */
 a:focus-visible,
 button:focus-visible,
@@ -151,9 +153,9 @@ input:focus-visible {
     outline: 2px solid var(--violet);
     outline-offset: 3px;
 }
-
+ 
 /* ==========================================================
-   HEADER  (Poppins — same look as the approved design)
+   HEADER  (Poppins — logo + nav)
    ========================================================== */
 .site-header {
     position: sticky;
@@ -170,9 +172,9 @@ input:focus-visible {
     border-bottom: 1px solid var(--border);
     transition: background 0.4s ease, border-color 0.4s ease;
 }
-
+ 
 .logo-container { flex-shrink: 0; }
-
+ 
 .logo-container h1 {
     font-family: "Poppins", sans-serif;
     font-size: 2.1rem;
@@ -183,7 +185,7 @@ input:focus-visible {
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
+ 
 .logo-container p {
     font-family: "Poppins", sans-serif;
     font-size: 0.62rem;
@@ -193,9 +195,9 @@ input:focus-visible {
     font-weight: 500;
     white-space: nowrap;
 }
-
+ 
 .site-header nav ul { display: flex; align-items: center; gap: 6px; }
-
+ 
 .site-header nav a {
     display: block;
     padding: 9px 20px;
@@ -208,16 +210,16 @@ input:focus-visible {
     white-space: nowrap;
     transition: all 0.25s ease;
 }
-
+ 
 .site-header nav a:hover { color: var(--text); }
-
+ 
 .site-header nav a.active {
     color: var(--text);
     border-color: rgba(99, 102, 241, 0.75);
     background: rgba(99, 102, 241, 0.14);
     box-shadow: 0 0 16px rgba(99, 102, 241, 0.30);
 }
-
+ 
 /* ==========================================================
    DARK / LIGHT TOGGLE  (interactive + animated)
    Moon = dark mode, Sun = light mode.
@@ -243,26 +245,26 @@ input:focus-visible {
     transition: border-color 0.3s ease, background 0.4s ease,
                 box-shadow 0.3s ease, transform 0.2s ease;
 }
-
+ 
 .theme-toggle:hover {
     border-color: var(--violet);
     box-shadow: 0 0 18px rgba(167, 139, 250, 0.40);
     transform: scale(1.05);
 }
-
+ 
 .theme-toggle:active { transform: scale(0.95); }
-
+ 
 .theme-toggle:focus-visible {
     outline: 2px solid var(--violet);
     outline-offset: 3px;
 }
-
+ 
 .theme-toggle svg {
     position: relative;
     z-index: 2;
     transition: color 0.3s ease, transform 0.5s cubic-bezier(.34, 1.56, .64, 1);
 }
-
+ 
 /* sliding knob */
 .toggle-knob {
     position: absolute;
@@ -278,35 +280,35 @@ input:focus-visible {
                 width 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
     z-index: 1;
 }
-
+ 
 .theme-toggle:active .toggle-knob { width: 36px; }
-
+ 
 /* ----- DARK state (default): knob left, moon active ----- */
 .icon-moon { color: #5b3fd1; transform: rotate(0deg) scale(1); }
 .icon-sun  { color: var(--muted); transform: rotate(-90deg) scale(0.8); }
-
+ 
 /* ----- LIGHT state: knob right, sun active ----- */
 [data-theme="light"] .theme-toggle {
     background: linear-gradient(90deg, #ffe9b8, #ffd1ea);
     border-color: rgba(245, 158, 11, 0.55);
 }
-
+ 
 [data-theme="light"] .theme-toggle:hover {
     border-color: #f59e0b;
     box-shadow: 0 0 18px rgba(245, 158, 11, 0.40);
 }
-
+ 
 [data-theme="light"] .toggle-knob {
     left: 62px;
     background: linear-gradient(135deg, #fbbf24, #f59e0b);
     box-shadow: 0 0 14px rgba(245, 158, 11, 0.75);
 }
-
+ 
 [data-theme="light"] .theme-toggle:active .toggle-knob { left: 54px; }
-
+ 
 [data-theme="light"] .icon-moon { color: var(--muted); transform: rotate(90deg) scale(0.8); }
 [data-theme="light"] .icon-sun  { color: #ffffff; transform: rotate(0deg) scale(1); }
-
+ 
 /* ==========================================================
    HERO
    ========================================================== */
@@ -320,7 +322,7 @@ input:focus-visible {
     overflow: hidden;
     text-align: left;
 }
-
+ 
 .hero-bg {
     position: absolute;
     inset: 0;
@@ -330,7 +332,7 @@ input:focus-visible {
     object-position: right center;
     z-index: 0;
 }
-
+ 
 .hero-overlay {
     position: absolute;
     inset: 0;
@@ -338,7 +340,7 @@ input:focus-visible {
     z-index: 1;
     transition: opacity 0.4s ease;
 }
-
+ 
 .hero-glow {
     position: absolute;
     inset: 0;
@@ -348,7 +350,7 @@ input:focus-visible {
         radial-gradient(620px 420px at 14% 45%, rgba(120, 90, 255, 0.20), transparent 70%),
         radial-gradient(520px 360px at 88% 25%, rgba(255, 95, 179, 0.14), transparent 70%);
 }
-
+ 
 .hero-section::after {
     content: "";
     position: absolute;
@@ -358,9 +360,10 @@ input:focus-visible {
     z-index: 1;
     pointer-events: none;
 }
-
+ 
 .hero-content { position: relative; z-index: 2; width: 100%; text-align: left; }
-
+ 
+/* Badge: ab Fredoka mein (Poppins sirf header/nav/buttons ke liye) */
 .hero-badge {
     display: inline-block;
     padding: 9px 22px;
@@ -370,54 +373,55 @@ input:focus-visible {
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
     color: #5cc8ff;
-    font-family: "Poppins", sans-serif;
-    font-weight: 700;
-    font-size: 0.8rem;
+    font-family: "Fredoka", "Quicksand", sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     margin-bottom: 24px;
 }
-
+ 
 [data-theme="light"] .hero-badge { color: #1565c0; }
-
+ 
+/* Hero heading: BADA kiya (pehle max 5rem tha, ab 6.8rem) */
 .hero-title {
-    font-family: "Poppins", sans-serif;
-    font-size: clamp(2.6rem, 5vw, 5rem);
-    font-weight: 800;
+    font-family: "Fredoka", "Quicksand", sans-serif;
+    font-size: clamp(3rem, 7.2vw, 5rem);
+    font-weight: 700;               /* Fredoka ka sabse bhaari weight 700 hai */
     line-height: 1.04;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
     text-align: left;
-    margin-bottom: 36px;
+    margin-bottom: 40px;
     background: linear-gradient(180deg, #ffffff 30%, #cfc6ff 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     filter: drop-shadow(0 4px 24px rgba(130, 120, 255, 0.35));
 }
-
+ 
 .hero-title .line { display: block; }
-
+ 
 .gradient-text {
     background: linear-gradient(90deg, #7fc4ff, #c4a8ff);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
+ 
 [data-theme="light"] .hero-title {
     background: none;
     -webkit-text-fill-color: var(--text);
     color: var(--text);
     filter: none;
 }
-
+ 
 [data-theme="light"] .gradient-text {
     background: linear-gradient(90deg, #1f6fe0, #7c4ddb);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
+ 
 /* ---------- Search bar ---------- */
 .search-container {
     display: flex;
@@ -434,14 +438,14 @@ input:focus-visible {
     -webkit-backdrop-filter: blur(12px);
     transition: box-shadow 0.25s ease, border-color 0.25s ease, background 0.4s ease;
 }
-
+ 
 .search-container:focus-within {
     border-color: rgba(99, 102, 241, 0.95);
     box-shadow: 0 0 34px rgba(99, 102, 241, 0.40);
 }
-
+ 
 .search-icon { color: var(--text); flex-shrink: 0; }
-
+ 
 .search-container input {
     flex: 1;
     min-width: 0;
@@ -454,10 +458,11 @@ input:focus-visible {
     font-size: 1rem;
     padding: 12px 6px;
 }
-
+ 
 .search-container input:focus-visible { outline: none; }
 .search-container input::placeholder { color: var(--muted); }
-
+ 
+/* Button: Poppins (allowed) */
 .search-container button {
     display: inline-flex;
     align-items: center;
@@ -474,14 +479,14 @@ input:focus-visible {
     white-space: nowrap;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-
+ 
 .search-container button:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 22px rgba(59, 130, 246, 0.45);
 }
-
+ 
 .search-container button:active { transform: translateY(0) scale(0.97); }
-
+ 
 /* ==========================================================
    SECTIONS  (alternate backgrounds + soft glowing orbs)
    ========================================================== */
@@ -492,10 +497,10 @@ input:focus-visible {
     overflow: hidden;
     transition: background 0.4s ease;
 }
-
+ 
 .section-base { background: var(--bg); }
 .section-alt  { background: var(--bg-alt); }
-
+ 
 /* decorative blurred orbs */
 .section-base::after,
 .section-alt::after {
@@ -507,13 +512,13 @@ input:focus-visible {
         radial-gradient(520px 320px at 8% 0%, var(--orb-1), transparent 70%),
         radial-gradient(520px 320px at 95% 100%, var(--orb-2), transparent 70%);
 }
-
+ 
 .section-alt::after {
     background:
         radial-gradient(520px 320px at 92% 0%, var(--orb-2), transparent 70%),
         radial-gradient(520px 320px at 5% 100%, var(--orb-1), transparent 70%);
 }
-
+ 
 /* thin glowing line on top */
 .section-base::before,
 .section-alt::before {
@@ -527,7 +532,7 @@ input:focus-visible {
     opacity: 0.8;
     z-index: 1;
 }
-
+ 
 .container {
     position: relative;
     z-index: 2;
@@ -536,7 +541,7 @@ input:focus-visible {
     margin: 0 auto;
     padding: 0 5%;
 }
-
+ 
 .container > h2 {
     font-size: clamp(1.9rem, 3.4vw, 2.7rem);
     font-weight: 700;
@@ -548,7 +553,7 @@ input:focus-visible {
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
+ 
 .container > h2::after {
     content: "";
     display: block;
@@ -559,7 +564,7 @@ input:focus-visible {
     background: var(--grad-rainbow);
     box-shadow: 0 0 16px var(--sec-glow);
 }
-
+ 
 .section-intro {
     text-align: center;
     color: var(--body);
@@ -567,9 +572,9 @@ input:focus-visible {
     margin: 0 auto 48px;
     font-size: 1.1rem;
 }
-
+ 
 .container > h2 + :not(.section-intro) { margin-top: 48px; }
-
+ 
 /* ---------- Buttons (pill shaped) ---------- */
 .btn {
     display: inline-block;
@@ -585,17 +590,17 @@ input:focus-visible {
     box-shadow: 0 6px 18px rgba(236, 72, 153, 0.30);
     transition: transform 0.25s cubic-bezier(.34, 1.56, .64, 1), box-shadow 0.2s ease, filter 0.2s ease;
 }
-
+ 
 .btn:hover {
     transform: translateY(-3px) scale(1.04);
     box-shadow: 0 10px 26px rgba(168, 85, 247, 0.45);
     filter: brightness(1.08);
 }
-
+ 
 .btn:active { transform: translateY(0) scale(0.97); }
-
+ 
 .btn.small { padding: 8px 22px; font-size: 0.9rem; }
-
+ 
 /* state used after a click (Join / Send Request / Voted) — for JS later */
 .btn.is-done {
     background: transparent;
@@ -604,9 +609,9 @@ input:focus-visible {
     box-shadow: none;
     cursor: default;
 }
-
+ 
 .btn.is-done:hover { transform: none; filter: none; box-shadow: none; }
-
+ 
 /* ==========================================================
    CARD COLOUR CYCLE  (each card gets its own colour)
    ========================================================== */
@@ -618,7 +623,7 @@ input:focus-visible {
     .poll-card, .chat-card, .user-card, .group-list li):nth-child(4n+3) { --c: var(--c3); --c2: var(--c3b); --cg: var(--c3g); }
 :is(.category-grid li, .stat-box, .chart-card, .voice-card, .tools-grid li,
     .poll-card, .chat-card, .user-card, .group-list li):nth-child(4n+4) { --c: var(--c4); --c2: var(--c4b); --cg: var(--c4g); }
-
+ 
 /* ---------- Shared card look ---------- */
 .category-grid li, .stat-box, .chart-card, .voice-card, .subtitle-panel,
 .tools-grid li, .poll-card, .chat-card, .user-card, .info-box {
@@ -634,7 +639,7 @@ input:focus-visible {
     transition: transform 0.35s cubic-bezier(.34, 1.56, .64, 1), border-color 0.3s ease,
                 box-shadow 0.3s ease, background 0.4s ease;
 }
-
+ 
 /* nth-child rules above must win over the fallback line above */
 :is(.category-grid li, .stat-box, .chart-card, .voice-card, .tools-grid li,
     .poll-card, .chat-card, .user-card):nth-child(4n+1) { --c: var(--c1); --c2: var(--c1b); --cg: var(--c1g); }
@@ -644,7 +649,7 @@ input:focus-visible {
     .poll-card, .chat-card, .user-card):nth-child(4n+3) { --c: var(--c3); --c2: var(--c3b); --cg: var(--c3g); }
 :is(.category-grid li, .stat-box, .chart-card, .voice-card, .tools-grid li,
     .poll-card, .chat-card, .user-card):nth-child(4n+4) { --c: var(--c4); --c2: var(--c4b); --cg: var(--c4g); }
-
+ 
 /* coloured top edge */
 .category-grid li::before, .stat-box::before, .chart-card::before, .voice-card::before,
 .subtitle-panel::before, .tools-grid li::before, .poll-card::before, .chat-card::before,
@@ -655,7 +660,7 @@ input:focus-visible {
     height: 6px;
     background: linear-gradient(90deg, var(--c), var(--c2));
 }
-
+ 
 /* soft colour wash from the top */
 .category-grid li::after, .stat-box::after, .chart-card::after, .voice-card::after,
 .subtitle-panel::after, .tools-grid li::after, .poll-card::after, .chat-card::after,
@@ -667,23 +672,23 @@ input:focus-visible {
     opacity: var(--tint);
     pointer-events: none;
 }
-
+ 
 .category-grid li:hover, .stat-box:hover, .voice-card:hover,
 .tools-grid li:hover, .user-card:hover, .chart-card:hover {
     transform: translateY(-8px) rotate(-0.4deg);
     border-color: var(--c);
     box-shadow: 0 20px 44px var(--cg);
 }
-
+ 
 /* ---------- Categories ---------- */
 .category-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 26px;
 }
-
+ 
 .category-grid li { padding: 34px 28px 32px; color: var(--body); font-size: 1.02rem; line-height: 1.7; }
-
+ 
 .category-grid li strong {
     display: block;
     font-family: "Fredoka", sans-serif;
@@ -693,19 +698,19 @@ input:focus-visible {
     color: var(--c);
     margin-bottom: 12px;
 }
-
+ 
 /* ==========================================================
    CATEGORY ICONS  (CSS-only SVG icons — emoji ki jagah)
    Brain / Swords / Flower / Rocket
    strong::before = rangeen bubble, strong::after = icon
    ========================================================== */
-
+ 
 /* icon ke liye jagah banao */
 .category-grid li strong {
     position: relative;
     padding-top: 74px;
 }
-
+ 
 /* ---------- Bubble (peeche ka gol dabba) ---------- */
 .category-grid li strong::before {
     content: "";
@@ -721,7 +726,7 @@ input:focus-visible {
     transition: transform 0.45s cubic-bezier(.34, 1.56, .64, 1),
                 box-shadow 0.3s ease, border-color 0.3s ease;
 }
-
+ 
 /* ---------- Icon (mask se bana, card ke rang mein) ---------- */
 .category-grid li strong::after {
     content: "";
@@ -736,66 +741,66 @@ input:focus-visible {
     transition: transform 0.45s cubic-bezier(.34, 1.56, .64, 1);
     animation: iconFloat 3.6s ease-in-out infinite;
 }
-
+ 
 /* har card ki alag animation timing, taake sab ek saath na hilein */
 .category-grid li:nth-child(2) strong::after { animation-delay: 0.4s; }
 .category-grid li:nth-child(3) strong::after { animation-delay: 0.8s; }
 .category-grid li:nth-child(4) strong::after { animation-delay: 1.2s; }
-
+ 
 @keyframes iconFloat {
     0%, 100% { transform: translateY(0); }
     50%      { transform: translateY(-3px); }
 }
-
+ 
 /* ---------- Hover effect ---------- */
 .category-grid li:hover strong::before {
     transform: rotate(-9deg) scale(1.10);
     border-color: var(--c);
     box-shadow: 0 12px 28px var(--cg), inset 0 0 18px var(--cg);
 }
-
+ 
 .category-grid li:hover strong::after {
     animation: none;
     transform: rotate(-9deg) scale(1.18);
 }
-
+ 
 /* ---------- Light theme ke liye halka sa fark ---------- */
 [data-theme="light"] .category-grid li strong::before {
     background: linear-gradient(135deg, var(--cg), transparent 130%), #ffffff;
     box-shadow: 0 8px 18px var(--cg), inset 0 0 10px var(--cg);
 }
-
+ 
 /* ---------- 4 ICONS (SVG, stroke style) ---------- */
-
+ 
 /* 1) Psychological Thriller → Brain */
 .category-grid li:nth-child(1) {
     --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z'/%3E%3Cpath d='M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z'/%3E%3Cpath d='M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4'/%3E%3Cpath d='M17.599 6.5a3 3 0 0 0 .399-1.375'/%3E%3Cpath d='M6.003 5.125A3 3 0 0 0 6.401 6.5'/%3E%3Cpath d='M3.477 10.896a4 4 0 0 1 .585-.396'/%3E%3Cpath d='M19.938 10.5a4 4 0 0 1 .585.396'/%3E%3Cpath d='M6 18a4 4 0 0 1-1.967-.516'/%3E%3Cpath d='M19.967 17.484A4 4 0 0 1 18 18'/%3E%3C/svg%3E");
 }
-
+ 
 /* 2) Dark Fantasy & Action → Crossed Swords */
 .category-grid li:nth-child(2) {
     --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14.5 17.5 3 6V3h3l11.5 11.5'/%3E%3Cpath d='M13 19l6-6'/%3E%3Cpath d='M16 16l4 4'/%3E%3Cpath d='M19 21l2-2'/%3E%3Cpath d='M14.5 6.5 18 3h3v3l-3.5 3.5'/%3E%3Cpath d='M5 14l6 6'/%3E%3Cpath d='M7 17l-3 3'/%3E%3Cpath d='M3 19l2 2'/%3E%3C/svg%3E");
 }
-
+ 
 /* 3) Slice of Life & Drama → Sakura Flower */
 .category-grid li:nth-child(3) {
     --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3Cpath d='M12 7.5a4.5 4.5 0 1 1 4.5 4.5M12 7.5A4.5 4.5 0 1 0 7.5 12M12 7.5V9m-4.5 3a4.5 4.5 0 1 0 4.5 4.5M7.5 12H9m7.5 0a4.5 4.5 0 1 1-4.5 4.5m4.5-4.5H15m-3 4.5V15'/%3E%3Cpath d='m8 16 1.5-1.5'/%3E%3Cpath d='M14.5 9.5 16 8'/%3E%3Cpath d='m8 8 1.5 1.5'/%3E%3Cpath d='M14.5 14.5 16 16'/%3E%3C/svg%3E");
 }
-
+ 
 /* 4) Sci-Fi & Mecha → Rocket */
 .category-grid li:nth-child(4) {
     --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z'/%3E%3Cpath d='m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z'/%3E%3Cpath d='M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0'/%3E%3Cpath d='M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5'/%3E%3C/svg%3E");
 }
-
+ 
 /* ---------- Stats ---------- */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 26px;
 }
-
+ 
 .stat-box { padding: 40px 28px; text-align: center; }
-
+ 
 .stat-box h3 {
     font-size: 1.55rem;
     font-weight: 700;
@@ -805,19 +810,19 @@ input:focus-visible {
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
+ 
 .stat-box p { color: var(--body); font-size: 1.02rem; }
 /* ==========================================================
    STAT ICONS  (CSS-only SVG icons — Platform Statistics)
    h3::before = rangeen bubble + glow ring
    h3::after  = icon (mask, card ke rang ke gradient mein)
    ========================================================== */
-
+ 
 .stat-box h3 {
     position: relative;
     padding-top: 92px;
 }
-
+ 
 /* ---------- Bubble ---------- */
 .stat-box h3::before {
     content: "";
@@ -833,7 +838,7 @@ input:focus-visible {
     transition: transform 0.45s cubic-bezier(.34, 1.56, .64, 1),
                 box-shadow 0.3s ease, border-color 0.3s ease;
 }
-
+ 
 /* ---------- Icon ---------- */
 .stat-box h3::after {
     content: "";
@@ -848,51 +853,51 @@ input:focus-visible {
     transition: transform 0.45s cubic-bezier(.34, 1.56, .64, 1);
     animation: statFloat 3.6s ease-in-out infinite;
 }
-
+ 
 /* har card ki alag timing */
 .stat-box:nth-child(2) h3::after { animation-delay: 0.5s; }
 .stat-box:nth-child(3) h3::after { animation-delay: 1s; }
-
+ 
 @keyframes statFloat {
     0%, 100% { transform: translateY(0); }
     50%      { transform: translateY(-4px); }
 }
-
+ 
 /* ---------- Hover ---------- */
 .stat-box:hover h3::before {
     transform: rotate(-8deg) scale(1.10);
     border-color: var(--c);
     box-shadow: 0 14px 30px var(--cg), inset 0 0 20px var(--cg);
 }
-
+ 
 .stat-box:hover h3::after {
     animation: none;
     transform: rotate(-8deg) scale(1.16);
 }
-
+ 
 /* ---------- Light theme ---------- */
 [data-theme="light"] .stat-box h3::before {
     background: linear-gradient(135deg, var(--cg), transparent 130%), #ffffff;
     box-shadow: 0 10px 22px var(--cg), inset 0 0 12px var(--cg);
 }
-
+ 
 /* ---------- 3 ICONS ---------- */
-
+ 
 /* 1) Total Anime Tracked → Film strip */
 .stat-box:nth-child(1) {
     --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='18' height='18' x='3' y='3' rx='2'/%3E%3Cpath d='M7 3v18'/%3E%3Cpath d='M3 7.5h4'/%3E%3Cpath d='M3 12h18'/%3E%3Cpath d='M3 16.5h4'/%3E%3Cpath d='M17 3v18'/%3E%3Cpath d='M17 7.5h4'/%3E%3Cpath d='M17 16.5h4'/%3E%3C/svg%3E");
 }
-
+ 
 /* 2) Anime Lovers → Heart (dhadakta hua) */
 .stat-box:nth-child(2) {
     --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z'/%3E%3C/svg%3E");
 }
-
+ 
 /* 3) Anime Haters → Broken heart */
 .stat-box:nth-child(3) {
     --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z'/%3E%3Cpath d='m12 13-1-1 2-2-3-3 2-2'/%3E%3C/svg%3E");
 }
-
+ 
 /* Lovers wala dil dhadakta hai */
 @keyframes heartBeat {
     0%, 100% { transform: scale(1); }
@@ -901,11 +906,11 @@ input:focus-visible {
     42%      { transform: scale(1.10); }
     56%      { transform: scale(1); }
 }
-
+ 
 .stat-box:nth-child(2) h3::after {
     animation: heartBeat 1.8s ease-in-out infinite;
 }
-
+ 
 .stat-box:nth-child(2):hover h3::after {
     animation: none;
     transform: rotate(-8deg) scale(1.16);
@@ -916,13 +921,13 @@ input:focus-visible {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 26px;
 }
-
+ 
 .chart-card { padding: 36px 28px 30px; }
 .chart-card h3 { margin-bottom: 26px; text-align: center; font-size: 1.3rem; color: var(--c); }
-
+ 
 /* Donut */
 .donut-wrap { display: flex; flex-direction: column; align-items: center; gap: 22px; }
-
+ 
 .donut {
     --size: 170px;
     position: relative;
@@ -934,7 +939,7 @@ input:focus-visible {
     place-items: center;
     box-shadow: 0 0 34px var(--cg);
 }
-
+ 
 .donut::before {
     content: "";
     position: absolute;
@@ -943,7 +948,7 @@ input:focus-visible {
     background: var(--card-solid);
     transition: background 0.4s ease;
 }
-
+ 
 .donut span {
     position: relative;
     font-family: "Fredoka", sans-serif;
@@ -954,7 +959,7 @@ input:focus-visible {
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
+ 
 .legend { display: flex; gap: 22px; font-size: 0.98rem; color: var(--body); }
 .legend li::before {
     content: "";
@@ -965,7 +970,7 @@ input:focus-visible {
     background: var(--violet);
 }
 .legend li.haters::before { background: var(--pink); }
-
+ 
 /* Bars */
 .bar-row { margin-bottom: 20px; }
 .bar-label { display: flex; justify-content: space-between; font-size: 0.98rem; color: var(--body); margin-bottom: 7px; }
@@ -981,7 +986,7 @@ input:focus-visible {
 .bar-fill.blue  { background: linear-gradient(90deg, #0ea5e9, #38bdf8); box-shadow: 0 0 12px rgba(56, 189, 248, 0.45); }
 .bar-fill.green { background: linear-gradient(90deg, #059669, #34d399); box-shadow: 0 0 12px rgba(52, 211, 153, 0.45); }
 .bar-fill.pink  { background: linear-gradient(90deg, #f59e0b, #fbbf24); box-shadow: 0 0 12px rgba(251, 191, 36, 0.45); }
-
+ 
 /* Columns */
 .column-chart {
     display: flex;
@@ -992,7 +997,7 @@ input:focus-visible {
     margin-top: 30px;
     border-bottom: 1px solid var(--border);
 }
-
+ 
 .column {
     position: relative;
     flex: 1;
@@ -1003,9 +1008,9 @@ input:focus-visible {
     box-shadow: 0 0 16px rgba(167, 139, 250, 0.35);
     transition: filter 0.2s ease, transform 0.2s ease;
 }
-
+ 
 .column:hover { filter: brightness(1.2); transform: translateY(-3px); }
-
+ 
 .column::before {
     content: attr(data-value);
     position: absolute;
@@ -1016,7 +1021,7 @@ input:focus-visible {
     font-weight: 600;
     color: var(--text);
 }
-
+ 
 .column::after {
     content: attr(data-label);
     position: absolute;
@@ -1025,21 +1030,22 @@ input:focus-visible {
     font-size: 0.85rem;
     color: var(--muted);
 }
-
+ 
 .spacer { height: 30px; }
-
+ 
 /* ---------- Voice actors ---------- */
 .voice-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 26px;
 }
-
+ 
 .voice-card { padding: 40px 22px 32px; text-align: center; }
-.voice-card h3 { margin: 18px 0 8px; font-size: 1.25rem; font-family: "Poppins", sans-serif; font-weight: 600; }
+/* h3: Fredoka (pehle Poppins tha) */
+.voice-card h3 { margin: 18px 0 8px; font-size: 1.25rem; font-family: "Fredoka", "Quicksand", sans-serif; font-weight: 600; }
 .voice-card p { color: var(--body); font-size: 1rem; }
 .voice-card strong { color: var(--c); font-weight: 700; }
-
+ 
 .voice-avatar, .user-avatar {
     position: relative;
     z-index: 1;
@@ -1055,15 +1061,15 @@ input:focus-visible {
     font-size: 1.5rem;
     box-shadow: 0 0 0 6px var(--cg), 0 0 28px var(--cg);
 }
-
+ 
 /* ---------- Watch & subtitles ---------- */
 .watch-layout { display: flex; justify-content: center; }
-
+ 
 .subtitle-panel { width: 100%; max-width: 640px; padding: 42px 30px; text-align: center; }
 .subtitle-panel h3 { margin-bottom: 22px; font-size: 1.4rem; color: var(--c); }
-
+ 
 .lang-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 22px; }
-
+ 
 .lang-btn {
     padding: 10px 28px;
     border-radius: 999px;
@@ -1075,21 +1081,21 @@ input:focus-visible {
     cursor: pointer;
     transition: all 0.2s ease;
 }
-
+ 
 .lang-btn:hover { color: var(--text); border-color: var(--c); transform: translateY(-2px); }
 .lang-btn.active { background: var(--grad); color: #fff; border-color: transparent; box-shadow: 0 6px 18px rgba(236, 72, 153, 0.30); }
-
+ 
 .note { font-size: 0.95rem; color: var(--muted); }
-
+ 
 /* ---------- Tools ---------- */
 .tools-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 26px;
 }
-
+ 
 .tools-grid li a { display: block; height: 100%; padding: 34px 26px 30px; color: var(--body); font-size: 1rem; }
-
+ 
 .tools-grid li strong {
     display: block;
     font-family: "Fredoka", sans-serif;
@@ -1098,19 +1104,19 @@ input:focus-visible {
     color: var(--c);
     margin-bottom: 8px;
 }
-
+ 
 .tools-grid li strong::after { content: " ↗"; font-weight: 500; opacity: 0.8; }
-
+ 
 /* ---------- Polls ---------- */
 .poll-layout, .chat-layout {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 26px;
 }
-
+ 
 .poll-card, .chat-card { padding: 38px 28px 30px; }
 .poll-card h3, .chat-card h3 { margin-bottom: 22px; font-size: 1.3rem; color: var(--c); }
-
+ 
 .poll-option {
     display: flex;
     align-items: center;
@@ -1123,13 +1129,13 @@ input:focus-visible {
     cursor: pointer;
     transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
 }
-
+ 
 .poll-option:hover { border-color: var(--c); background: var(--cg); color: var(--text); }
 .poll-option:has(input:checked) { border-color: var(--c); background: var(--cg); color: var(--text); }
 .poll-option input { accent-color: var(--c); width: 17px; height: 17px; }
-
+ 
 #createPollForm { display: flex; flex-direction: column; gap: 14px; }
-
+ 
 #createPollForm input[type="text"], .chat-input input {
     width: 100%;
     padding: 13px 18px;
@@ -1143,24 +1149,24 @@ input:focus-visible {
     outline: none;
     transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.4s ease;
 }
-
+ 
 #createPollForm input::placeholder, .chat-input input::placeholder { color: var(--muted); }
-
+ 
 #createPollForm input:focus, .chat-input input:focus {
     border-color: var(--c);
     box-shadow: 0 0 0 4px var(--cg);
 }
-
+ 
 #pollForm .btn, #createPollForm .btn { margin-top: 8px; }
-
+ 
 .poll-results { margin-top: 20px; font-size: 0.98rem; color: var(--body); }
 .poll-results:empty { display: none; }
-
+ 
 /* poll result rows (JS use karega) */
 .poll-result-row { margin-bottom: 14px; }
 .poll-result-row .bar-label { margin-bottom: 6px; }
 .poll-result-row .bar-fill { background: linear-gradient(90deg, var(--c), var(--c2)); box-shadow: 0 0 12px var(--cg); transition: width 0.6s ease; }
-
+ 
 /* ---------- Chat ---------- */
 .chat-window {
     height: 250px;
@@ -1176,11 +1182,11 @@ input:focus-visible {
     scroll-behavior: smooth;
     transition: background 0.4s ease;
 }
-
+ 
 .msg { max-width: 82%; padding: 10px 16px; border-radius: 18px; font-size: 1rem; color: var(--text); }
 .msg.bot  { align-self: flex-start; background: rgba(167, 139, 250, 0.22); border-bottom-left-radius: 5px; }
 .msg.user { align-self: flex-end; background: var(--grad); color: #fff; border-bottom-right-radius: 5px; }
-
+ 
 /* "typing..." dots (JS use karega) */
 .msg.typing { display: inline-flex; gap: 5px; align-items: center; }
 .msg.typing span {
@@ -1191,17 +1197,17 @@ input:focus-visible {
 }
 .msg.typing span:nth-child(2) { animation-delay: 0.15s; }
 .msg.typing span:nth-child(3) { animation-delay: 0.30s; }
-
+ 
 @keyframes typingBounce {
     0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
     30%           { transform: translateY(-6px); opacity: 1; }
 }
-
+ 
 .chat-input { display: flex; gap: 10px; }
-
+ 
 /* Group list */
 .group-list { display: flex; flex-direction: column; gap: 14px; }
-
+ 
 .group-list li {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -1212,58 +1218,58 @@ input:focus-visible {
     border-radius: 18px;
     transition: border-color 0.2s ease, background 0.2s ease;
 }
-
+ 
 .group-list li:hover { border-color: var(--c); background: var(--cg); }
 .group-list li div:first-child strong { display: block; color: var(--c); font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.1rem; }
 .group-list li span { font-size: 0.9rem; color: var(--muted); }
 .group-list .mini-track { grid-column: 1; }
 .group-list .btn { grid-column: 2; grid-row: 1 / span 2; }
-
+ 
 .mini-track { height: 9px; border-radius: 999px; background: var(--track); overflow: hidden; }
 .mini-fill { height: 100%; width: calc(var(--value) * 1%); border-radius: 999px; background: linear-gradient(90deg, var(--c), var(--c2)); }
-
+ 
 /* ---------- Live connection ---------- */
 .connect-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 26px;
 }
-
+ 
 .user-card { padding: 40px 22px 32px; text-align: center; }
 .user-card h3 { margin: 18px 0 6px; font-size: 1.25rem; }
 .user-card p { color: var(--body); font-size: 1rem; margin-bottom: 18px; }
-
+ 
 .status { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; }
 .status.online { background: var(--mint); box-shadow: 0 0 10px var(--mint); }
 .status.away   { background: var(--amber); box-shadow: 0 0 10px var(--amber); }
-
+ 
 /* ---------- Benefits & shortcomings ---------- */
 .info-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 26px;
 }
-
+ 
 .info-box { padding: 38px 32px; }
 .info-box h3 { margin-bottom: 18px; font-size: 1.4rem; }
-
+ 
 .info-box.benefits {
     --c: var(--mint);
     border-top: 6px solid var(--mint);
     background: linear-gradient(180deg, rgba(52, 211, 153, 0.14), transparent 55%), var(--card);
 }
-
+ 
 .info-box.shortcomings {
     --c: var(--pink);
     border-top: 6px solid var(--pink);
     background: linear-gradient(180deg, rgba(244, 114, 182, 0.14), transparent 55%), var(--card);
 }
-
+ 
 .info-box li { position: relative; padding-left: 30px; margin-bottom: 11px; color: var(--body); font-size: 1.02rem; }
 .info-box li::before { position: absolute; left: 0; top: 0; font-weight: 800; color: var(--c); }
 .info-box.benefits li::before { content: "✓"; }
 .info-box.shortcomings li::before { content: "!"; left: 7px; }
-
+ 
 /* ==========================================================
    FOOTER
    ========================================================== */
@@ -1276,7 +1282,7 @@ footer {
     font-size: 1rem;
     transition: background 0.4s ease;
 }
-
+ 
 footer::before {
     content: "";
     position: absolute;
@@ -1284,7 +1290,7 @@ footer::before {
     height: 4px;
     background: var(--grad-rainbow);
 }
-
+ 
 /* ==========================================================
    RESPONSIVE
    ========================================================== */
@@ -1292,32 +1298,32 @@ footer::before {
     .site-header nav a { padding: 8px 14px; font-size: 0.9rem; }
     .logo-container p { display: none; }
 }
-
+ 
 @media (max-width: 950px) {
     .site-header { flex-wrap: wrap; justify-content: center; }
     .logo-container p { display: block; }
 }
-
+ 
 @media (max-width: 700px) {
     .site-header { padding: 12px 4%; }
     .site-header nav ul { flex-wrap: wrap; justify-content: center; }
-
+ 
     .hero-section { padding: 40px 5%; min-height: auto; }
     .hero-bg { object-position: 72% center; }
     .hero-overlay { background: var(--hero-overlay-mobile); }
-
+ 
     .search-container { flex-wrap: wrap; padding: 12px; }
     .search-container input { flex: 1 1 100%; order: 2; }
     .search-icon { display: none; }
     .search-container button { flex: 1 1 100%; order: 3; justify-content: center; }
-
+ 
     .section-base, .section-alt { padding: 66px 0; }
     .container { padding: 0 6%; }
-
+ 
     .group-list li { grid-template-columns: 1fr; }
     .group-list .btn { grid-column: 1; grid-row: auto; justify-self: start; }
 }
-
+ 
 /* ==========================================================
    ACCESSIBILITY — jin logon ne "reduce motion" on kiya ho
    ========================================================== */
@@ -1329,3 +1335,4 @@ footer::before {
         scroll-behavior: auto !important;
     }
 }
+ 
