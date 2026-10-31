@@ -1,17 +1,24 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Watch & Stream — Anemria</title>
-    <link rel="stylesheet" href="./css/style4.css">
+    <link rel="stylesheet" href="./css/style3.css">
+    <link rel="stylesheet" href="./css/watch-ui.css">
+    <!-- theme (dark/light): head mein hi rakhein taake page flash na kare -->
     <script src="js/script.js"></script>
+    <!-- is page ka apna JS -->
+    <script src="js/watch.js" defer></script>
 </head>
 <body>
 
 <header>
-    <h1>Anemria Watch & Streaming Hub</h1>
+    <div class="logo-container" onclick="location.href='index.html'">
+        <h1>Anemria</h1>
+        <p>Your Ultimate Anime Universe Hub</p>
+    </div>
+
     <nav>
         <ul>
             <li><a href="index.html">Home</a></li>
@@ -21,313 +28,133 @@
             <li><a href="community.html">Community Hub</a></li>
         </ul>
     </nav>
+
+    <!-- Dark / Light toggle -->
+    <button class="theme-toggle" id="themeToggle" type="button"
+            aria-label="Toggle dark and light mode" title="Toggle theme">
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24"
+             fill="currentColor" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
+        </svg>
+        <span class="toggle-knob"></span>
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+    </button>
 </header>
 
-<main>
-    <section class="hero">
-        <span class="eyebrow">ANEMRIA • ANIME COLLECTION</span>
-        <h2>Discover. Select. <span>Watch.</span></h2>
-        <p>Explore your favourite anime trailers in one place. Search for an anime and select its thumbnail to play the video.</p>
+<main class="ui">
 
-        <div class="search-box">
-            <input id="animeSearch" type="text"
-                   placeholder="Search anime..." aria-label="Search anime">
-            <button id="searchBtn" type="button">Search</button>
+    <!-- ================= HERO: cute text (left) + long search (right) ================= -->
+    <section class="hero" aria-label="Search anime">
+
+        <!-- LEFT: interactive typing text -->
+        <div class="hero-left">
+            <span class="hero-hello">
+                <span class="wave" aria-hidden="true">👋</span> Konnichiwa, anime fan!
+            </span>
+
+            <h2 class="hero-line">
+                Tonight, I'm watching
+                <button class="typed-btn" id="typedBtn" type="button"
+                        title="Click to search this anime">
+                    <span id="typedWord" class="typed-word">Naruto</span><span class="caret" aria-hidden="true"></span>
+                </button>
+            </h2>
+
+          <p class="hero-hint">👆 Tap the name to play it, or type your own</p>
         </div>
 
-        <p id="resultCount" class="result-count" aria-live="polite"></p>
-    </section>
-
-    <section class="player-section" id="playerSection">
-        <div class="section-heading">
-            <div>
-                <span class="eyebrow">NOW PLAYING</span>
-                <h2 id="videoTitle">Choose an anime to start</h2>
+        <!-- RIGHT: long search bar + quick picks -->
+        <div class="hero-right">
+            <div class="search-bar">
+                <svg class="search-ico" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+                </svg>
+                <input id="animeSearch" type="text" autocomplete="off"
+                       placeholder="Search your favourite anime…" aria-label="Search anime">
+                <button id="clearBtn" class="clear-btn" type="button" aria-label="Clear search" hidden>✕</button>
+                <button id="searchBtn" class="search-btn" type="button">Search</button>
             </div>
-            <span class="video-badge">LOCAL TRAILER</span>
-        </div>
 
-        <div class="video-frame">
-            <video id="animePlayer" controls playsinline preload="metadata">
-                Your browser does not support HTML video.
-            </video>
-        </div>
-
-        <p id="videoStatus" class="video-status" aria-live="polite">
-            Select an anime thumbnail below to load its trailer.
-        </p>
-    </section>
-
-    <section class="library-section">
-        <div class="section-heading">
-            <div>
-                <span class="eyebrow">YOUR COLLECTION</span>
-                <h2>Anime Trailers</h2>
+            <div class="chips">
+                <span class="chips-label">Try:</span>
+                <button class="chip" type="button" data-q="Naruto">🍥 Naruto</button>
+                <button class="chip" type="button" data-q="One Piece">🏴‍☠️ One Piece</button>
+                <button class="chip" type="button" data-q="Demon Slayer">🗡️ Demon Slayer</button>
+                <button class="chip" type="button" data-q="Solo Leveling">⚔️ Solo Leveling</button>
+                <button class="chip" type="button" data-q="Your Name">💫 Your Name</button>
+                <button class="chip surprise" id="surpriseBtn" type="button">🎲 Surprise me</button>
             </div>
-            <span class="collection-count">Hindi trailers</span>
         </div>
-
-        <div id="animeGrid" class="anime-grid"></div>
-
-        <p id="emptyMessage" class="empty-message" hidden>
-            No anime found. Try another title.
-        </p>
     </section>
 
-    <section class="info-section">
-        <h2>Your Anime, Your Experience</h2>
-        <p>Choose a trailer from the collection, use the video controls to pause or play, and adjust the volume whenever you want.</p>
-        <p class="note">Available audio and subtitles depend on each individual video.</p>
+    <p id="resultCount" class="count-pill" aria-live="polite"></p>
+
+    <!-- ================= LCD TV ================= -->
+    <section class="stage" id="playerSection">
+        <div class="lcd" id="lcd">
+            <img class="lcd-img" src="images/lcd-tv.png" alt="">
+
+            <div class="lcd-screen">
+                <video id="animePlayer" controls playsinline preload="metadata">
+                    Your browser does not support HTML video.
+                </video>
+
+                <!-- standby screen (video chalte hi hat jati hai) -->
+               <!-- Featured slideshow (video chalte hi hat jata hai) -->
+<div class="idle" id="idle">
+    <div class="idle-bg" id="idleBg"></div>
+    <div class="idle-shade"></div>
+
+    <span class="idle-chip l">✨ FEATURED</span>
+    <span class="idle-chip r" id="idleCount"></span>
+
+    <div class="idle-card" id="idleCard">
+        <img class="idle-poster" id="idlePoster" alt="">
+        <div class="idle-text">
+            <small>TONIGHT'S PICK</small>
+            <h3 id="idleTitle"></h3>
+            <p id="idleTag"></p>
+            <button class="idle-play-btn" id="idlePlay" type="button">▶ Play now</button>
+        </div>
+    </div>
+
+    <div class="idle-dots" id="idleDots"></div>
+</div>
+
+                <div class="lcd-glare"></div>
+            </div>
+        </div>
+
+        <div class="now">
+            <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <div>
+                <small id="nowLabel">YOUR SCREEN IS READY ✨</small>
+                <h2 id="videoTitle">Pick a trailer &amp; press play</h2>
+            </div>
+        </div>
+        <p id="videoStatus" class="status" aria-live="polite"></p>
+    </section>
+
+    <!-- ================= LIBRARY ================= -->
+    <section class="library">
+        <div class="library-head">
+            <h2>🌸 Pick your trailer</h2>
+            <p>Every poster is a tiny portal. Tap one and press play.</p>
+        </div>
+        <div id="animeGrid" class="poster-grid"></div>
     </section>
 </main>
 
 <footer>
     <p>&copy; 2026 Anemria Hub. All Rights Reserved.</p>
 </footer>
-
-<script>
-const animeList = [
-    {
-        title: "Black Clover",
-        image: "images/Black Clover.webp",
-        video: "videos/Black Clover - Trailer -1 In Hindi Dubbed 🇮🇳🇮🇳.mp4"
-    },
-    {
-        title: "Bleach",
-        image: "images/Bleach.webp",
-        video: "videos/BLEACH _ Trailer in Hindi.mp4"
-    },
-    {
-        title: "Blue Lock",
-        image: "images/Blue Lock.webp",
-        video: "videos/BLUE LOCK Season 1 Recap _ HINDI DUB.mp4"
-    },
-    {
-        title: "Chainsaw Man",
-        image: "images/Chainsaw man.webp",
-        video: "videos/CHAINSAW MAN_ THE MOVIE - THE REZE ARC - NEW HINDI TRAILER _ Exclusively In Cinemas 26 September.mp4"
-    },
-    {
-        title: "Demon Slayer",
-        image: "images/Demon Slayer.webp",
-        video: "videos/Demon Slayer_ Kimetsu no Yaiba Infinity Castle _ OFFICIAL HINDI TRAILER.mp4"
-    },
-    {
-        title: "Dr. Stone",
-        image: "images/Dr Stone.webp",
-        video: "videos/DR. STONE (Trailer) Hindi Dub.mp4"
-    },
-    {
-        title: "Dragon Ball",
-        image: "images/Dragon Ball.webp",
-        video: "videos/Dragon Ball Super_ SUPER HERO _ OFFICIAL HINDI TRAILER _ August 26 _ Hindi, English and Japanese.mp4"
-    },
-    {
-        title: "Hunter x Hunter",
-        image: "images/Hunter Hunter.webp",
-        video: "videos/Hunter X Hunter _Trailer_ Hindi Dub.mp4"
-    },
-    {
-        title: "Jujutsu Kaisen",
-        image: "images/Jujusto Kaisen.webp",
-        video: "videos/Jujutsu Kaisen Hindi Trailer _ Season 1 _ Part 1 _ JJK S1 _ [Fan Dub] Clanimex Productions.mp4"
-    },
-    {
-        title: "Mob Psycho 100",
-        image: "images/Mob psycho.webp",
-        video: "videos/Mob Psycho 100 _ Season 1 _ Hindi Trailer _ HD.mp4"
-    },
-    {
-        title: "My Hero Academia",
-        image: "images/My Hero Acadmia.webp",
-        video: "videos/My Hero Academia - Season One - Hindi Dubbed Trailer.mp4"
-    },
-    {
-        title: "Naruto",
-        image: "images/Naruto.webp",
-        video: "videos/Naruto Shippuden __ Trailer Hindi Dubbed - OFFICIAL FULL HD.mp4"
-    },
-    {
-        title: "One Piece",
-        image: "images/One Piece.webp",
-        video: "videos/ONE PIECE _ NETFLIX HINDI DUBBED TRAILER _ ANIME VERSION in हिंदी.mp4"
-    },
-    {
-        title: "One Punch Man",
-        image: "images/One Punch Man.webp",
-        video: "videos/One Punch Man _ Official Hindi Trailer _ Starts 1st Jan 2023 _ Bloody tv+.mp4"
-    },
-    {
-        title: "Seven Deadly Sins",
-        image: "images/Seven Deadly Sins.webp",
-        video: "videos/Seven Deadly Sins Hindi Dub Release Date _ Seven Deadly Sins _ Hindi Dub _ Muse IN _ Anime Times.mp4"
-    },
-    {
-        title: "Solo Leveling",
-        image: "images/Solo Leveling.webp",
-        video: "videos/Solo Leveling -ReAwakening-  OFFICIAL HINDI DUB TRAILER  In Cinemas 4th Dec  Crunchyroll India - Crunchyroll India (360p, h264).mp4"
-    },
-    {
-        title: "Spy x Family",
-        image: "images/Spy Family.webp",
-        video: "videos/Spy x Family Trailer _ S1 & S2 - Hindi Dub _ JioHotstar.mp4"
-    },
-    {
-        title: "Suzume",
-        image: "images/Suzume.webp",
-        video: "videos/SUZUME - OFFICIAL HINDI TRAILER _ COMING TO PVR ON 21ST APRIL.mp4"
-    },
-    {
-        title: "Sword Art Online",
-        image: "images/Sword Art Online.webp",
-        video: "videos/Sword Art Online_ Progressive The Movie - Official Trailer _ Hindi Dubbed _ LuffyDubz.mp4"
-    },
-    {
-        title: "The Promised Neverland",
-        image: "images/The Promised Neverland.webp",
-        video: "videos/the promised neverland hindi dubbed trailer.mp4"
-    },
-    {
-        title: "Tokyo Ghoul",
-        image: "images/Tokyo Goul.webp",
-        video: "videos/Tokyo Ghoul - Season 1 Official Trailer Hindi _ Tokyo Ghoul - Season 1 Official Trailer Hindi _.mp4"
-    },
-    {
-        title: "Tokyo Revengers",
-        image: "images/Tokyo Revengers.webp",
-        video: "videos/Tokyo Revengers _ OFFICIAL TRAILER _ Hindi Dub _ Anime Nagri.mp4"
-    },
-    {
-        title: "Vinland Saga",
-        image: "images/Viland Saga.webp",
-        video: "videos/VINLAND SAGA (Trailer) Hindi Dub.mp4"
-    },
-    {
-        title: "Weathering with You",
-        image: "images/Weathering with you.webp",
-        video: "videos/Weathering with you Trailer (Hindi Dubbed).mp4"
-    },
-    {
-        title: "Your Name",
-        image: "images/Your Name.webp",
-        video: "videos/Your Name _ Official Hindi Trailer _ Bloody tv+.mp4"
-    }
-];
-
-const grid = document.getElementById("animeGrid");
-const searchInput = document.getElementById("animeSearch");
-const searchBtn = document.getElementById("searchBtn");
-const player = document.getElementById("animePlayer");
-const videoTitle = document.getElementById("videoTitle");
-const videoStatus = document.getElementById("videoStatus");
-const resultCount = document.getElementById("resultCount");
-const emptyMessage = document.getElementById("emptyMessage");
-
-function renderAnime(list) {
-    grid.replaceChildren();
-
-    list.forEach(anime => {
-        const card = document.createElement("article");
-        card.className = "anime-card";
-
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "thumbnail-button";
-        button.setAttribute("aria-label", "Play " + anime.title);
-
-        const image = document.createElement("img");
-        image.src = anime.image;
-        image.alt = anime.title + " thumbnail";
-        image.loading = "lazy";
-
-        image.onerror = () => {
-            image.onerror = null;
-            image.removeAttribute("src");
-            image.alt = "Thumbnail unavailable for " + anime.title;
-            image.classList.add("thumbnail-missing");
-
-            const placeholder = document.createElement("span");
-            placeholder.className = "thumbnail-placeholder";
-            placeholder.textContent = "Thumbnail unavailable";
-            button.prepend(placeholder);
-        };
-
-        const playIcon = document.createElement("span");
-        playIcon.className = "play-icon";
-        playIcon.setAttribute("aria-hidden", "true");
-        playIcon.textContent = "▶";
-
-        button.append(image, playIcon);
-
-        const details = document.createElement("div");
-        details.className = "card-details";
-
-        const title = document.createElement("h3");
-        title.textContent = anime.title;
-
-        const subtitle = document.createElement("p");
-        subtitle.textContent = "Hindi trailer";
-
-        details.append(title, subtitle);
-        card.append(button, details);
-        grid.append(card);
-
-        button.addEventListener("click", () => playAnime(anime));
-    });
-
-    resultCount.textContent = list.length + " anime available";
-    emptyMessage.hidden = list.length !== 0;
-}
-
-function playAnime(anime) {
-    player.pause();
-    player.removeAttribute("poster");
-    player.src = anime.video;
-    player.load();
-
-    videoTitle.textContent = anime.title;
-    videoStatus.textContent = "Loading trailer: " + anime.title;
-
-    document.getElementById("playerSection").scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
-
-    player.play().then(() => {
-        videoStatus.textContent = "Now playing: " + anime.title;
-    }).catch(() => {
-        videoStatus.textContent =
-            "Trailer selected: " + anime.title +
-            ". Press Play to start, or check the video filename and path.";
-    });
-}
-
-function searchAnime() {
-    const query = searchInput.value.trim().toLowerCase();
-
-    const filteredAnime = animeList.filter(anime =>
-        anime.title.toLowerCase().includes(query)
-    );
-
-    renderAnime(filteredAnime);
-}
-
-searchBtn.addEventListener("click", searchAnime);
-searchInput.addEventListener("input", searchAnime);
-
-searchInput.addEventListener("keydown", event => {
-    if (event.key === "Enter") {
-        searchAnime();
-    }
-});
-
-player.addEventListener("error", () => {
-    videoStatus.textContent =
-        "This video could not be loaded. Please check its filename and path.";
-});
-
-renderAnime(animeList);
-</script>
 
 </body>
 </html>

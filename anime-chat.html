@@ -22,32 +22,70 @@
             </ul>
         </nav>
     </header>
+<main>
+    <!-- SEARCH -->
+    <section class="hero">
+        <div class="search-box">
+            <svg class="search-ico" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
+                 stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+            </svg>
+            <input id="animeSearch" type="text"
+                   placeholder="Search your favourite anime ✨" aria-label="Search anime">
+            <button id="searchBtn" type="button">Search</button>
+        </div>
+        <p id="resultCount" class="result-count" hidden></p>
+    </section>
 
-    <!-- Main Content Area -->
-    <main>
-        <!-- Character Search Section -->
-        <section>
-            <h2>Search & Talk to Your Favorite Anime Character</h2>
-            <p>Type any character name (e.g., Light Yagami) to launch a surprise interactive chat session with live dialogue simulations:</p>
-            <div class="search-box">
-                <input type="text" placeholder="Search character (e.g., Light Yagami)..." style="width: 50%; padding: 8px;">
-                <button style="padding: 8px 15px;">Search Character</button>
-            </div>
-        </section>
+    <!-- TV -->
+    <section class="player-section" id="playerSection">
+        <div class="tv">
+            <div class="tv-bezel">
+                <div class="tv-screen">
+                    <video id="animePlayer" controls playsinline preload="metadata">
+                        Your browser does not support HTML video.
+                    </video>
 
-        <!-- Live Character Simulation Box -->
-        <section style="margin-top: 30px;">
-            <h2>Live Character Simulation Box</h2>
-            <div style="border: 2px solid #444; padding: 25px; max-width: 650px; background-color: #fafafa; color: #111;">
-                <h3>Active Character: Light Yagami (Death Note)</h3>
-                <div style="border: 1px solid #ccc; background: #fff; padding: 15px; height: 180px; overflow-y: scroll; margin-bottom: 15px;">
-                    <p><strong>Light Yagami:</strong> "Konnichiwa! Do you believe in true justice? Share your thoughts with me."</p>
+                    <div class="tv-idle" aria-hidden="true">
+                        <div class="idle-sky"></div>
+                        <div class="idle-moon"></div>
+                        <div class="idle-petals">
+                            <i style="--x:6%;  --d:0s;   --s:9s"></i>
+                            <i style="--x:18%; --d:2.5s; --s:11s"></i>
+                            <i style="--x:30%; --d:5s;   --s:8s"></i>
+                            <i style="--x:44%; --d:1s;   --s:12s"></i>
+                            <i style="--x:58%; --d:3.5s; --s:9.5s"></i>
+                            <i style="--x:70%; --d:6s;   --s:10s"></i>
+                            <i style="--x:82%; --d:0.8s; --s:11s"></i>
+                            <i style="--x:93%; --d:4s;   --s:8.5s"></i>
+                        </div>
+                        <span class="idle-chip left">● STANDBY</span>
+                        <span class="idle-chip right">HD · HINDI</span>
+                        <div class="idle-center">
+                            <span class="idle-logo">ANEMRIA</span>
+                            <span class="idle-play">▶</span>
+                            <span class="idle-hint">Pick a trailer below</span>
+                        </div>
+                    </div>
                 </div>
-                <input type="text" placeholder="Type your message to the character here..." style="width: 75%; padding: 10px;">
-                <button style="padding: 10px 20px;">Send Message</button>
+                <div class="tv-chin"><span class="tv-led"></span></div>
             </div>
-        </section>
-    </main>
+            <div class="tv-stand"></div>
+        </div>
+
+        <p id="videoTitle" class="tv-caption">✨ Pick a trailer &amp; enjoy</p>
+        <p id="videoStatus" class="video-status" hidden></p>
+    </section>
+
+    <!-- COLLECTION -->
+    <section class="library-section">
+        <h2 class="cute-heading">🌸 Pick your trailer</h2>
+        <div id="animeGrid" class="anime-grid"></div>
+        <p id="emptyMessage" class="empty-message" hidden>😢 No anime found, try another title.</p>
+    </section>
+</main>
+   
 
     <!-- Footer -->
     <footer>

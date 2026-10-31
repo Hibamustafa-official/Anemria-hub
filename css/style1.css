@@ -156,6 +156,8 @@ input:focus-visible {
  
 /* ==========================================================
    HEADER  (Poppins — logo + nav)
+   Style: watch.html jaisa — pill nav + gradient active tab
+          + neeche rainbow line
    ========================================================== */
 .site-header {
     position: sticky;
@@ -165,12 +167,24 @@ input:focus-visible {
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    padding: 12px 5%;
+    width: 100%;
+    max-width: 100%;
+    padding: 14px 5% 17px;
     background: var(--header-bg);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-    transition: background 0.4s ease, border-color 0.4s ease;
+    transition: background 0.4s ease;
+}
+ 
+/* neeche rainbow line */
+.site-header::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: var(--grad-rainbow);
 }
  
 .logo-container { flex-shrink: 0; }
@@ -196,11 +210,21 @@ input:focus-visible {
     white-space: nowrap;
 }
  
-.site-header nav ul { display: flex; align-items: center; gap: 6px; }
+/* nav ke peeche pill container */
+.site-header nav ul {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px;
+    border-radius: 999px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.10);
+}
  
 .site-header nav a {
     display: block;
-    padding: 9px 20px;
+    padding: 12px 24px;
     border-radius: 999px;
     border: 1px solid transparent;
     font-family: "Poppins", sans-serif;
@@ -211,13 +235,17 @@ input:focus-visible {
     transition: all 0.25s ease;
 }
  
-.site-header nav a:hover { color: var(--text); }
- 
-.site-header nav a.active {
+.site-header nav a:hover {
     color: var(--text);
-    border-color: rgba(99, 102, 241, 0.75);
-    background: rgba(99, 102, 241, 0.14);
-    box-shadow: 0 0 16px rgba(99, 102, 241, 0.30);
+    background: rgba(139, 92, 246, 0.12);
+}
+ 
+/* active tab: purple-pink gradient pill */
+.site-header nav a.active {
+    color: #ffffff;
+    background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899);
+    border-color: transparent;
+    box-shadow: 0 8px 20px rgba(139, 92, 246, 0.40);
 }
  
 /* ==========================================================
@@ -1295,7 +1323,7 @@ footer::before {
    RESPONSIVE
    ========================================================== */
 @media (max-width: 1250px) {
-    .site-header nav a { padding: 8px 14px; font-size: 0.9rem; }
+    .site-header nav a { padding: 10px 16px; font-size: 0.92rem; }
     .logo-container p { display: none; }
 }
  
@@ -1305,8 +1333,8 @@ footer::before {
 }
  
 @media (max-width: 700px) {
-    .site-header { padding: 12px 4%; }
-    .site-header nav ul { flex-wrap: wrap; justify-content: center; }
+    .site-header { padding: 12px 4% 15px; }
+    .site-header nav ul { flex-wrap: wrap; justify-content: center; border-radius: 26px; }
  
     .hero-section { padding: 40px 5%; min-height: auto; }
     .hero-bg { object-position: 72% center; }
