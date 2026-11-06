@@ -132,7 +132,7 @@ $("authForm").onsubmit = async e=>{
     if(!db.users[k] || db.users[k].hash!==h){ note.textContent = "Wrong username or password."; return; }
   }
   me = k; sessionStorage.setItem(ME_KEY, k);
-  $("authDlg").close(); renderAll();
+  $("authDlg").close(); renderAll(); applyPending();
 };
 
 /* ===== 5. POLLS ===== */
@@ -148,6 +148,7 @@ function renderPolls(){
   );
   polls.forEach(p=>{
     const el = tpl("tplPoll");
+    el.dataset.id = p.id;   // so the home page can link to this exact poll
     el.querySelector(".tag").textContent = p.type;
     el.querySelector(".q").textContent = p.q;
     el.querySelector(".by").textContent = ownerName(p)+" · "+new Date(p.at).toLocaleDateString();
@@ -222,9 +223,15 @@ $("pollForm").onsubmit = e=>{
 };
 
 /* ===== 6. FRIENDS ===== */
-function sendReq(k){
+function sendReq(k, anime){
   if(!me || !db.users[k] || k===me || isFriend(me,k) || sentTo(k) || gotFrom(k)) return;
-  db.requests.push({from:me, to:k}); save(); renderAll();
+  db.requests.push({from:me, to:k, anime:anime||""}); save(); renderAll();
+}
+function applyPending(){
+  const raw = sessionStorage.getItem("anemria_pending");
+  if(!raw || !me) return;
+  sessionStorage.removeItem("anemria_pending");
+  try{ const p = JSON.parse(raw); sendReq(p.to, p.anime); showTab("friends"); }catch(e){}
 }
 function cancelReq(k){
   db.requests = db.requests.filter(r=>!(r.from===me && r.to===k)); save(); renderAll();
@@ -260,12 +267,15 @@ function renderFriends(){
   }
 
   /* requests for me */
-  const incoming = me ? db.requests.filter(r=>r.to===me).map(r=>r.from) : [];
+   const incomingReqs = me ? db.requests.filter(r=>r.to===me) : [];
+  const incoming = incomingReqs.map(r=>r.from);
   const ul = $("incomingList"); ul.innerHTML = "";
-  incoming.forEach(k=>{
+  incomingReqs.forEach(r=>{
+    const k = r.from;
     const el = tpl("tplIncoming");
     userAv(el.querySelector(".av"), k);
     el.querySelector(".nm").textContent = nameOf(k);
+    el.querySelector(".why").textContent = r.anime ? "Wants to talk about " + r.anime : "Sent you a request";
     el.querySelector(".accept").onclick = ()=>acceptReq(k);
     el.querySelector(".reject").onclick = ()=>rejectReq(k);
     ul.appendChild(el);
@@ -274,7 +284,18 @@ function renderFriends(){
   $("inEmpty").hidden = incoming.length>0;
   $("reqBadge").textContent = incoming.length;
   $("reqBadge").hidden = incoming.length===0;
-
+  /* my friends */
+  const fl = $("friendsList"); fl.innerHTML = "";
+  const myFriends = me ? friendsOf(me) : [];
+  myFriends.forEach(k=>{
+    const el = tpl("tplFriend");
+    userAv(el.querySelector(".av"), k);
+    el.querySelector(".nm").textContent = nameOf(k);
+    el.querySelector(".chat").onclick = ()=>{ showTab("messages"); openChat(k); };
+    fl.appendChild(el);
+  });
+  $("frCount").textContent = myFriends.length;
+  $("frEmpty").hidden = myFriends.length>0;
   /* everyone else */
   const grid = $("peopleGrid"); grid.innerHTML = "";
   const others = me ? Object.keys(db.users).filter(k=>k!==me) : [];
@@ -361,14 +382,14 @@ $("dmForm").onsubmit = e=>{
 $("dmBack").onclick = ()=>{ chatWith = null; renderStrip(); renderDM(); };
 
 /* ===== 8. SEARCH BUTTONS (click or Enter) ===== */
-$("pollSearchBtn").onclick = renderPolls;
-$("peopleSearchBtn").onclick = renderFriends;
 $("pollSearch").onkeydown = e => { if(e.key==="Enter") renderPolls(); };
 $("peopleSearch").onkeydown = e => { if(e.key==="Enter") renderFriends(); };
 
 /* ===== 9. DRAW EVERYTHING ===== */
 function renderAuth(){
   $("authBtn").textContent = me ? "Log out" : "Log in";
+    $("profileBox").hidden = !me;
+  if(me){ userAv($("hdAv"), me); $("hdName").textContent = nameOf(me); }
   $("userBar").hidden = !me;
   if(me) $("userName").textContent = nameOf(me);
   $("myPolls").setAttribute("aria-pressed", mineOnly);
@@ -385,3 +406,29 @@ window.addEventListener("storage", e=>{
 
 setChips();
 renderAll();
+/* ===== 10. OPENED FROM HOME PAGE (#create or #poll=ID) ===== */
+function handleHash(){
+  const h = location.hash.slice(1);
+  if(!h) return;
+  if(h === "login"){ if(!me) openAuth(false); return; }
+  if(h === "friends"){ showTab("friends"); return; }
+  showTab("polls");
+
+  if(h === "create"){
+    const box = $("newPollBox");
+    box.open = true;
+    box.scrollIntoView({behavior:"smooth", block:"center"});
+    $("pollQ").focus({preventScroll:true});
+  }else if(h.startsWith("poll=")){
+    const id = decodeURIComponent(h.slice(5));
+    const card = document.querySelector('.poll[data-id="'+id+'"]');
+    if(card){
+      card.scrollIntoView({behavior:"smooth", block:"center"});
+      card.classList.add("highlight");
+      setTimeout(()=>card.classList.remove("highlight"), 2500);
+    }
+  }
+}
+$("profileBox").onclick = ()=>showTab("friends");
+handleHash();
+window.addEventListener("hashchange", handleHash);

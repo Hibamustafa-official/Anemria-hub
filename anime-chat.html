@@ -6,15 +6,16 @@
     <meta name="description" content="Anemria Hub Anime Chat — chat with your favorite anime characters or get a guide for 1500+ anime.">
     <title>Anime Chat - Anemria Hub</title>
 
-    <!-- Theme script: head mein taake page load par flash na aaye -->
+    <!-- Theme script (in head so the page doesn't flash on load) -->
     <script src="js/script.js"></script>
 
-    <!-- Google Fonts (ek hi link) -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Poppins:wght@400;500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/style4.css?v=5">
+    <link rel="stylesheet" href="css/style4.css?v=9">
+    <script src="js/profile.js"></script>
 </head>
 <body>
 
@@ -36,9 +37,10 @@
         </nav>
 
         <div class="header-actions">
-            <a href="community.html" class="login-btn">Log in</a>
-
             <!-- Dark / Light Mode Toggle -->
+             <a href="community.html#friends" class="profile-chip" id="profileBox" hidden>
+    <span class="pc-av" id="hdAv"></span><span id="hdName"></span>
+</a>
             <button type="button" class="theme-toggle" id="themeToggle" role="switch" aria-checked="true" aria-label="Toggle dark and light mode" title="Dark / Light mode">
                 <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
                     <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
@@ -54,66 +56,46 @@
 
     <main class="wrap">
 
-        <!-- ================= HERO & SEARCH ================= -->
-       <section class="hero" id="top">
-    <span class="hero-badge">✨ Characters &bull; Anime Guides &bull; Quick Chat</span>
+        <!-- ================= HERO ================= -->
+        <section class="hero" id="top">
+            <span class="hero-kicker"><i></i> Characters are ready to chat</span>
 
-    <h2 class="page-title">
-        <span class="t-small">Chat with your</span>
-        <span class="t-big">favorite anime</span>
-    </h2>
-    <span class="hero-line"></span>
+            <div class="hero-top">
+                <h2 class="page-title">Anime <em>Chat</em></h2>
 
-    <p class="sub">Pick any card to start a chat. My Characters stay in their own personality, and every anime card opens a guide who knows that show.</p>
+                <div class="avatars" aria-hidden="true">
+                    <span style="--c1:#ef4444;--c2:#f59e0b">🏴‍☠️</span>
+                    <span style="--c1:#ff8a00;--c2:#ec4899">🍥</span>
+                    <span style="--c1:#38bdf8;--c2:#6366f1">🕶️</span>
+                    <span style="--c1:#4d908e;--c2:#34d399">⚔️</span>
+                    <span style="--c1:#d62839;--c2:#a855f7">📓</span>
+                    <div><b>5 characters</b><small>+ 1500 anime guides</small></div>
+                </div>
+            </div>
 
-    <ul class="hero-stats">
-        <li><b>1500+</b><span>Anime guides</span></li>
-        <li><b>5</b><span>Own characters</span></li>
-        <li><b>3</b><span>Languages</span></li>
-        <li><b>Free</b><span>To use</span></li>
-    </ul>
+            <p class="sub">Pick any card to start a chat. Characters stay true to their personality, and every anime card opens a guide who knows that show.</p>
 
-    <div class="search-row">
-        <div class="search">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-                <circle cx="11" cy="11" r="7"/>
-                <path d="M20 20l-3.5-3.5"/>
-            </svg>
-            <input id="q" type="search" placeholder="Search by name, anime or genre" autocomplete="off" aria-label="Search">
-        </div>
-        <button type="button" class="search-btn" id="qBtn">Search</button>
-    </div>
-</section>
+            <ul class="hero-stats">
+                <li><b>1500+</b><span>Anime guides</span></li>
+                <li><b>5</b><span>Characters</span></li>
+                <li><b>Free</b><span>To use</span></li>
+            </ul>
 
-        <!-- ================= HOW IT WORKS ================= -->
-        <section class="how-section" id="how">
-            <h2 class="block-title">How it works</h2>
-            <p class="block-intro">Sirf teen simple steps mein chat shuru karo:</p>
-
-            <div class="how-grid">
-                <article class="how-card">
-                    <span class="how-num">1</span>
-                    <h3>Pick a card</h3>
-                    <p>Search karo ya category chip chuno, phir kisi bhi character ya anime card par click karo.</p>
-                </article>
-                <article class="how-card">
-                    <span class="how-num">2</span>
-                    <h3>Open the chat</h3>
-                    <p>Full-screen chat khul jati hai. Neeche quick buttons se ek click mein sawal bhi bhej sakte ho.</p>
-                </article>
-                <article class="how-card">
-                    <span class="how-num">3</span>
-                    <h3>Start chatting</h3>
-                    <p>Character se baat karo ya anime ke baare mein poochho. English, Urdu aur Roman Urdu teeno chalti hain.</p>
-                </article>
+            <div class="search-row">
+                <div class="search">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                        <circle cx="11" cy="11" r="7"/>
+                        <path d="M20 20l-3.5-3.5"/>
+                    </svg>
+                    <input id="q" type="search" placeholder="Search by name, anime or genre" autocomplete="off" aria-label="Search">
+                </div>
+                <button type="button" class="search-btn" id="qBtn">Search</button>
+                <button type="button" class="ghost-btn" id="surprise">🎲 Surprise me</button>
             </div>
         </section>
 
         <!-- ================= CATEGORY CHIPS + CARDS (JS fills these) ================= -->
         <section class="browse-section" id="browse">
-            <h2 class="block-title">Choose who to chat with</h2>
-            <p class="block-intro">Neeche categories se filter karo, ya upar search use karo.</p>
-
             <div class="chips" id="chips" role="group" aria-label="Categories"></div>
             <p id="status" aria-live="polite"></p>
 
@@ -121,41 +103,65 @@
             <p class="empty" id="empty" hidden>Nothing found. Try another name or genre.</p>
         </section>
 
+        <!-- ================= HOW IT WORKS ================= -->
+        <section class="how-section" id="how">
+            <h2 class="block-title">How it works</h2>
+            <p class="block-intro">Start chatting in just three simple steps:</p>
+
+            <div class="how-grid">
+                <article class="how-card">
+                    <span class="how-num">1</span>
+                    <h3>Pick a card</h3>
+                    <p>Search by name or choose a category chip, then click any character or anime card.</p>
+                </article>
+                <article class="how-card">
+                    <span class="how-num">2</span>
+                    <h3>Open the chat</h3>
+                    <p>A full-screen chat opens right away. Use the quick buttons at the bottom to send a question in one click.</p>
+                </article>
+                <article class="how-card">
+                    <span class="how-num">3</span>
+                    <h3>Start chatting</h3>
+                    <p>Talk to your favorite character or ask about the story, genres and rating of any anime.</p>
+                </article>
+            </div>
+        </section>
+
         <!-- ================= FEATURES ================= -->
         <section class="features-section" id="features">
             <h2 class="block-title">Why Anime Chat?</h2>
-            <p class="block-intro">Yeh page sirf chat box nahi, ek poora anime companion hai.</p>
+            <p class="block-intro">More than a chat box: it's a complete anime companion.</p>
 
             <div class="feature-grid">
                 <article class="feature-card">
                     <div class="feature-icon">🎭</div>
                     <h3>In-character replies</h3>
-                    <p>Light, Naruto, Luffy, Levi aur Gojo apni apni personality aur bolne ke andaaz mein jawab dete hain.</p>
+                    <p>Light, Naruto, Luffy, Levi and Gojo each answer in their own personality and speaking style.</p>
                 </article>
                 <article class="feature-card">
                     <div class="feature-icon">📚</div>
                     <h3>1500+ anime guides</h3>
-                    <p>Har anime card ek guide kholta hai jo story, genres aur synopsis ke baare mein bata sakta hai.</p>
+                    <p>Every anime card opens a guide that can tell you about the story, genres and synopsis.</p>
                 </article>
                 <article class="feature-card">
-                    <div class="feature-icon">🌐</div>
-                    <h3>Multi-language</h3>
-                    <p>Tum English, Urdu ya Roman Urdu, jis mein chaho likh sakte ho.</p>
+                    <div class="feature-icon">📱</div>
+                    <h3>Works everywhere</h3>
+                    <p>A clean, responsive layout that looks great on phones, tablets and desktops.</p>
                 </article>
                 <article class="feature-card">
                     <div class="feature-icon">⚡</div>
                     <h3>Instant replies</h3>
-                    <p>Koi login ya setup nahi. Card kholo aur turant jawab milna shuru ho jata hai.</p>
+                    <p>No login and no setup. Open a card and the answers start right away.</p>
                 </article>
                 <article class="feature-card">
                     <div class="feature-icon">💬</div>
                     <h3>Quick questions</h3>
-                    <p>Chat ke neeche ready-made buttons hain, ek click mein sawal bhej do.</p>
+                    <p>Ready-made buttons under the chat let you ask popular questions with a single click.</p>
                 </article>
                 <article class="feature-card">
                     <div class="feature-icon">🌙</div>
-                    <h3>Dark &amp; Light mode</h3>
-                    <p>Header ke toggle se ek click mein dono themes ke beech switch karo.</p>
+                    <h3>Dark &amp; light mode</h3>
+                    <p>Use the toggle in the header to switch between both themes in one click.</p>
                 </article>
             </div>
         </section>
@@ -163,23 +169,23 @@
         <!-- ================= TIPS ================= -->
         <section class="tips-section" id="tips">
             <h2 class="block-title">Chat tips</h2>
-            <p class="block-intro">Behtar jawab lene ke liye yeh try karo:</p>
+            <p class="block-intro">Try these for better answers:</p>
 
             <div class="tips-grid">
                 <div class="tip-box">
                     <h3>With characters</h3>
                     <ul>
-                        <li>Unse advice maango: "Give me some advice".</li>
-                        <li>Unki power ke baare mein poochho: "How strong are you?".</li>
-                        <li>Apna mood batao, woh apne style mein jawab dein ge.</li>
+                        <li>Ask for advice: "Give me some advice".</li>
+                        <li>Ask about their power: "How strong are you?".</li>
+                        <li>Share your mood and they'll answer in their own style.</li>
                     </ul>
                 </div>
                 <div class="tip-box">
                     <h3>With anime guides</h3>
                     <ul>
-                        <li>Poochho: "What is the story about?" ya "Should I watch it?".</li>
-                        <li>Genres aur rating card par hi dikh jati hai.</li>
-                        <li>Naya anime dhoondne ke liye genre chips use karo.</li>
+                        <li>Ask: "What is the story about?" or "Should I watch it?".</li>
+                        <li>Genres and rating are shown right on the card.</li>
+                        <li>Use the genre chips to discover a new anime.</li>
                     </ul>
                 </div>
             </div>
@@ -191,24 +197,24 @@
 
             <div class="faq-list">
                 <details>
-                    <summary>Kya yeh chat free hai?</summary>
-                    <p>Haan, bilkul free hai. Koi login ya payment nahi chahiye.</p>
+                    <summary>Is this chat free?</summary>
+                    <p>Yes, it's completely free. No login or payment needed.</p>
                 </details>
                 <details>
-                    <summary>Characters kaise jawab dete hain?</summary>
-                    <p>Har character ke pehle se likhe hue jawab hain jo tumhare sawal ke keywords (jese advice, power, sad) se match hote hain.</p>
+                    <summary>How do the characters reply?</summary>
+                    <p>Each character has pre-written replies that match keywords in your message (like advice, power or sad).</p>
                 </details>
                 <details>
-                    <summary>Anime list load kyun nahi hoti?</summary>
-                    <p>Anime data AniList se aata hai, to internet chahiye. Connection check karke page refresh karo.</p>
+                    <summary>Why isn't the anime list loading?</summary>
+                    <p>The anime data comes from AniList, so you need an internet connection. Check your connection and refresh the page.</p>
                 </details>
                 <details>
-                    <summary>Apna naya character kaise add karun?</summary>
-                    <p><code>js/chat.js</code> mein <code>CHARS</code> list ka koi block copy karo aur naam, rang, emoji aur replies badal do.</p>
+                    <summary>How do I add my own character?</summary>
+                    <p>Open <code>js/chat.js</code>, copy any block in the <code>CHARS</code> list and change the name, colors, emoji and replies.</p>
                 </details>
                 <details>
-                    <summary>Dark ya Light mode kaise lagaun?</summary>
-                    <p>Header mein sun/moon wala toggle dabao. Tumhari pasand yaad rakhi jati hai.</p>
+                    <summary>How do I switch dark or light mode?</summary>
+                    <p>Click the sun/moon toggle in the header. Your choice is remembered.</p>
                 </details>
             </div>
         </section>
@@ -253,8 +259,8 @@
             <div class="footer-links">
                 <h4>On this page</h4>
                 <ul>
-                    <li><a href="#how">How it works</a></li>
                     <li><a href="#browse">Choose a character</a></li>
+                    <li><a href="#how">How it works</a></li>
                     <li><a href="#features">Features</a></li>
                     <li><a href="#faq">FAQ</a></li>
                 </ul>
@@ -263,6 +269,7 @@
         <p class="footer-copy">&copy; 2026 Anemria Hub. All Rights Reserved. Built with passion for global anime lovers.</p>
     </footer>
 
-    <script src="js/chat.js?v=5"></script>
+    <script src="js/chat.js?v=6"></script>
 </body>
 </html>
+<script src="js/chat.js?v=7"></script>

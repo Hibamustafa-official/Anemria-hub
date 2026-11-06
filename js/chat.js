@@ -2,10 +2,7 @@
    ANEMRIA HUB — chat.js  (Anime Chat page)
    ========================================================== */
 
-/* ===== 1. YOUR OWN CARDS =====
-   Copy a block to add a character.
-   k = section name, c = [main color, dark color], e = emoji,
-   hi = first message, l = offline replies (about/power/advice/sad), fb = fallback replies */
+/* ===== 1. YOUR OWN CARDS ===== */
 const CHARS=[
  {id:"light",n:"Light Yagami",a:"Death Note",k:"My Characters",c:["#d62839","#2a0a10"],e:"📓",t:"A genius with a notebook and a plan.",
   hi:"Hello, I’m Light Yagami. What’s on your mind today?",
@@ -39,6 +36,46 @@ let ANIME=[], cat="All", cur=null;
 const lim={}, store={};
 const ls={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
 
+/* ===== AI (Gemini via Cloudflare Worker) ===== */
+const WORKER_URL="https://anime-chat.hibamustafa431.workers.dev";
+
+function buildSystem(it){
+  if(it.custom){
+    return "You are "+it.n+" from the anime "+it.a+". Stay fully in character, speak in their style. "+
+           "Reply in the same language the user writes in. Keep replies short (max 3 sentences). "+
+           "Personality: "+it.t+" Never mention you are an AI. No harmful or adult content.";
+  }
+  return "You are a friendly guide for the anime '"+it.n+"'. Genres: "+it.gs+". "+
+         (it.s?("AniList rating: "+(it.s/10).toFixed(1)+"/10. "):"")+
+         "Synopsis: "+it.d+" Answer about its story, characters and whether to watch it. "+
+         "Keep replies short (max 4 sentences). Avoid big spoilers unless asked.";
+}
+
+async function askAI(it,text){
+  const note=$("note");
+  try{
+    const hist=store[it.id].slice(0,-1);
+    const r=await fetch(WORKER_URL,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({system:buildSystem(it),history:hist,message:text})
+    });
+    let j={}; try{j=await r.json();}catch(e){}
+    if(!r.ok){
+      note.textContent=(r.status===429)
+        ? "AI limit reached for now. Using simple replies."
+        : "AI error ("+r.status+"): "+(j.error||"unknown");
+      return offline(it,text);
+    }
+    if(!j.reply){note.textContent="AI error: empty reply";return offline(it,text);}
+    note.textContent="";
+    return j.reply;
+  }catch(e){
+    note.textContent="AI error: could not reach the Worker ("+e.message+")";
+    return offline(it,text);
+  }
+}
+
 /* ===== 3. LOAD 1500 ANIME (AniList, free, no key) ===== */
 const GQL="query($p:Int,$n:Int){Page(page:$p,perPage:$n){media(type:ANIME,sort:POPULARITY_DESC,isAdult:false){id title{romaji english}coverImage{large}genres seasonYear averageScore episodes description(asHtml:false)}}}";
 async function loadAnime(){
@@ -67,8 +104,6 @@ function setStatus(msg){
   $("status").textContent=msg||(ANIME.length+" anime + "+CHARS.length+" of your own characters");
   updateHeroStats();
 }
-
-/* Updates the hero stats pills (.hero-stats) with real numbers */
 function updateHeroStats(){
   const items=document.querySelectorAll(".hero-stats li b");
   if(items[0]&&ANIME.length) items[0].textContent=(Math.floor(ANIME.length/100)*100)+"+";
@@ -129,7 +164,7 @@ function renderHome(){
   $("empty").hidden=found>0||ANIME.length===0;
 }
 
-/* ===== 5. CHAT (simple replies, no key needed) ===== */
+/* ===== 5. CHAT (AI first, simple replies as backup) ===== */
 const TOPICS=[["about",/who are|your name|about you|introduce/],["power",/strong|power|fight|battle|skill/],["advice",/advice|help|motivat|tip|goal|dream/],["sad",/sad|lonely|cry|tired|stress|alone/]];
 const ANIME_TOPICS=[
   ["watch",/watch|worth|recommend|should i/],
@@ -171,7 +206,7 @@ function openChat(it){
             :["What is the story about?","Should I watch it?","Suggest something similar","Who is the best character?"]).forEach(s=>{
     const b=document.createElement("button"); b.type="button"; b.textContent=s; b.onclick=()=>send(s); q.appendChild(b);});
   $("msgs").innerHTML=""; $("chat").classList.add("open");
-  document.body.style.overflow="hidden";            // lock page scroll while chat is open
+  document.body.style.overflow="hidden";
   if(!store[it.id]){
     store[it.id]=[]; const hi=it.custom?it.hi:"Hi! I’m your guide for "+it.n+". Ask me anything about it.";
     store[it.id].push({t:hi}); addMsg(hi,false);
@@ -191,10 +226,9 @@ async function send(text){
   const dots=document.createElement("div"); dots.className="m";
   dots.innerHTML="<div class='bub'><span class='dots'><i></i><i></i><i></i></span></div>";
   $("msgs").appendChild(dots); $("msgs").scrollTop=$("msgs").scrollHeight;
-  await sleep(600);                                  // small "typing" effect
+  const reply=await askAI(it,text);
   dots.remove();
-  const reply=offline(it,text);
-  store[it.id].push({t:reply});                      // reply is always saved, even if the user went back
+  store[it.id].push({t:reply});
   if(cur!==it) return;
   addMsg(reply,false);
 }
@@ -203,12 +237,10 @@ async function send(text){
 $("form").onsubmit=e=>{e.preventDefault(); send($("txt").value);};
 $("back").onclick=closeChat;
 
-/* Escape closes the chat */
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape"&&$("chat").classList.contains("open")) closeChat();
 });
 
-/* Search: live filter while typing, button/Enter scrolls to the results */
 let tm; $("q").oninput=()=>{clearTimeout(tm); tm=setTimeout(renderHome,150);};
 function doSearch(){
   renderHome();
@@ -218,11 +250,9 @@ function doSearch(){
 $("qBtn").onclick=doSearch;
 $("q").onkeydown=e=>{ if(e.key==="Enter"){ e.preventDefault(); doSearch(); } };
 
-/* Surprise me: opens a chat with a random character */
 const surpriseBtn=$("surprise");
 if(surpriseBtn) surpriseBtn.onclick=()=>openChat(pick(CHARS));
 
-/* FAQ: only one question open at a time */
 document.querySelectorAll(".faq-list details").forEach(d=>{
   d.addEventListener("toggle",()=>{
     if(d.open) document.querySelectorAll(".faq-list details").forEach(o=>{ if(o!==d) o.open=false; });
@@ -231,3 +261,15 @@ document.querySelectorAll(".faq-list details").forEach(d=>{
 
 /* ===== 7. START ===== */
 renderChips(); renderHome(); setStatus("Loading anime…"); loadAnime();
+
+/* ===== 8. OPEN CHAT FROM HOME PAGE (?char=ID&msg=TEXT) ===== */
+(function(){
+  const p=new URLSearchParams(location.search);
+  const id=p.get("char"), msg=p.get("msg");
+  if(!id) return;
+  const it=CHARS.find(c=>c.id===id);
+  if(!it) return;
+  openChat(it);
+  if(msg) send(msg);
+  history.replaceState(null,"",location.pathname);
+})();

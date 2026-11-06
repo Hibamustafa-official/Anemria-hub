@@ -34,6 +34,9 @@
     </nav>
 
     <div class="header-actions">
+            <div class="profile-chip" id="profileBox" hidden>
+        <span class="pc-av" id="hdAv"></span><span id="hdName"></span>
+      </div>
       <button class="auth-btn" id="authBtn" type="button">Log in</button>
 
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme">
@@ -129,7 +132,11 @@
           <input type="file" id="dpInput" accept="image/*" hidden>
         </div>
       </div>
-
+      <div class="box">
+        <h2>My friends <small id="frCount">0</small></h2>
+        <ul class="people" id="friendsList"></ul>
+        <p class="empty" id="frEmpty">No friends yet.</p>
+      </div>
       <div class="box">
         <h2>Friend requests <small id="inCount">0</small></h2>
         <ul class="people" id="incomingList"></ul>
@@ -232,7 +239,7 @@
   <template id="tplIncoming">
     <li class="person">
       <div class="av"></div>
-      <span class="nm"></span>
+      <div class="who-box"><span class="nm"></span><small class="why"></small></div>
       <div class="acts">
         <button type="button" class="accept go">Accept</button>
         <button type="button" class="reject">Reject</button>
@@ -247,7 +254,13 @@
       <button type="button" class="act"></button>
     </div>
   </template>
-
+  <template id="tplFriend">
+    <li class="person">
+      <div class="av"></div>
+      <span class="nm"></span>
+      <div class="acts"><button type="button" class="go chat">Message</button></div>
+    </li>
+  </template>
   <template id="tplStory">
     <li>
       <button type="button" class="story">

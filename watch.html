@@ -10,6 +10,7 @@
     <script src="js/script.js"></script>
     <!-- is page ka apna JS -->
     <script src="js/watch.js" defer></script>
+    <script src="js/profile.js"></script>
 </head>
 <body>
 
@@ -30,6 +31,9 @@
     </nav>
 
     <!-- Dark / Light toggle -->
+     <a href="community.html#friends" class="profile-chip" id="profileBox" hidden>
+    <span class="pc-av" id="hdAv"></span><span id="hdName"></span>
+</a>
     <button class="theme-toggle" id="themeToggle" type="button"
             aria-label="Toggle dark and light mode" title="Toggle theme">
         <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24"
@@ -95,42 +99,46 @@
     </section>
 
     <p id="resultCount" class="count-pill" aria-live="polite"></p>
-
-    <!-- ================= LCD TV ================= -->
-    <section class="stage" id="playerSection">
-        <div class="lcd" id="lcd">
-            <img class="lcd-img" src="images/lcd-tv.png" alt="">
-
-            <div class="lcd-screen">
-                <video id="animePlayer" controls playsinline preload="metadata">
-                    Your browser does not support HTML video.
-                </video>
-
-                <!-- standby screen (video chalte hi hat jati hai) -->
-               <!-- Featured slideshow (video chalte hi hat jata hai) -->
-<div class="idle" id="idle">
-    <div class="idle-bg" id="idleBg"></div>
-    <div class="idle-shade"></div>
-
-    <span class="idle-chip l">✨ FEATURED</span>
-    <span class="idle-chip r" id="idleCount"></span>
-
-    <div class="idle-card" id="idleCard">
-        <img class="idle-poster" id="idlePoster" alt="">
-        <div class="idle-text">
-            <small>TONIGHT'S PICK</small>
-            <h3 id="idleTitle"></h3>
-            <p id="idleTag"></p>
-            <button class="idle-play-btn" id="idlePlay" type="button">▶ Play now</button>
+<!-- ================= INFO STRIP (TV ke upar) ================= -->
+<section class="strip" aria-label="Quick info">
+    <div class="strip-item">
+        <span class="strip-ico">🎬</span>
+        <div>
+            <b>25+ Trailers</b>
+            <small>Hindi dubbed</small>
         </div>
     </div>
-
-    <div class="idle-dots" id="idleDots"></div>
-</div>
-
-                <div class="lcd-glare"></div>
-            </div>
+    <div class="strip-item">
+        <span class="strip-ico">⚡</span>
+        <div>
+            <b>Instant Play</b>
+            <small>No login needed</small>
         </div>
+    </div>
+    <div class="strip-item">
+        <span class="strip-ico">🎲</span>
+        <div>
+            <b>Surprise Me</b>
+            <small>Random pick</small>
+        </div>
+    </div>
+    <div class="strip-item">
+        <span class="strip-ico">🌙</span>
+        <div>
+            <b>Dark &amp; Light</b>
+            <small>Your choice</small>
+        </div>
+    </div>
+</section>
+    <!-- ================= LCD TV ================= -->
+    <section class="stage" id="playerSection">
+       <div class="lcd" id="lcd">
+    <img class="lcd-img" src="images/lcd-tv.png" alt="">
+
+    <div class="lcd-screen">
+        <video id="animePlayer" playsinline preload="metadata"></video>
+    </div>
+</div>
 
         <div class="now">
             <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
@@ -149,6 +157,11 @@
             <p>Every poster is a tiny portal. Tap one and press play.</p>
         </div>
         <div id="animeGrid" class="poster-grid"></div>
+        <div id="animeGrid" class="poster-grid"></div>
+
+<div class="load-wrap" id="loadWrap">
+    <button type="button" class="search-btn" id="loadMoreBtn">Load More Trailers</button>
+</div>
     </section>
 </main>
 

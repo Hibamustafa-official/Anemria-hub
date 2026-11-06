@@ -1363,4 +1363,192 @@ footer::before {
         scroll-behavior: auto !important;
     }
 }
- 
+ /* ===== Search results: poster cards (overlap fix) ===== */
+#searchResults .voice-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    align-items: stretch;
+}
+
+#searchResults .voice-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 22px 18px 26px;
+}
+
+/* gol dabba hata kar poster ka lamba frame (2:3) */
+#searchResults .voice-avatar {
+    display: block;
+    width: 100%;
+    max-width: 170px;
+    height: auto;
+    aspect-ratio: 2 / 3;
+    margin: 0 0 18px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 26px var(--cg);
+}
+
+#searchResults .voice-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0 !important; /* JS ka gol (50%) hata do */
+}
+
+#searchResults .voice-card h3 {
+    margin: 0 0 10px;
+    font-size: 1.1rem;
+    line-height: 1.35;
+}
+
+/* text ko khali jagah bharne do taake buttons sab cards mein barabar neeche aayein */
+#searchResults .voice-card p {
+    flex: 1;
+    font-size: 0.95rem;
+}
+
+#searchResults .voice-card .btn {
+    margin-top: 16px !important;
+}
+.voice-avatar { overflow: hidden; }
+.voice-avatar img { width: 100%; height: 100%; object-fit: cover; }
+/* ==========================================================
+   HOME POLL PREVIEW  (random community poll)
+   ========================================================== */
+
+/* card: column layout, taake button hamesha neeche rahe */
+#homePoll {
+    display: flex;
+    flex-direction: column;
+    transition: opacity 0.3s ease, transform 0.35s cubic-bezier(.34, 1.56, .64, 1),
+                border-color 0.3s ease, box-shadow 0.3s ease, background 0.4s ease;
+}
+
+/* rotate hote waqt halka fade (JS se class lagegi) */
+#homePoll.is-fading { opacity: 0; }
+
+/* category tag: chhota pill badge */
+.poll-tag {
+    align-self: flex-start;
+    display: inline-block;
+    padding: 4px 14px;
+    margin-bottom: 12px;
+    border-radius: 999px;
+    border: 1px solid var(--c);
+    background: var(--cg);
+    color: var(--c);
+    font-family: "Fredoka", sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+}
+
+/* option row: ab <a> hai, flex-row nahi balki column */
+.poll-option.poll-link {
+    display: block;
+    padding: 12px 18px 14px;
+    text-decoration: none;
+    position: relative;
+    z-index: 1;
+}
+
+/* label aur % ke beech gap, % right par */
+.poll-option.poll-link .bar-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 8px;
+    color: inherit;
+}
+
+.poll-option.poll-link .bar-label b { color: var(--c); }
+
+/* track hamesha nazar aaye, 0% par bhi */
+.poll-option.poll-link .bar-track {
+    height: 10px;
+    background: var(--track);
+    border: 1px solid var(--border);
+}
+
+.poll-option.poll-link .bar-fill {
+    background: linear-gradient(90deg, var(--c), var(--c2));
+    box-shadow: 0 0 10px var(--cg);
+    transition: width 0.6s ease;
+}
+
+.poll-option.poll-link:hover { transform: translateY(-2px); }
+
+/* meta line aur button ke beech gap, button hamesha neeche */
+#homePoll .note {
+    margin: 8px 0 20px;
+    position: relative;
+    z-index: 1;
+}
+
+#homePoll .btn {
+    align-self: flex-start;
+    margin-top: auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* "Create Your Own Poll" card: button neeche, text beech mein barabar */
+.poll-layout > .poll-card:last-child {
+    display: flex;
+    flex-direction: column;
+}
+
+.poll-layout > .poll-card:last-child .section-intro {
+    text-align: left;
+    margin: 0 0 24px;
+    font-size: 1.02rem;
+}
+
+.poll-layout > .poll-card:last-child .btn {
+    align-self: flex-start;
+    margin-top: auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* <a class="btn"> ke liye (button ki tarah dikhe) */
+.poll-section a.btn {
+    text-align: center;
+    text-decoration: none;
+}
+.profile-chip{
+  display:inline-flex;align-items:center;gap:8px;padding:6px 16px 6px 6px;border-radius:999px;
+  border:1.5px solid rgba(180,160,255,.3);font-weight:700;color:inherit;cursor:pointer;
+}
+.profile-chip[hidden]{display:none}
+.pc-av{
+  width:30px;height:30px;border-radius:50%;display:grid;place-items:center;overflow:hidden;
+  background:linear-gradient(135deg,#6366f1,#ec4899);color:#fff;font-size:.85rem;
+}
+.pc-av img{width:100%;height:100%;object-fit:cover}
+.who-box{flex:1;min-width:0;display:grid}
+.who-box .nm{flex:none}
+.who-box .why{color:var(--muted);font-size:.8rem}
+#spotlightGrid{grid-template-columns:repeat(4,1fr)}
+
+@media (max-width:1000px){
+  #spotlightGrid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:560px){
+  #spotlightGrid{grid-template-columns:1fr}
+}
+#spotlightGrid .spot-card{display:flex;flex-direction:column;align-items:center;padding:22px 18px 26px}
+#spotlightGrid .voice-avatar{
+    display:block;width:100%;max-width:170px;height:auto;aspect-ratio:2/3;
+    margin:0 0 18px;border-radius:16px;overflow:hidden;
+}
+#spotlightGrid .voice-avatar img{width:100%;height:100%;object-fit:cover;border-radius:0}
+#spotlightGrid .spot-card h3{margin:0 0 10px;font-size:1.1rem;line-height:1.35}
+#spotlightGrid .spot-card p{flex:1;font-size:.95rem}
+#spotlightGrid .spot-card .btn{margin-top:16px;text-decoration:none}
+#spotlightGrid .spot-card .btn + .btn{margin-top:10px}

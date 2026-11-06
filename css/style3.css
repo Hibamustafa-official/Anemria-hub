@@ -963,3 +963,16 @@ footer::before { content: ""; position: absolute; top: 0; left: 0; right: 0; hei
 .lcd-screen video { cursor: pointer; background: #000; }
 .stage:not(.is-playing) .lcd-screen video { visibility: hidden; }
 .stage:not(.is-playing) .lcd-screen { background: #000; }
+/* ===== YouTube trailer iframe (API wale anime) ===== */
+.lcd-screen iframe.yt-frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #000;
+}
+
+/* ===== Load More button ===== */
+.load-wrap { text-align: center; margin-top: 44px; }
+.load-wrap .search-btn:disabled { opacity: .6; cursor: wait; }

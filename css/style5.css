@@ -665,3 +665,17 @@ body{overflow-x:hidden}
 @media (max-width:700px){
   .site-header nav ul,.site-header > ul{flex-wrap:wrap;justify-content:center;border-radius:26px}
 }
+.poll.highlight { outline: 2px solid #a78bfa; box-shadow: 0 0 24px rgba(167, 139, 250, 0.5); }
+.profile-chip{
+  display:inline-flex;align-items:center;gap:8px;padding:6px 16px 6px 6px;border-radius:999px;
+  border:1.5px solid rgba(180,160,255,.3);font-weight:700;color:inherit;cursor:pointer;
+}
+.profile-chip[hidden]{display:none}
+.pc-av{
+  width:30px;height:30px;border-radius:50%;display:grid;place-items:center;overflow:hidden;
+  background:linear-gradient(135deg,#6366f1,#ec4899);color:#fff;font-size:.85rem;
+}
+.pc-av img{width:100%;height:100%;object-fit:cover}
+.who-box{flex:1;min-width:0;display:grid}
+.who-box .nm{flex:none}
+.who-box .why{color:var(--muted);font-size:.8rem}

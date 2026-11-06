@@ -1078,3 +1078,16 @@ footer::before {
 .site-header nav a.active:hover {
     transform: translateY(-2px) scale(1.03);
 }
+.btn{
+    display:inline-block;padding:12px 30px;border:none;border-radius:999px;
+    background:var(--grad);color:#fff;font-weight:600;font-size:1rem;cursor:pointer;
+    box-shadow:0 6px 18px rgba(236,72,153,.30);
+    transition:transform .25s cubic-bezier(.34,1.56,.64,1),filter .2s;
+}
+.btn:hover{transform:translateY(-3px) scale(1.04);filter:brightness(1.08)}
+.btn:disabled{opacity:.6;cursor:default;transform:none}
+
+.story-card.spot{
+    border-color:var(--c);
+    box-shadow:0 0 0 3px var(--c),0 24px 50px var(--cg);
+}
