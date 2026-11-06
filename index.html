@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Anemria Hub — anime stories, voice actors, streaming guides, polls, chat and community in one place.">
     <title>Anemria — The Ultimate Anime Universe Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Poppins:wght@500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Google Fonts: Poppins (headings) + Inter (body text) -->
+    <!-- Theme script: head mein taake page load par flash na aaye -->
+    <script src="js/script.js"></script>
+    <script src="js/index.js"></script>
+
+    <!-- Google Fonts (ek hi link) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Poppins:wght@400;500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="css/style1.css">
 </head>
@@ -34,7 +37,10 @@
         </nav>
 
         <!-- Dark / Light Mode Toggle -->
-        <button type="button" class="theme-toggle" id="themeToggle" role="switch" aria-checked="true" aria-label="Toggle dark and light mode">
+                 <a href="community.html#friends" class="profile-chip" id="profileBox" hidden>
+            <span class="pc-av" id="hdAv"></span><span id="hdName"></span>
+        </a>
+        <button type="button" class="theme-toggle" id="themeToggle" role="switch" aria-checked="true" aria-label="Toggle dark and light mode" title="Dark / Light mode">
             <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
                 <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
             </svg>
@@ -50,12 +56,10 @@
 
         <!-- ================= HERO & SEARCH ================= -->
         <section class="hero-section" id="home">
-            <!-- Background art (sirf artwork, bina text ke) -->
             <img class="hero-bg" src="images/Main page.png" alt="" aria-hidden="true">
             <div class="hero-overlay"></div>
             <div class="hero-glow"></div>
 
-            <!-- Left side content -->
             <div class="hero-content">
                 <span class="hero-badge">Anime &bull; Stories &bull; Community</span>
 
@@ -96,7 +100,17 @@
                 </ul>
             </div>
         </section>
-
+<!-- ================= BROWSE ALL ANIME ================= -->
+<section class="section-alt accent-violet" id="browse">
+    <div class="container">
+        <h2>Browse All Anime</h2>
+        <p class="section-intro">Explore the full catalog, sorted by popularity.</p>
+        <div class="voice-grid" id="browseGrid"></div>
+        <div style="text-align:center; margin-top:40px;">
+            <button type="button" class="btn" id="loadMoreBtn">Load More</button>
+        </div>
+    </div>
+</section>
         <!-- ================= PLATFORM STATISTICS ================= -->
         <section class="stats-section section-alt accent-violet" id="stats">
             <div class="container">
@@ -170,8 +184,6 @@
             </div>
         </section>
 
-        <!-- ================= STORIES (READ & LISTEN) ================= -->
-
         <!-- ================= REAL VOICES BEHIND ANIME ================= -->
         <section class="voice-section section-alt accent-pink" id="voices">
             <div class="container">
@@ -189,35 +201,14 @@
                         <p>Voice of <strong>L</strong><br>Death Note (Japanese)</p>
                     </div>
                     <div class="voice-card">
-                        <div class="voice-avatar">NS</div>
-                        <h3>Shidō Nakamura</h3>
+                        <div class="voice-avatar">SN</div>
+                       <h3>Shido Nakamura</h3>
                         <p>Voice of <strong>Ryuk</strong><br>Death Note (Japanese)</p>
                     </div>
                     <div class="voice-card">
                         <div class="voice-avatar">CK</div>
                         <h3>Chiaki Kobayashi</h3>
                         <p>Voice of <strong>Gabimaru</strong><br>Hell's Paradise (Japanese)</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= WATCH & SUBTITLES ================= -->
-        <section class="watch-section section-base accent-violet" id="watch">
-            <div class="container">
-                <h2>Watch Anime &amp; Subtitle Languages</h2>
-                <p class="section-intro">Stream sample episodes with subtitle options. For full episodes, we only use official and legal sources.</p>
-
-                <div class="watch-layout">
-
-                    <div class="subtitle-panel">
-                        <h3>Subtitle &amp; Language</h3>
-                        <div class="lang-buttons" role="group" aria-label="Subtitle language">
-                            <button type="button" class="lang-btn active" data-lang="en">English</button>
-                            <button type="button" class="lang-btn" data-lang="ur">Urdu</button>
-                            <button type="button" class="lang-btn" data-lang="hi">Hindi</button>
-                        </div>
-                        <p class="note">Hindi and other subtitles are available through YouTube's built-in caption settings on supported videos.</p>
                     </div>
                 </div>
             </div>
@@ -236,40 +227,44 @@
                 </ul>
             </div>
         </section>
-
-        <!-- ================= POLLS ================= -->
-        <section class="poll-section section-base accent-mint" id="polls">
+        <!-- ================= STORY SPOTLIGHT ================= -->
+        <section class="section-base accent-pink" id="spotlight">
             <div class="container">
-                <h2>Community Polls</h2>
-                <p class="section-intro">Create a poll or vote on live community questions.</p>
-
-                <div class="poll-layout">
-                    <!-- Vote -->
-                    <div class="poll-card">
-                        <h3>Which anime has the best story?</h3>
-                        <form id="pollForm">
-                            <label class="poll-option"><input type="radio" name="poll" value="death-note"> Death Note</label>
-                            <label class="poll-option"><input type="radio" name="poll" value="hells-paradise"> Hell's Paradise</label>
-                            <label class="poll-option"><input type="radio" name="poll" value="slice-of-life"> Slice of Life Classic</label>
-                            <button type="submit" class="btn">Vote</button>
-                        </form>
-                        <div class="poll-results" id="pollResults"></div>
-                    </div>
-
-                    <!-- Create -->
-                    <div class="poll-card">
-                        <h3>Create Your Own Poll</h3>
-                        <form id="createPollForm">
-                            <input type="text" id="pollQuestion" placeholder="Your poll question" required>
-                            <input type="text" class="poll-opt" placeholder="Option 1" required>
-                            <input type="text" class="poll-opt" placeholder="Option 2" required>
-                            <input type="text" class="poll-opt" placeholder="Option 3 (optional)">
-                            <button type="submit" class="btn">Create Poll</button>
-                        </form>
-                    </div>
+                <h2>Story Spotlight</h2>
+                <p class="section-intro">Random anime picked for you. Click one to read its full story.</p>
+                <div class="voice-grid" id="spotlightGrid"></div>
+                <div style="text-align:center; margin-top:40px;">
+                    <button type="button" class="btn" id="spotlightShuffle">Shuffle</button>
                 </div>
             </div>
         </section>
+      <!-- ================= POLLS ================= -->
+<section class="poll-section section-base accent-mint" id="polls">
+    <div class="container">
+        <h2>Community Polls</h2>
+        <p class="section-intro">A live poll from the community. Vote and create your own polls in the Community Hub.</p>
+
+        <div class="poll-layout">
+
+            <!-- Random community poll (preview only, rotates automatically) -->
+            <div class="poll-card" id="homePoll">
+                <span class="poll-tag" id="homePollTag"></span>
+                <h3 id="homePollQ">Loading poll...</h3>
+                <div id="homePollOpts"></div>
+                <p class="note" id="homePollMeta"></p>
+                <a class="btn" id="homePollGo" href="community.html#polls">Vote in Community Hub</a>
+            </div>
+
+            <!-- Create poll -> opens Community Hub -->
+            <div class="poll-card">
+                <h3>Create Your Own Poll</h3>
+                <p class="section-intro">Ask the community anything about anime. Your poll will be created in the Community Hub.</p>
+                <a class="btn" href="community.html#create">Create Poll</a>
+            </div>
+
+        </div>
+    </div>
+</section>
 
         <!-- ================= CHATBOT & GROUP CHAT ================= -->
         <section class="chat-section section-alt accent-violet" id="chat">
@@ -278,38 +273,13 @@
                 <p class="section-intro">Talk with your favorite characters, or join a group chat for a specific anime.</p>
 
                 <div class="chat-layout">
-                    <!-- Character chatbot -->
                     <div class="chat-card">
-                        <h3>Chat with a Character</h3>
-                        <div class="chat-window" id="chatWindow">
-                            <div class="msg bot">Hello! I'm Ryuk. Ask me anything about Death Note. 🍎</div>
-                        </div>
+                       <h3 id="chatTitle">Chat with a Character</h3>
+<div class="chat-window" id="chatWindow"></div>
                         <div class="chat-input">
                             <input type="text" id="chatInput" placeholder="Type your message..." aria-label="Chat message">
                             <button type="button" id="chatSend" class="btn">Send</button>
                         </div>
-                    </div>
-
-                    <!-- Group chat -->
-                    <div class="chat-card">
-                        <h3>Group Chats by Anime</h3>
-                        <ul class="group-list">
-                            <li>
-                                <div><strong>Death Note Fans</strong><span>82% of members have watched it</span></div>
-                                <div class="mini-track"><div class="mini-fill" style="--value:82"></div></div>
-                                <button type="button" class="btn small">Join</button>
-                            </li>
-                            <li>
-                                <div><strong>Hell's Paradise Club</strong><span>74% of members have watched it</span></div>
-                                <div class="mini-track"><div class="mini-fill" style="--value:74"></div></div>
-                                <button type="button" class="btn small">Join</button>
-                            </li>
-                            <li>
-                                <div><strong>Slice of Life Lounge</strong><span>65% of members have watched it</span></div>
-                                <div class="mini-track"><div class="mini-fill" style="--value:65"></div></div>
-                                <button type="button" class="btn small">Join</button>
-                            </li>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -321,26 +291,7 @@
                 <h2>Live Connection with Fans</h2>
                 <p class="section-intro">See who is online and send a connect request to chat, share reviews, or just talk anime.</p>
 
-                <div class="connect-grid">
-                    <div class="user-card">
-                        <div class="user-avatar">AK</div>
-                        <h3>Ayesha K.</h3>
-                        <p><span class="status online"></span> Online &middot; Loves Thrillers</p>
-                        <button type="button" class="btn small">Send Request</button>
-                    </div>
-                    <div class="user-card">
-                        <div class="user-avatar">RA</div>
-                        <h3>Rohan A.</h3>
-                        <p><span class="status online"></span> Online &middot; Loves Dark Fantasy</p>
-                        <button type="button" class="btn small">Send Request</button>
-                    </div>
-                    <div class="user-card">
-                        <div class="user-avatar">SM</div>
-                        <h3>Sana M.</h3>
-                        <p><span class="status away"></span> Away &middot; Loves Slice of Life</p>
-                        <button type="button" class="btn small">Send Request</button>
-                    </div>
-                </div>
+                <div class="connect-grid" id="fansGrid"></div>
             </div>
         </section>
 
@@ -378,6 +329,5 @@
         <p>&copy; 2026 Anemria Hub. All Rights Reserved. Built with passion for global anime lovers.</p>
     </footer>
 
-    <script src="js/script.js"></script>
 </body>
 </html>
