@@ -1,0 +1,356 @@
+/* ==========================================================
+   Anemria — header.css  (SHARED HEADER, har page par same)
+   Logo + nav + Log in/Log out + profile chip + dark/light toggle
+   Ye file self-contained hai: apne colours khud rakhti hai,
+   isliye har page par header ka rang aur spacing same rehti hai.
+   ========================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+/* ---------- Header colours: DARK (default) ---------- */
+:root {
+    --hd-bg: rgba(11, 7, 34, 0.78);
+    --hd-card: rgba(32, 24, 82, 0.60);
+    --hd-border: rgba(180, 160, 255, 0.22);
+    --hd-text: #ffffff;
+    --hd-muted: #a69cdc;
+    --hd-violet: #a78bfa;
+    --hd-input: rgba(14, 10, 46, 0.75);
+    --hd-grad-hero: linear-gradient(90deg, #2f8bff, #a78bfa);   /* Anemria ka rang */
+    --hd-rainbow: linear-gradient(90deg, #38bdf8, #a78bfa, #f472b6, #fbbf24);
+}
+
+/* ---------- LIGHT ---------- */
+[data-theme="light"] {
+    --hd-bg: rgba(255, 255, 255, 0.86);
+    --hd-card: #ffffff;
+    --hd-border: rgba(124, 58, 237, 0.15);
+    --hd-text: #241b4b;
+    --hd-muted: #8277ad;
+    --hd-violet: #7c3aed;
+    --hd-input: rgba(255, 255, 255, 0.95);
+    --hd-grad-hero: linear-gradient(90deg, #2563eb, #7c3aed);   /* Anemria ka rang */
+    --hd-rainbow: linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b);
+}
+
+/* ---------- Reset (sirf header ke andar) ---------- */
+.site-header,
+.site-header *,
+.site-header *::before,
+.site-header *::after { box-sizing: border-box; }
+
+.site-header ul { list-style: none; margin: 0; padding: 0; }
+.site-header a { text-decoration: none; }
+.site-header button { font: inherit; }
+
+/* ==========================================================
+   HEADER BAR
+   ========================================================== */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+    max-width: 100%;
+    padding: 14px 5% 17px;
+    background: var(--hd-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: background 0.4s ease;
+}
+
+/* neeche rainbow line */
+.site-header::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: var(--hd-rainbow);
+}
+
+/* ---------- Logo ---------- */
+.site-header .logo-container { flex-shrink: 0; }
+
+.site-header .logo-container h1 {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    font-size: 2.1rem;
+    font-weight: 800;
+    line-height: 1.05;
+    background: var(--hd-grad-hero);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.site-header .logo-container p {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--hd-muted);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* ---------- Nav (pill container) ---------- */
+.site-header nav ul {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px;
+    border-radius: 999px;
+    background: var(--hd-card);
+    border: 1px solid var(--hd-border);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.10);
+}
+
+.site-header nav a {
+    display: block;
+    padding: 12px 24px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--hd-muted);
+    white-space: nowrap;
+    transition: all 0.25s ease;
+}
+
+.site-header nav a:hover {
+    color: var(--hd-text);
+    background: rgba(139, 92, 246, 0.12);
+}
+
+.site-header nav a.active {
+    color: #ffffff;
+    background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899);
+    border-color: transparent;
+    box-shadow: 0 8px 20px rgba(139, 92, 246, 0.40);
+}
+
+/* ==========================================================
+   RIGHT SIDE: profile chip + Log in/Log out + theme toggle
+   ========================================================== */
+.site-header .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+/* ---------- Log in / Log out button ---------- */
+.site-header .auth-btn {
+    flex-shrink: 0;
+    height: 40px;
+    padding: 0 22px;
+    border: 1.5px solid transparent;
+    border-radius: 999px;
+    background: var(--hd-grad-hero);
+    color: #ffffff;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease,
+                background 0.3s ease, color 0.3s ease;
+}
+
+.site-header .auth-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(59, 130, 246, 0.45);
+}
+
+.site-header .auth-btn:active { transform: translateY(0) scale(0.97); }
+
+/* login ke baad: "Log out" (outline style) */
+.site-header .auth-btn.is-logout {
+    background: transparent;
+    color: var(--hd-text);
+    border-color: var(--hd-border);
+}
+
+.site-header .auth-btn.is-logout:hover {
+    border-color: #f472b6;
+    color: #f472b6;
+    box-shadow: 0 8px 22px rgba(244, 114, 182, 0.28);
+}
+
+.site-header .auth-btn:focus-visible,
+.site-header .profile-chip:focus-visible,
+.site-header .theme-toggle:focus-visible,
+.site-header nav a:focus-visible {
+    outline: 2px solid var(--hd-violet);
+    outline-offset: 3px;
+}
+
+/* ---------- Profile chip (login ke baad dikhta hai) ---------- */
+.site-header .profile-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 16px 5px 5px;
+    border-radius: 999px;
+    border: 1.5px solid rgba(180, 160, 255, 0.3);
+    background: var(--hd-card);
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--hd-text);
+    cursor: pointer;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.site-header .profile-chip:hover { border-color: var(--hd-violet); transform: translateY(-2px); }
+.site-header .profile-chip[hidden] { display: none; }
+
+.site-header .pc-av {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: linear-gradient(135deg, #6366f1, #ec4899);
+    color: #fff;
+    font-size: 0.85rem;
+}
+
+.site-header .pc-av img { width: 100%; height: 100%; object-fit: cover; }
+
+.site-header .pc-name {
+    max-width: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ==========================================================
+   DARK / LIGHT TOGGLE
+   Moon = dark, Sun = light. State: <html data-theme="dark|light">
+   ========================================================== */
+.site-header .theme-toggle {
+    position: relative;
+    flex-shrink: 0;
+    width: 96px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1.5px solid var(--hd-border);
+    background: var(--hd-input);
+    cursor: pointer;
+    color: var(--hd-muted);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+    overflow: hidden;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: border-color 0.3s ease, background 0.4s ease,
+                box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.site-header .theme-toggle:hover {
+    border-color: var(--hd-violet);
+    box-shadow: 0 0 18px rgba(167, 139, 250, 0.40);
+    transform: scale(1.05);
+}
+
+.site-header .theme-toggle:active { transform: scale(0.95); }
+
+.site-header .theme-toggle svg {
+    position: relative;
+    z-index: 2;
+    transition: color 0.3s ease, transform 0.5s cubic-bezier(.34, 1.56, .64, 1);
+    width: 20px;
+    height: 20px;
+}
+
+.site-header .toggle-knob {
+    position: absolute;
+    top: 50%;
+    left: 6px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #ffffff;
+    transform: translateY(-50%);
+    box-shadow: 0 0 12px rgba(167, 139, 250, 0.75);
+    transition: left 0.4s cubic-bezier(.68, -0.3, .27, 1.3),
+                width 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
+    z-index: 1;
+}
+
+.site-header .theme-toggle:active .toggle-knob { width: 36px; }
+
+/* DARK state (default) */
+.site-header .icon-moon { color: #5b3fd1; transform: rotate(0deg) scale(1); }
+.site-header .icon-sun  { color: var(--hd-muted); transform: rotate(-90deg) scale(0.8); }
+
+/* LIGHT state */
+[data-theme="light"] .site-header .theme-toggle {
+    background: linear-gradient(90deg, #ffe9b8, #ffd1ea);
+    border-color: rgba(245, 158, 11, 0.55);
+}
+
+[data-theme="light"] .site-header .theme-toggle:hover {
+    border-color: #f59e0b;
+    box-shadow: 0 0 18px rgba(245, 158, 11, 0.40);
+}
+
+[data-theme="light"] .site-header .toggle-knob {
+    left: 62px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    box-shadow: 0 0 14px rgba(245, 158, 11, 0.75);
+}
+
+[data-theme="light"] .site-header .theme-toggle:active .toggle-knob { left: 54px; }
+
+[data-theme="light"] .site-header .icon-moon { color: var(--hd-muted); transform: rotate(90deg) scale(0.8); }
+[data-theme="light"] .site-header .icon-sun  { color: #ffffff; transform: rotate(0deg) scale(1); }
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+/* Log in button ki wajah se jagah kam padti hai, isliye tagline pehle chhup jati hai
+   (nav ki spacing wahi rehti hai) */
+@media (max-width: 1500px) {
+    .site-header { gap: 14px; }
+    .site-header .header-actions { gap: 10px; }
+    .site-header .logo-container p { display: none; }
+}
+
+@media (max-width: 1240px) {
+    .site-header nav a { padding: 12px 18px; }
+}
+
+@media (max-width: 1200px) {
+    .site-header nav a { padding: 11px 14px; font-size: 0.9rem; }
+}
+
+/* is se chhoti screen par logo upar, nav + buttons neeche (wrap) */
+@media (max-width: 1150px) {
+    .site-header { flex-wrap: wrap; justify-content: center; row-gap: 12px; }
+    .site-header .logo-container p { display: block; }
+    .site-header nav a { padding: 11px 16px; }
+}
+
+@media (max-width: 700px) {
+    .site-header { padding: 12px 4% 15px; }
+    .site-header nav ul { flex-wrap: wrap; justify-content: center; border-radius: 26px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .site-header, .site-header *, .site-header *::before, .site-header *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}

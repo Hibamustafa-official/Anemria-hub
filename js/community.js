@@ -3,6 +3,17 @@
    Everything is saved in this browser only (localStorage).
    Later this file will be connected to Firebase.
    Dark / light theme is handled by js/script.js
+
+   Contents
+   1. Data
+   2. Pictures (DP)
+   3. Tabs, page text and stats
+   4. Login / sign up
+   5. Polls
+   6. Friends
+   7. Messages
+   8. Draw everything
+   9. Opened from the home page (#create, #poll=ID, #login, #friends)
    ========================================================== */
 
 const $ = id => document.getElementById(id);
@@ -28,7 +39,8 @@ const uk = n => n.trim().toLowerCase();                   // username key
 function loadDB(){
   let d = null;
   try{ d = JSON.parse(localStorage.getItem(DB_KEY)); }catch(e){}
-  if(!d || !d.users) d = {users:{}, polls:seedPolls(), requests:[], friends:[], chats:{}};
+  if(!d || !d.users) d = {users:{}, polls:seedPolls(), requests:[], friends:[], chats:{}, links:{}};
+  if(!d.links) d.links = {};                              // "connected over" text for each friend pair
   /* polls made by the older version: find the owner from the saved name */
   d.polls.forEach(p=>{
     if(!("owner" in p)){
@@ -54,6 +66,8 @@ const isFriend = (a,b) => db.friends.includes(pairKey(a,b));
 const friendsOf = k => db.friends.filter(p=>p.split("|").includes(k)).map(p=>p.split("|").find(x=>x!==k));
 const sentTo = k => db.requests.some(r=>r.from===me && r.to===k);
 const gotFrom = k => db.requests.some(r=>r.from===k && r.to===me);
+const linkOf = k => db.links[pairKey(me,k)] || "";        // anime a friendship started with
+const fmt = n => n>=1000 ? (n/1000).toFixed(1).replace(/\.0$/,"")+"k" : String(n);
 
 async function hash(text){
   const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
@@ -84,15 +98,32 @@ function fillAv(el, name, dp){
 }
 const userAv = (el, k) => fillAv(el, nameOf(k), db.users[k] && db.users[k].dp);
 
-/* ===== 3. TABS ===== */
+/* ===== 3. TABS, PAGE TEXT AND STATS ===== */
 const TABS = ["polls","friends","messages"];
+const TAB_TEXT = {
+  polls:"Vote in polls, add friends who love the same anime, and chat with them.",
+  friends:"Your friends and the requests waiting for you.",
+  messages:"Chat with your anime friends."
+};
 function showTab(name){
   TABS.forEach(t=>{
     $("tab-"+t).setAttribute("aria-selected", t===name);
     $("panel-"+t).hidden = t!==name;
   });
+  $("pageSub").textContent = TAB_TEXT[name];
+  $("statsPolls").hidden = name!=="polls";
+  $("statsFriends").hidden = name!=="friends";
 }
 TABS.forEach(t=>{ $("tab-"+t).onclick = ()=>showTab(t); });
+
+function renderStats(){
+  const votes = db.polls.reduce((n,p)=>n+Object.keys(p.votes).length, 0);
+  $("stPolls").textContent = fmt(db.polls.length);
+  $("stVotes").textContent = fmt(votes);
+  $("stMembers").textContent = fmt(Object.keys(db.users).length);
+  $("stFriends").textContent = me ? friendsOf(me).length : 0;
+  $("stRequests").textContent = me ? db.requests.filter(r=>r.to===me).length : 0;
+}
 
 /* ===== 4. LOGIN / SIGN UP ===== */
 function setMode(s){
@@ -137,6 +168,21 @@ $("authForm").onsubmit = async e=>{
 
 /* ===== 5. POLLS ===== */
 const ownerName = p => (p.owner && db.users[p.owner]) ? db.users[p.owner].name : (p.byName || "Anemria");
+/* the option I voted for in a poll (used as the "talk about" topic of a friend request) */
+const votedAnime = p => (me && p.votes[me]!==undefined) ? p.opts[p.votes[me]] : "";
+
+/* Sets up the "Add friend" button of one poll card. */
+function pollFriendBtn(p, btn){
+  const o = p.owner;
+  if(!o || !db.users[o] || o===me){ btn.hidden = true; return; }   // site polls and my own polls: no button
+  btn.hidden = false;
+  if(me && isFriend(me,o)){ btn.textContent = "Friends"; btn.classList.add("is-friend"); btn.disabled = true; }
+  else if(me && sentTo(o)){
+    btn.textContent = "Pending"; btn.classList.add("pending"); btn.title = "Click to cancel";
+    btn.onclick = ()=>{ if(confirm("Cancel your request to "+nameOf(o)+"?")) cancelReq(o); };
+  }else if(me && gotFrom(o)){ btn.textContent = "Accept"; btn.onclick = ()=>acceptReq(o); }
+  else btn.onclick = ()=>{ if(!needLogin()) sendReq(o, votedAnime(p)); };
+}
 
 function renderPolls(){
   const list = $("pollList"); list.innerHTML = "";
@@ -151,9 +197,10 @@ function renderPolls(){
     el.dataset.id = p.id;   // so the home page can link to this exact poll
     el.querySelector(".tag").textContent = p.type;
     el.querySelector(".q").textContent = p.q;
-    el.querySelector(".by").textContent = ownerName(p)+" · "+new Date(p.at).toLocaleDateString();
-    if(p.owner && db.users[p.owner]) userAv(el.querySelector(".owner .av"), p.owner);
-    else fillAv(el.querySelector(".owner .av"), ownerName(p), null);
+    el.querySelector(".by").textContent = ownerName(p);
+    el.querySelector(".date").textContent = new Date(p.at).toLocaleDateString("en-US");
+    if(p.owner && db.users[p.owner]) userAv(el.querySelector(".poll-head .av"), p.owner);
+    else fillAv(el.querySelector(".poll-head .av"), ownerName(p), null);
 
     const del = el.querySelector(".del");
     if(me && p.owner===me){
@@ -163,6 +210,7 @@ function renderPolls(){
         db.polls = db.polls.filter(x=>x.id!==p.id); save(); renderPolls();
       };
     }
+    pollFriendBtn(p, el.querySelector(".add-friend"));
 
     const counts = p.opts.map((_,i)=>Object.values(p.votes).filter(v=>v===i).length);
     const total = counts.reduce((a,b)=>a+b,0);
@@ -180,6 +228,7 @@ function renderPolls(){
     list.appendChild(el);
   });
   $("pollEmpty").hidden = polls.length>0;
+  renderStats();
 }
 function vote(id, i){
   if(needLogin()) return;
@@ -197,9 +246,19 @@ $("pollTypes").onclick = e=>{
 };
 $("myPolls").onclick = ()=>{
   if(needLogin()) return;
-  mineOnly = !mineOnly; renderPolls();
+  mineOnly = !mineOnly; renderPolls(); renderAuth();
 };
 let pollTimer; $("pollSearch").oninput = ()=>{ clearTimeout(pollTimer); pollTimer = setTimeout(renderPolls, 150); };
+
+/* poll composer: open / close the form */
+function setComposer(open){
+  $("pollForm").hidden = !open;
+  if(open) $("pollQ").focus({preventScroll:true});
+}
+const toggleComposer = ()=>setComposer($("pollForm").hidden);
+$("createToggle").onclick = toggleComposer;
+$("composerText").onclick = toggleComposer;
+
 $("addOption").onclick = ()=>{
   const box = $("pollOptions"), n = box.querySelectorAll("input").length;
   if(n>=5) return;
@@ -218,8 +277,8 @@ $("pollForm").onsubmit = e=>{
   save();
   $("pollForm").reset();
   $("pollOptions").querySelectorAll("input").forEach((inp,i)=>{ if(i>1) inp.remove(); });
-  $("newPollBox").open = false;
-  typeFilter = "All"; mineOnly = false; $("pollSearch").value = ""; setChips(); renderPolls();
+  setComposer(false);
+  typeFilter = "All"; mineOnly = false; $("pollSearch").value = ""; setChips(); renderPolls(); renderAuth();
 };
 
 /* ===== 6. FRIENDS ===== */
@@ -237,8 +296,12 @@ function cancelReq(k){
   db.requests = db.requests.filter(r=>!(r.from===me && r.to===k)); save(); renderAll();
 }
 function acceptReq(k){
+  const req = db.requests.find(r=>r.from===k && r.to===me);
   db.requests = db.requests.filter(r=>!((r.from===k&&r.to===me)||(r.from===me&&r.to===k)));
-  if(!isFriend(me,k)) db.friends.push(pairKey(me,k));
+  if(!isFriend(me,k)){
+    db.friends.push(pairKey(me,k));
+    if(req && req.anime) db.links[pairKey(me,k)] = req.anime;   // remember what they connected over
+  }
   save(); renderAll();
 }
 function rejectReq(k){
@@ -267,12 +330,10 @@ function renderFriends(){
   }
 
   /* requests for me */
-   const incomingReqs = me ? db.requests.filter(r=>r.to===me) : [];
-  const incoming = incomingReqs.map(r=>r.from);
+  const incomingReqs = me ? db.requests.filter(r=>r.to===me) : [];
   const ul = $("incomingList"); ul.innerHTML = "";
   incomingReqs.forEach(r=>{
-    const k = r.from;
-    const el = tpl("tplIncoming");
+    const k = r.from, el = tpl("tplIncoming");
     userAv(el.querySelector(".av"), k);
     el.querySelector(".nm").textContent = nameOf(k);
     el.querySelector(".why").textContent = r.anime ? "Wants to talk about " + r.anime : "Sent you a request";
@@ -280,10 +341,11 @@ function renderFriends(){
     el.querySelector(".reject").onclick = ()=>rejectReq(k);
     ul.appendChild(el);
   });
-  $("inCount").textContent = incoming.length;
-  $("inEmpty").hidden = incoming.length>0;
-  $("reqBadge").textContent = incoming.length;
-  $("reqBadge").hidden = incoming.length===0;
+  $("inCount").textContent = incomingReqs.length;
+  $("inEmpty").hidden = incomingReqs.length>0;
+  $("reqBadge").textContent = incomingReqs.length;
+  $("reqBadge").hidden = incomingReqs.length===0;
+
   /* my friends */
   const fl = $("friendsList"); fl.innerHTML = "";
   const myFriends = me ? friendsOf(me) : [];
@@ -291,11 +353,13 @@ function renderFriends(){
     const el = tpl("tplFriend");
     userAv(el.querySelector(".av"), k);
     el.querySelector(".nm").textContent = nameOf(k);
+    el.querySelector(".why").textContent = linkOf(k) ? "Connected over " + linkOf(k) : "Friends";
     el.querySelector(".chat").onclick = ()=>{ showTab("messages"); openChat(k); };
     fl.appendChild(el);
   });
   $("frCount").textContent = myFriends.length;
   $("frEmpty").hidden = myFriends.length>0;
+
   /* everyone else */
   const grid = $("peopleGrid"); grid.innerHTML = "";
   const others = me ? Object.keys(db.users).filter(k=>k!==me) : [];
@@ -323,21 +387,23 @@ $("dpRemove").onclick = ()=>{
 };
 
 /* ===== 7. MESSAGES ===== */
-function renderStrip(){
-  const ul = $("friendStrip"); ul.innerHTML = "";
+function renderChats(){
+  const ul = $("chatList"); ul.innerHTML = "";
   const friends = me ? friendsOf(me) : [];
   friends.forEach(k=>{
-    const el = tpl("tplStory"), b = el.querySelector(".story");
+    const el = tpl("tplChat"), b = el.querySelector(".chat-item");
+    const msgs = db.chats[pairKey(me,k)] || [], last = msgs[msgs.length-1];
     userAv(el.querySelector(".av"), k);
     el.querySelector(".nm").textContent = nameOf(k);
+    el.querySelector(".last").textContent = last ? (last.f===me ? "You: " : "") + last.t : "Say hi!";
     if(k===chatWith) b.classList.add("active");
     b.onclick = ()=>openChat(k);
     ul.appendChild(el);
   });
-  $("stripEmpty").hidden = friends.length>0;
-  $("stripEmpty").textContent = me ? "Accept a friend request to start messaging." : "Log in to message your friends.";
+  $("chatsEmpty").hidden = friends.length>0;
+  $("chatsEmpty").textContent = me ? "Accept a friend request to start messaging." : "Log in to message your friends.";
 }
-function openChat(k){ chatWith = k; renderStrip(); renderDM(); $("dmText").focus(); }
+function openChat(k){ chatWith = k; renderChats(); renderDM(); $("dmText").focus(); }
 function stamp(t){
   const d = new Date(t), time = d.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
   return d.toDateString()===new Date().toDateString() ? time : d.toLocaleDateString([], {day:"numeric", month:"short"})+", "+time;
@@ -355,6 +421,7 @@ function renderDM(){
   $("dmTop").hidden = false; $("dmForm").hidden = false;
   userAv($("dmAv"), chatWith);
   $("dmName").textContent = nameOf(chatWith);
+  $("dmSub").textContent = linkOf(chatWith) ? "Talking about " + linkOf(chatWith) : "Friends";
   const msgs = db.chats[pairKey(me, chatWith)] || [];
   if(!msgs.length){
     const p = document.createElement("p"); p.className = "empty"; p.textContent = "No messages yet. Say hi!";
@@ -363,7 +430,6 @@ function renderDM(){
   msgs.forEach(m=>{
     const el = tpl("tplMsg");
     if(m.f===me) el.classList.add("me");
-    el.querySelector(".who").textContent = m.f===me ? "Me" : nameOf(m.f);
     el.querySelector(".txt").textContent = m.t;
     el.querySelector(".time").textContent = stamp(m.at);
     box.appendChild(el);
@@ -377,24 +443,20 @@ $("dmForm").onsubmit = e=>{
   const k = pairKey(me, chatWith), arr = db.chats[k] = db.chats[k] || [];
   arr.push({f:me, t, at:Date.now()});
   if(arr.length>200) arr.splice(0, arr.length-200);       // keeps storage small
-  save(); $("dmText").value = ""; renderDM();
+  save(); $("dmText").value = ""; renderDM(); renderChats();
 };
-$("dmBack").onclick = ()=>{ chatWith = null; renderStrip(); renderDM(); };
+$("dmBack").onclick = ()=>{ chatWith = null; renderChats(); renderDM(); };
 
-/* ===== 8. SEARCH BUTTONS (click or Enter) ===== */
-$("pollSearch").onkeydown = e => { if(e.key==="Enter") renderPolls(); };
-$("peopleSearch").onkeydown = e => { if(e.key==="Enter") renderFriends(); };
-
-/* ===== 9. DRAW EVERYTHING ===== */
+/* ===== 8. DRAW EVERYTHING ===== */
 function renderAuth(){
   $("authBtn").textContent = me ? "Log out" : "Log in";
-    $("profileBox").hidden = !me;
+  $("profileBox").hidden = !me;
   if(me){ userAv($("hdAv"), me); $("hdName").textContent = nameOf(me); }
-  $("userBar").hidden = !me;
-  if(me) $("userName").textContent = nameOf(me);
+  /* avatar in the poll composer: my picture when logged in, "You" otherwise */
+  if(me) userAv($("composerAv"), me); else $("composerAv").textContent = "You";
   $("myPolls").setAttribute("aria-pressed", mineOnly);
 }
-function renderAll(){ renderAuth(); renderPolls(); renderFriends(); renderStrip(); renderDM(); }
+function renderAll(){ renderAuth(); renderPolls(); renderFriends(); renderChats(); renderDM(); }
 
 /* A change made in another tab (another user) shows up here live. */
 window.addEventListener("storage", e=>{
@@ -406,7 +468,8 @@ window.addEventListener("storage", e=>{
 
 setChips();
 renderAll();
-/* ===== 10. OPENED FROM HOME PAGE (#create or #poll=ID) ===== */
+
+/* ===== 9. OPENED FROM HOME PAGE (#create, #poll=ID, #login, #friends) ===== */
 function handleHash(){
   const h = location.hash.slice(1);
   if(!h) return;
@@ -415,10 +478,8 @@ function handleHash(){
   showTab("polls");
 
   if(h === "create"){
-    const box = $("newPollBox");
-    box.open = true;
-    box.scrollIntoView({behavior:"smooth", block:"center"});
-    $("pollQ").focus({preventScroll:true});
+    setComposer(true);
+    $("newPollBox").scrollIntoView({behavior:"smooth", block:"center"});
   }else if(h.startsWith("poll=")){
     const id = decodeURIComponent(h.slice(5));
     const card = document.querySelector('.poll[data-id="'+id+'"]');
