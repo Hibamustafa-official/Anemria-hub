@@ -1,54 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Watch & Stream — Anemria</title>
-    <link rel="stylesheet" href="./css/style3.css">
-    <link rel="stylesheet" href="./css/watch-ui.css">
+
     <!-- theme (dark/light): head mein hi rakhein taake page flash na kare -->
     <script src="js/script.js"></script>
+
+    <link rel="stylesheet" href="./css/style3.css">
+    <link rel="stylesheet" href="./css/watch-ui.css">
+    <!-- Shared header ki styling (home jaisa header). Page ki CSS ke BAAD lagani hai -->
+    <link rel="stylesheet" href="css/header.css">
+
     <!-- is page ka apna JS -->
     <script src="js/watch.js" defer></script>
     <script src="js/profile.js"></script>
 </head>
 <body>
 
-<header>
-    <div class="logo-container" onclick="location.href='index.html'">
-        <h1>Anemria</h1>
-        <p>Your Ultimate Anime Universe Hub</p>
-    </div>
-
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="anime-list.html">Explorer & Story</a></li>
-            <li><a href="watch.html" class="active">Watch & Stream</a></li>
-            <li><a href="anime-chat.html">Anime Chat</a></li>
-            <li><a href="community.html">Community Hub</a></li>
-        </ul>
-    </nav>
-
-    <!-- Dark / Light toggle -->
-     <a href="community.html#friends" class="profile-chip" id="profileBox" hidden>
-    <span class="pc-av" id="hdAv"></span><span id="hdName"></span>
-</a>
-    <button class="theme-toggle" id="themeToggle" type="button"
-            aria-label="Toggle dark and light mode" title="Toggle theme">
-        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24"
-             fill="currentColor" aria-hidden="true">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
-        </svg>
-        <span class="toggle-knob"></span>
-        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24"
-             fill="none" stroke="currentColor" stroke-width="2"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="4"/>
-            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
-        </svg>
-    </button>
-</header>
+<!-- ================= HEADER (shared: js/header.js se aata hai) ================= -->
+<div id="site-header"></div>
+<script src="js/header.js"></script>
 
 <main class="ui">
 
@@ -69,7 +42,7 @@
                 </button>
             </h2>
 
-          <p class="hero-hint">👆 Tap the name to play it, or type your own</p>
+            <p class="hero-hint">👆 Tap the name to play it, or type your own</p>
         </div>
 
         <!-- RIGHT: long search bar + quick picks -->
@@ -99,46 +72,48 @@
     </section>
 
     <p id="resultCount" class="count-pill" aria-live="polite"></p>
-<!-- ================= INFO STRIP (TV ke upar) ================= -->
-<section class="strip" aria-label="Quick info">
-    <div class="strip-item">
-        <span class="strip-ico">🎬</span>
-        <div>
-            <b>25+ Trailers</b>
-            <small>Hindi dubbed</small>
+
+    <!-- ================= INFO STRIP (TV ke upar) ================= -->
+    <section class="strip" aria-label="Quick info">
+        <div class="strip-item">
+            <span class="strip-ico">🎬</span>
+            <div>
+                <b>25+ Trailers</b>
+                <small>Hindi dubbed</small>
+            </div>
         </div>
-    </div>
-    <div class="strip-item">
-        <span class="strip-ico">⚡</span>
-        <div>
-            <b>Instant Play</b>
-            <small>No login needed</small>
+        <div class="strip-item">
+            <span class="strip-ico">⚡</span>
+            <div>
+                <b>Instant Play</b>
+                <small>No login needed</small>
+            </div>
         </div>
-    </div>
-    <div class="strip-item">
-        <span class="strip-ico">🎲</span>
-        <div>
-            <b>Surprise Me</b>
-            <small>Random pick</small>
+        <div class="strip-item">
+            <span class="strip-ico">🎲</span>
+            <div>
+                <b>Surprise Me</b>
+                <small>Random pick</small>
+            </div>
         </div>
-    </div>
-    <div class="strip-item">
-        <span class="strip-ico">🌙</span>
-        <div>
-            <b>Dark &amp; Light</b>
-            <small>Your choice</small>
+        <div class="strip-item">
+            <span class="strip-ico">🌙</span>
+            <div>
+                <b>Dark &amp; Light</b>
+                <small>Your choice</small>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+
     <!-- ================= LCD TV ================= -->
     <section class="stage" id="playerSection">
-       <div class="lcd" id="lcd">
-    <img class="lcd-img" src="images/lcd-tv.png" alt="">
+        <div class="lcd" id="lcd">
+            <img class="lcd-img" src="images/lcd-tv.png" alt="">
 
-    <div class="lcd-screen">
-        <video id="animePlayer" playsinline preload="metadata"></video>
-    </div>
-</div>
+            <div class="lcd-screen">
+                <video id="animePlayer" playsinline preload="metadata"></video>
+            </div>
+        </div>
 
         <div class="now">
             <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
@@ -156,12 +131,12 @@
             <h2>🌸 Pick your trailer</h2>
             <p>Every poster is a tiny portal. Tap one and press play.</p>
         </div>
-        <div id="animeGrid" class="poster-grid"></div>
+
         <div id="animeGrid" class="poster-grid"></div>
 
-<div class="load-wrap" id="loadWrap">
-    <button type="button" class="search-btn" id="loadMoreBtn">Load More Trailers</button>
-</div>
+        <div class="load-wrap" id="loadWrap">
+            <button type="button" class="search-btn" id="loadMoreBtn">Load More Trailers</button>
+        </div>
     </section>
 </main>
 

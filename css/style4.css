@@ -1,7 +1,8 @@
 /* ==========================================================
-   ANEMRIA HUB - Anime Chat page  (style4.css)  -- UPDATED
-   Headings: Fredoka | Body: Quicksand | Header: Poppins
+   ANEMRIA HUB - Anime Chat page  (style4.css)
+   Headings: Fredoka | Body: Quicksand
    Dark (default) + Light via [data-theme] on <html>
+   Header ki styling is file mein NAHI hai: wo css/header.css mein hai.
    ========================================================== */
 
 /* ---------- 1. Theme variables ---------- */
@@ -93,79 +94,11 @@ code{
 ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#a78bfa,#f472b6);border-radius:999px;border:2px solid var(--bg)}
 
 /* ==========================================================
-   3. HEADER  (same as Home page: logo | nav pill | theme toggle)
+   3. HEADER (shared)
+   Poori styling css/header.css mein hai. Yahan sirf wrapper rule:
+   #site-header "display:contents" taake header sticky chalay.
    ========================================================== */
-.site-header{
-  position:sticky;top:0;z-index:5;
-  display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:20px;
-  width:100%;padding:14px 4%;
-  background:
-    linear-gradient(90deg,rgba(167,139,250,.14),rgba(244,114,182,.10),rgba(56,189,248,.14)),
-    var(--hd-bg);
-  backdrop-filter:blur(18px) saturate(170%);-webkit-backdrop-filter:blur(18px) saturate(170%);
-  border-bottom:1px solid var(--line);
-  box-shadow:0 10px 34px rgba(124,58,237,.12);
-}
-.site-header::after{
-  content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;
-  background:var(--hd-line);box-shadow:0 0 14px rgba(167,139,250,.55);pointer-events:none;
-}
-
-/* logo */
-.site-header .logo-container{flex-shrink:0;cursor:pointer;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
-.site-header .logo-container:hover{transform:scale(1.04) rotate(-1deg)}
-.site-header .logo-container h1{
-  margin:0;font-family:"Poppins",sans-serif;font-size:2.5rem;font-weight:800;line-height:1.05;
-  background:linear-gradient(90deg,#38bdf8,#818cf8,#a78bfa,#f472b6);background-size:200% 100%;
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
-  filter:drop-shadow(0 4px 14px rgba(129,140,248,.45));
-  animation:hdLogoShift 6s ease-in-out infinite;
-}
-@keyframes hdLogoShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-.site-header .logo-container p{
-  margin:2px 0 0;font-family:"Poppins",sans-serif;font-size:.6rem;font-weight:500;
-  letter-spacing:.22em;text-transform:uppercase;color:var(--hd-muted);white-space:nowrap;
-}
-
-/* nav pill */
-.site-header nav{flex:0 1 auto;min-width:0}
-.site-header nav ul{
-  display:flex;align-items:center;justify-content:center;gap:4px;padding:6px;
-  border-radius:999px;border:1px solid var(--line);background:var(--hd-pill);
-  box-shadow:0 8px 24px rgba(124,58,237,.10);
-}
-.site-header nav a{
-  display:block;padding:10px 20px;border-radius:999px;
-  font-family:"Quicksand",sans-serif;font-weight:700;font-size:1.02rem;color:var(--hd-muted);white-space:nowrap;
-  transition:color .25s,background .25s,transform .25s,box-shadow .25s;
-}
-.site-header nav a:hover{color:var(--hd-text);background:rgba(167,139,250,.16);transform:translateY(-2px)}
-.site-header nav a.active,.site-header nav a.active:hover{
-  color:#fff;background:var(--grad);box-shadow:0 8px 22px var(--hd-glow);transform:none;
-}
-
-/* right side: only the theme toggle */
-.header-actions{display:flex;align-items:center;gap:12px;flex-shrink:0}
-
-.theme-toggle{
-  position:relative;flex-shrink:0;width:104px;height:44px;padding:0 14px;overflow:hidden;
-  display:flex;align-items:center;justify-content:space-between;
-  border-radius:999px;border:2px solid var(--line);background:var(--hd-pill);color:var(--hd-muted);
-  transition:border-color .3s,background .4s,box-shadow .3s,transform .2s;
-}
-.theme-toggle:hover{box-shadow:0 0 18px rgba(167,139,250,.4);transform:scale(1.04)}
-.theme-toggle svg{position:relative;z-index:2;width:18px;height:18px}
-.toggle-knob{
-  position:absolute;top:50%;left:6px;width:30px;height:30px;border-radius:50%;background:#fff;
-  transform:translateY(-50%);box-shadow:0 0 12px rgba(167,139,250,.75);z-index:1;
-  transition:left .4s cubic-bezier(.68,-.3,.27,1.3),background .3s,box-shadow .3s;
-}
-.icon-moon{color:#5b3fd1}
-.icon-sun{color:var(--hd-muted)}
-[data-theme="light"] .theme-toggle{background:linear-gradient(90deg,#ffe9b8,#ffd1ea);border-color:rgba(245,158,11,.55)}
-[data-theme="light"] .toggle-knob{left:68px;background:linear-gradient(135deg,#fbbf24,#f59e0b);box-shadow:0 0 14px rgba(245,158,11,.75)}
-[data-theme="light"] .icon-moon{color:var(--hd-muted)}
-[data-theme="light"] .icon-sun{color:#fff}
+#site-header{display:contents}
 
 /* ==========================================================
    4. HERO  (Community-style: kicker, title + avatar stack, stats pill, search + buttons)
@@ -452,9 +385,10 @@ code{
 
 /* ==========================================================
    11. CHAT SCREEN
+   z-index header (100) se upar rakha hai taake chat poori screen cover kare
    ========================================================== */
 #chat{
-  position:fixed;inset:0;z-index:20;display:none;flex-direction:column;
+  position:fixed;inset:0;z-index:1100;display:none;flex-direction:column;
   background:linear-gradient(180deg,var(--chat-top),var(--bg) 50%);
 }
 #chat.open{display:flex;animation:chatIn .3s ease}
@@ -563,10 +497,6 @@ code{
 /* ==========================================================
    13. RESPONSIVE + REDUCED MOTION
    ========================================================== */
-@media (max-width:1200px){
-  .site-header{flex-wrap:wrap;justify-content:center;row-gap:12px}
-  .site-header nav ul{flex-wrap:wrap}
-}
 @media (max-width:900px){
   .how-grid,.feature-grid{grid-template-columns:1fr 1fr}
   .tips-grid{grid-template-columns:1fr}
@@ -574,10 +504,6 @@ code{
   .footer-brand{grid-column:1/-1}
 }
 @media (max-width:700px){
-  .site-header .logo-container h1{font-size:2rem}
-  .site-header nav ul{border-radius:26px}
-  .site-header nav a{padding:9px 14px;font-size:.95rem}
-  .header-actions{flex-wrap:wrap;justify-content:center}
   .wrap{padding:28px 14px 70px}
   .search-row{flex-wrap:wrap}
   .search{flex:1 1 100%;height:54px;padding:0 16px}
@@ -595,11 +521,8 @@ code{
   .card:hover{transform:none}
 }
 /* ==========================================================
-   COMMUNITY-HUB STYLE OVERRIDE  (paste at the very END of style4.css)
+   COMMUNITY-HUB STYLE OVERRIDE
    ========================================================== */
-
-/* header: only logo + nav + theme toggle (hides Log in / AI key) */
-.header-actions > *:not(.theme-toggle){display:none!important}
 
 /* page order: hero -> cards -> how it works -> features -> tips -> faq */
 .wrap{display:flex;flex-direction:column}
@@ -690,7 +613,7 @@ code{
   .search .search-btn{height:42px;padding:0 22px}
 }
 /* ==========================================================
-   SMALLER HERO TEXT  (paste at the very END, after everything)
+   SMALLER HERO TEXT
    ========================================================== */
 
 /* title: smaller, fits nicely in one line */
